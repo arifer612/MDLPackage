@@ -8,6 +8,12 @@ conf.read(confDir)
 keyDir = os.path.expanduser(conf['DIRECTORIES']['key']) if conf['DIRECTORIES']['key'] else os.path.expanduser('~')
 logDir = os.path.expanduser(conf['DIRECTORIES']['log']) if conf['DIRECTORIES']['log'] else os.path.expanduser('~')
 
+if not os.path.exists(keyDir):
+    keyConf = ConfigParser()
+    keyConf['USER'] = {'username': '', 'password': ''}
+    with open(keyDir, 'w') as r:
+        keyConf.write(r)
+
 from . import general
 from . import kakaku
 from . import library
