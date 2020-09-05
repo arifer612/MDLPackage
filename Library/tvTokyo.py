@@ -1,9 +1,10 @@
 import datetime as d
 import json
 import requests
+import re
 from Library import general as g
 
-programRoot = 'https://www.tv-tokyo.co.jp/broad_bstvtokyo/program/data/'
+programRoot = 'https://www.tv-tokyo.co.jp/broad_bstvtokyo/program/'
 
 
 ## Search for show, allows user to pick from choice of 16 results
@@ -22,86 +23,71 @@ def search(title):
         'json': json.dumps(searchPayload, ensure_ascii=False).encode('utf8')
     }
     searchURL = 'https://api.cxense.com/document/search?'
-    searchResponse = requests.get(searchURL, params=searchParams)
-    searchResults = json.loads(searchResponse.content)
-    if searchResults['totalCount'] > 1:
+    searchResults = g.soup(searchURL, params=searchParams, JSON=True)
+    if searchResults['totalCount'] == 1:
+        return {entry['field']: entry['value'] for entry in searchResults['matches'][0]['fields']}
+    elif searchResults['totalCount'] > 1:
         print('Which of the following is the right show:')
         for resultNum, result in enumerate(searchResults['matches'], 1):
             showInfo = {entry['field']: entry['value'] for entry in result['fields']}
             query = f"{resultNum}: Title -- {showInfo['title']}"
             if 'txn-broadcast-time' in showInfo.keys():
-                query += f" airing on {showInfo['txn-broadcast-time']}"
+                if '曜' in showInfo['txn-broadcast-time']:
+                    query += f" airing on {showInfo['txn-broadcast-time']}"
+                else:
+                    query += f", {showInfo['txn-broadcast-time']}"
             else:
                 pass
             print(query)
-        answer = input()
-        showInfo = {entry['field']: entry['value']
-                    for entry in searchResults['matches'][int(answer) - 1]['fields']}
-    elif searchResults['totalCount'] == 1:
-        showInfo = {entry['field']: entry['value']
-                    for entry in searchResults['matches'][0]['fields']}
+
+        answer = attempt = 0
+        while answer not in range(1, searchResults['totalCount'] + 1) and attempt < 4:
+            try:
+                answer = int(input()) if attempt == 0 else int(input('Invalid choice. Pick again'))
+            except ValueError:
+                pass
+            attempt += 1
+            if attempt < 3:
+                pass
+            else:
+                print('Too many invalid attempts. Picking the first choice')
+                answer = 1
+
+        return {entry['field']: entry['value'] for entry in searchResults['matches'][answer - 1]['fields']}
     else:
-        showInfo = None
-        exit('Invalid search terms')
-    return showInfo
+        raise FileNotFoundError
 
 
-## Extracts timetable URL of the show instead of show's official site
-def URL(title):
-    showInfo = search(title)
-    BS = 'ＢＳ' in showInfo['txn-broadcaster']
-    jpConvert = {'月': 1, '火': 2, '水': 3, '木': 4, '金': 5, '土': 6, '日': 7}
-    [airDay, airtime] = showInfo['txn-broadcast-time'].split('夜')
-    airDay = jpConvert[airDay[0]]
-    try:
-        airtime = d.datetime.strptime(airtime, '%H時%M分')
-    except ValueError:
-        airtime = d.datetime.strptime(airtime, '%H時')
-    HRS = f"{str(airtime.hour + (24 if airtime.hour < 4 else 12)).zfill(2)}{str(airtime.minute).zfill(2)}"
-    today = d.datetime.now().weekday() + 1
-    timeDelta = (today - airDay) % 7
-    searchDate = d.datetime.strftime(d.datetime.now() - d.timedelta(days=timeDelta), '%Y%m%d')
-    timetableResponse = requests.get(f'https://www.tv-tokyo.co.jp/tbcms/assets/data/{searchDate}.json')
-    if timetableResponse.status_code == 200:
-        timetable = json.loads(timetableResponse.content)
-        showURL = f"https:{timetable[HRS][str(BS + 1)]['url']}"
-    else:
-        showURL = None
-        exit('Fail to retrieve timetable information')
-    return showURL, d.datetime.strftime(airtime, '%H:%M'), BS  # airTime needed to check against past airtime
-
-
-## Internal ID tag employed by TV Tokyo to identify shows
-def getID(showURL):
-    return g.soup(showURL, post=False).find(class_='tbcms_contents')['data-program'].split('/')[-1]
+def getPageID(showInfo):
+    return f"pg_{str(showInfo['txn-program-id']).zfill(10)}.json"
 
 
 ## Scrapes internal database for information on show
 def getData(title, fixed=False):
-    showURL, airTime, BS = URL(title)
-    showID = getID(showURL)
-    dataFull = g.soup(f"https://www.tv-tokyo.co.jp/broad_{'bs' if BS else ''}tvtokyo/program/data/{showID}", JSON=True)
+    showInfo = search(title)
+    pageID = getPageID(showInfo)
+    BS = 'ＢＳ' in showInfo['txn-broadcaster']
+    dataFull = g.soup(f"{programRoot.replace('bs', '' if not BS else 'bs')}data/{pageID}", JSON=True)
     dataEpisodes = {int(year[:4]): payload for year, payload in dataFull['backnumber']['data'].items()}
     showTitle = dataFull['bangumi'] if not fixed else title
-    # variety = 'バラエティ・音楽' in dataFull['genre'] ## boolean. Checks if the show is a variety show
-    return dataEpisodes, showTitle, showURL, airTime, BS
+    return dataEpisodes, showTitle, BS
 
 
-## Extracts exact airdate and airtime of show in JST
-# data (dict) : needs keys 'url' and 'txt'
-# showTitle (str) : used for getting episodeTitle
+## Analyses episode data for air dates
+# data (dict) : Retrieved from getData()
+# showTitle (str) : Retrieved from getData()
 # BS (bool) : True for bsTokyo shows
-def analyse(data, showTitle=None, BS=False):
-    datetimeInfo = data['url'].split('_')[1].split('.')[0]
+def getEpisodeDates(data, showTitle=None, BS=False):
+    datetimeInfo = re.split('[_.]', data['url'])[1]
     try:
         startTime = d.datetime.strptime(datetimeInfo, '%Y%m%d%H%M')
     except ValueError:
         datetimeInfo = str(int(datetimeInfo) - 2400)
         startTime = d.datetime.strptime(datetimeInfo, '%Y%m%d%H%M') + d.timedelta(days=1)
     episodeTitle = data['txt'].replace(showTitle if showTitle else '', '')
-    episodeURL = f"https://www.tv-tokyo.co.jp/broad_{'bs' if BS else ''}tvtokyo/program/detail/{data['url']}"
+    episodeURL = f"{programRoot.replace('bs', '' if not BS else 'bs')}detail/{data['url']}"
     if startTime < d.datetime.now():
-        return {'start': startTime - d.timedelta(minutes=startTime.minute % 5),
+        return {'start': startTime,
                 'title': episodeTitle,
                 'url': episodeURL}
     else:
@@ -109,103 +95,65 @@ def analyse(data, showTitle=None, BS=False):
 
 
 ## Compact function to scrape for episodes
-# auto (bool) : splits season by year. Recommended for variety shows / music shows etc.
-# start (int) : episode number to start working from
-# initialValue (int) : value of first episode, only change this if the show does not start at #1
-def showDates(title, start=0, initialValue=1, fixed=False):  # initialValue=0 # start: value of first episode
-    dataEpisodes, showTitle, showURL, airTime, BS = getData(title, fixed)
+# title (str) : Title
+# start (int) : Episode to begin truncation
+# initialValue (int) : Value of first episode, ONLY change this if the show does not start at #1
+def showDates(title, start=0, fixed=False, initialValue=1):
+    dataEpisodes, showTitle, BS = getData(title, fixed)
     totalEpisodes = initialValue
     episodeList = {}
     seasons = {}
     for year in sorted(dataEpisodes):
+        episodeList.update({episodeNumber: getEpisodeDates(info, showTitle, BS)
+                            for episodeNumber, info in enumerate(dataEpisodes[year], start=totalEpisodes)
+                            if (episodeNumber > start)})
         seasons[year] = {'start': totalEpisodes,
                          'end': totalEpisodes + len(dataEpisodes[year]) - 1,
-                         'startDate': d.datetime.strptime(dataEpisodes[year][0]['url'].split('_')[1].split('.')[0],
-                                                          '%Y%m%d%H%M')
+                         'startDate': episodeList[totalEpisodes]['start']
                          }
-        episodeList.update({episodeNumber: analyse(info, showTitle, BS)
-                            for episodeNumber, info in enumerate(dataEpisodes[year], start=totalEpisodes)
-                            if (episodeNumber > start) and analyse(info, showTitle, BS)})
         totalEpisodes += len(dataEpisodes[year])
-    return episodeList, seasons, airTime
+
+    [episodeList.pop(i, None) for i in [j for j in episodeList if not episodeList[j]]]
+    return episodeList, seasons
 
 
 ## Preps information to be posted to MDL
-# seasonEpisodes (dict) : Highly suggest to include all the episodes at once, rather than to split by season
-def formData(seasonEpisodes, airTime):
+# episodes (dict) : Highly suggest to include all the episodes at once, rather than to split by season
+# airTime (str) : To be obtained from MDL, in HHMM format
+def formData(episodes, airTime):
+    airTime = str((int(airTime) - 900) % 2400).zfill(4)
     payload = [
         {
             "episode_number": episode,
             "release_date": d.datetime.strftime(date['start'] - d.timedelta(hours=9), '%Y-%m-%d'),
-            "release_time": d.datetime.strftime(date['start'] - d.timedelta(hours=9), '%H:%M'),
-            "released_at": d.datetime.strftime(date['start'] - d.timedelta(hours=9), '%Y-%m-%d %H:%M:00'),
-            "status": "auto",
+            "release_time": d.datetime.strftime(date['start'] - d.timedelta(hours=9, minutes=date['start'].minute % 5),
+                                                '%H:%M'),
+            "released_at": d.datetime.strftime(date['start'] - d.timedelta(hours=9, minutes=date['start'].minute % 5),
+                                               '%Y-%m-%d %H:%M:00'),
+            "status": "auto"
         }
-        for episode, date in seasonEpisodes.items()
+        for episode, date in episodes.items()
     ]
-    for episode in payload:
-        if d.datetime.strftime(d.datetime.strptime(airTime, '%H:%M') - d.timedelta(hours=9), '%H:%M:00') \
-                != episode['released_at'].split(' ')[1]:
-            episode['status'] = 'updated'
-            episode['delay_reason'] = 1
+    [episode.update({'status': 'updated', 'delay_reason': 1}) for episode in payload
+     if episode['release_time'].replace(':', '') != airTime]
     return payload
 
 
-# episodes, total, airtime = showDates('YOUは何しに日本へ')
-
-# Specific script to check airdates for past episodes of もっと！もっと！YOUは何しに日本へ？Z
-def supercharged(title='もっと！もっと！YOUは何しに日本へ？Z', oldID=24922, startDate=d.datetime(2018, 4, 3, 21, 00), maxWeeks=52):
-    showURL, airTime, BS = URL(title)
-
-    def checkURL(date, oldID):
-        url = 'https://www.tv-tokyo.co.jp/broad_bstvtokyo/program/detail/{}/{}_{}.html'.format(
-            d.datetime.strftime(date, '%Y%m'),
-            oldID,
-            d.datetime.strftime(date, '%Y%m%d%H%M')
-        )
-        return url if BS else url.replace('bs', '')
-
-    pastEpisodes = {}
-    counter = 0
-    for weeks in range(maxWeeks):
-        date = startDate + d.timedelta(weeks=weeks)
-        try:
-            showID = getID(checkURL(date, oldID))
-            checkResponse = requests.get('https://www.tv-tokyo.co.jp/broad_bstvtokyo/program/data/{}'.format(
-                showID).replace('bs', '' if not BS else 'bs'),
-                                         headers={'referer': checkURL(date, oldID)})
-            showTitle = json.loads(checkResponse.content)['bangumi']
-            if showTitle == 'もっと！もっと！YOUは何しに日本へ？Z':
-                counter += 1
-                pastEpisodes[counter] = analyse({'url': checkURL(date, oldID).split('detail/')[1],
-                                                 'txt': showTitle},
-                                                BS=True)
-            print('{} : {}'.format(d.datetime.strftime(date, '%Y%m%d'), showTitle))
-        except Exception:
-            print('{} : NONE'.format(d.datetime.strftime(date, '%Y%m%d')))
-            pass
-    print('Finished')
-    pastSeasons = {
-        str((list(pastEpisodes.values())[0]['start']).year):
-            [list(pastEpisodes.keys())[0],
-             list(pastEpisodes.keys())[-1],
-             list(pastEpisodes.values())[0]['start']]
-    }
-    return pastEpisodes, pastSeasons
-
-
-def episodeImages(title, episodeStart=1):
-    dataEpisodes, showTitle, showLink, airtime, BS = getData(title)
+def episodeImages(title, episodeStart=1, fixed=False):
+    dataEpisodes, showTitle, BS = getData(title, fixed=fixed)
     return {
         epNum: {
-            'url': f"{'/'.join(showLink.split('/')[:-2])}/{epDetails['url']}",
-            'airdate': d.datetime.strptime(f"{year} {epDetails['day']}", '%Y %m月%d日'),
+            'url': f"{programRoot.replace('bs', '' if not BS else 'bs')}detail/{epDetails['url']}",
+            'airDate': d.datetime.strptime(re.split('[_.]', epDetails['url'])[1], '%Y%m%d%H%M')
+            if int(re.split('[_.]', epDetails['url'])[1][-4:]) < 2400 else
+            d.datetime.strptime(str(int(re.split('[_.]', epDetails['url'])[1]) - 2400), '%Y%m%d%H%M'),
             'txt': epDetails['txt'],
             'keyNotes': f"TvTokyo Gallery Episode {epNum} ",
             'description': '',
             'images': [f"https:{image['href']}"
-                       for image in g.soup(f"{'/'.join(showLink.split('/')[:-2])}/{epDetails['url']}")
-                                   .find(class_='tbcms_program-gallery__list').find_all(href=True)]
+                       for gallery in g.soup(f"{programRoot}detail/{epDetails['url']}")
+                           .find_all(class_='tbcms_program-gallery__list')
+                       for image in gallery.find_all(href=True)]
         } for year, yearList in dataEpisodes.items()
         for epNum, epDetails in enumerate(yearList, start=1)
         if epNum >= episodeStart
