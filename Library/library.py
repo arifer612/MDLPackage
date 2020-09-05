@@ -339,7 +339,8 @@ def showInfo(cookies, link):
 ## Reads all the information of the cast appearance
 # cookies (CookieJar) : Login cookies. Obtained from login()
 # showID (str) : ShowID. Obtained from search()
-def castInfo(cookies, showID):
+def castInfo(cookies, link):
+    showID = getShowID(link)
     castURL = postURL(showID)[2]
     params = parameters(cookies)
     castJSON = general.soup(castURL, params=params, cookies=cookies, JSON=True)
@@ -383,7 +384,7 @@ def castSearch(name, nationality=None, gender=None):
         'na': nationalityMap[nationality.lower()] if nationality else None,
         'so': 'relevance'
     }
-    [params.pop(i, None) for i in params if not params[i]]
+    [params.pop(i, None) for i in [j for j in params if not params[j]]]
     searchResults = general.soup(f"{siteRoot}/search", params=params).find_all('h6')
 
     try:
@@ -435,6 +436,8 @@ def castAnalyse(castList, castEdited, castRevision):
                     castDetails['character_name'] = castDetails['character_name'].replace(episodes, castEdited[cast])
                 elif not episodes:
                     castDetails['character_name'] = f"{characterName} {castEdited[cast]}"
+                else:
+                    raise KeyError
             else:
                 castDetails['character_name'] = castEdited[cast]
             newCast.append(castDetails)
@@ -450,8 +453,8 @@ def castAnalyse(castList, castEdited, castRevision):
 # showID (str) : Show ID. Obtained from search()
 # latestCast (dict) : Analysed cast list. Obtained from general.episodesAnalyse()
 # notes (str) : Notes for reviewing staff to read
-def castSubmit(cookies, showID, latestCast, notes=''):
-    castList, castRevision, weights, castURL, params = castInfo(cookies, showID)
+def castSubmit(cookies, link, latestCast, notes=''):
+    castList, castRevision, weights, castURL, params = castInfo(cookies, link)
     newCastList = castAnalyse(castList, latestCast, castRevision)
     if newCastList:
         popTerms = ['url', 'content_type', 'display_nam', 'role_id', 'weight', 'thumbnail']
@@ -463,7 +466,7 @@ def castSubmit(cookies, showID, latestCast, notes=''):
             'weights': weights,
             'cast_weights': weights
         }
-        response = general.soup(castURL, data=dataForm, params=params, cookies=cookies, response=True)
+        response = general.soup(castURL, data=dataForm, params=params, cookies=cookies, post=True, response=True)
         if response.status_code == 200:
             return True
         else:
@@ -562,13 +565,14 @@ def summarySubmit(cookies, epID, summary='', title='', notes=''):
         return False
 
 
-def coverImageDelete(cookies, epID):
-    submitURL = f"{siteRoot}/v1/edit/tickets/{epID}/episodes"
+def deleteSubmission(cookies, category=None, link=None, epID=None):
+    deleteURL = f"{siteRoot}/v1/edit/tickets/{epID}/episodes" \
+        if epID else f"{siteRoot}/v1/edit/titles/{getShowID(link)}/titles"
     params = {
-        'category': 'cover'
+        'category': category
     }
-    params.update(parameters(cookies, undef=True))
-    general.delete(submitURL, params=params)
+    params.update(parameters(cookies, undef=True if epID else False))
+    general.delete(deleteURL, params=params)
 
 
 def dramaList(cookies, watching=True, completed=True, plan_to_watch=True, hold=True, drop=True, not_interested=True,
