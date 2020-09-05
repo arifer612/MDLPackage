@@ -1,0 +1,150 @@
+#+title: mdlTestPackage
+#+description: First package release of bots to scrape official sites to post on MDL
+#+author: arifer612@GitHub
+
+* Workflow
+
+** Minimise codes
+
+*** DONE library.py
+CLOSED: [2020-09-05 Sat 23:58]
+
+**** DONE Remove headers (IDEAS #14)
+
+**** DONE Test functions
+CLOSED: [2020-09-05 Sat 23:57]
+
+***** DONE login()
+CLOSED: [2020-09-05 Sat 22:54]
+
+***** DONE parameters()
+CLOSED: [2020-09-05 Sat 22:54]
+
+***** DONE search()
+CLOSED: [2020-09-05 Sat 22:54]
+
+***** DONE getShowID()
+CLOSED: [2020-09-05 Sat 22:54]
+
+***** DONE showDetails()
+CLOSED: [2020-09-05 Sat 22:54]
+
+***** DONE getStartDate()
+CLOSED: [2020-09-05 Sat 22:54]
+
+***** DONE getEpisodeID()
+CLOSED: [2020-09-05 Sat 22:54]
+
+***** DONE retrieveRatings()
+CLOSED: [2020-09-05 Sat 22:54]
+
+***** DONE postRating()
+CLOSED: [2020-09-05 Sat 22:54]
+
+***** DONE postURL()
+CLOSED: [2020-09-05 Sat 22:54]
+
+***** DONE showInfo()
+CLOSED: [2020-09-05 Sat 22:54]
+
+***** DONE castInfo()
+CLOSED: [2020-09-05 Sat 23:56]
+
+***** DONE castSearch()
+CLOSED: [2020-09-05 Sat 23:56]
+
+***** DONE castAnalyse()
+CLOSED: [2020-09-05 Sat 23:56]
+
+***** DONE castSubmit()
+CLOSED: [2020-09-05 Sat 23:57]
+
+***** DONE imageSubmit()
+CLOSED: [2020-09-05 Sat 22:54]
+
+***** DONE summarySubmit()
+CLOSED: [2020-09-05 Sat 22:54]
+
+***** DONE deleteSubmission()
+CLOSED: [2020-09-05 Sat 23:57]
+Renamed from coverImageDelete()
+
+***** DONE dramaList()
+CLOSED: [2020-09-05 Sat 22:54]
+*** DONE general.py
+CLOSED: [2020-09-05 Sat 23:58]
+
+**** DONE Test functions 
+CLOSED: [2020-09-05 Sat 23:58]
+
+***** DONE saveImage()
+CLOSED: [2020-09-05 Sat 23:57]
+
+***** DONE revDict()
+CLOSED: [2020-09-05 Sat 22:54]
+
+***** DONE episodesAnalyse()
+CLOSED: [2020-09-05 Sat 23:57]
+
+***** DONE soup()
+CLOSED: [2020-09-05 Sat 22:55]
+
+***** DONE delete()
+CLOSED: [2020-09-05 Sat 23:57]
+
+***** DONE japaneseDays()
+CLOSED: [2020-09-05 Sat 22:55]
+
+***** DONE printProgressBar()
+CLOSED: [2020-09-05 Sat 22:55]
+
+*** TODO kakaku.py
+
+*** DONE tvTokyo.py
+CLOSED: [2020-09-05 Sat 23:58]
+
+**** DONE Test codes
+CLOSED: [2020-09-05 Sat 22:54]
+
+***** DONE search()
+CLOSED: [2020-09-05 Sat 20:35]
+
+***** DONE URL()
+CLOSED: [2020-09-05 Sat 20:36]
+REMOVED
+
+***** DONE getPageID()
+CLOSED: [2020-09-05 Sat 20:36]
+Renamed from getID()
+
+***** DONE getEpisodeDates()
+CLOSED: [2020-09-05 Sat 20:37]
+
+***** DONE showDates()
+CLOSED: [2020-09-05 Sat 20:51]
+
+***** DONE formData()
+CLOSED: [2020-09-05 Sat 21:15]
+
+***** DONE superCharged()
+CLOSED: [2020-09-05 Sat 21:15]
+REMOVED
+
+***** DONE episodeImages()
+CLOSED: [2020-09-05 Sat 22:54]
+
+*** TODO tvOsaka.py
+
+** TODO Publish package locally
+#+date: 2020:10:31
+
+** TODO Implement package locally
+
+** TODO Publish package publicly
+#+date: 2020:12:31
+
+* Ideas to implement
+
+** DONE Remove /headers/ from library.py
+I do not believe that they are necessary for posting/retrieving information on MDL
+> Headers are truly unneeded for working on MDL. However, it would be wise to keep in mind that they might implement anti-bot aliasing techniques in the future so having a simple user-agent declaration might be a way to future-proof
