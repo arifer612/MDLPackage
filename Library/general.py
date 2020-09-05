@@ -37,24 +37,34 @@ def episodesAnalyse(castDict):
     return castDict
 
 
-def soup(link, post=False, params=None, headers=None, cookies=None, data=None, JSON=False, timeout=5, attempts=3):
+def soup(link, params=None, headers=None, cookies=None, data=None, post=False, JSON=False, response=False,
+         timeout=5, attempts=5, **kwargs):
     attempt = 0
     while attempt < attempts:
         try:
             if not post:
-                if not JSON:
-                    return bs(requests.get(link, params=params, headers=headers, cookies=cookies, data=data,
-                                           timeout=timeout).content, 'lxml')
-                else:
-                    return json.loads(
-                        requests.get(link, params=params, headers=headers, cookies=cookies,data=data,
-                                     timeout=timeout).content)
-            else:
-                return bs(requests.post(link, params=params, headers=headers, cookies=cookies, data=data,
-                                        timeout=timeout).content, 'lxml')
-        except requests.exceptions.ConnectTimeout:
+                request = requests.get(link, params=params, headers=headers, cookies=cookies, data=data,
+                                       timeout=timeout, **kwargs)
+            elif int(post) == 1:
+                request = requests.post(link, params=params, headers=headers, cookies=cookies, data=data,
+                                        timeout=timeout, **kwargs)
+            elif int(post) == -1:
+                request = requests.patch(link, params=params, headers=headers, cookies=cookies, data=data,
+                                         timeout=timeout, **kwargs)
+
+            if not JSON and not response:
+                return bs(request.content, 'lxml')
+            elif JSON:
+                return json.loads(request.content)
+            elif response:
+                return request
+        except (requests.exceptions.ConnectTimeout, requests.exceptions.ReadTimeout):
             attempt += 1
     raise ConnectionRefusedError
+
+
+def delete(link, params=None, headers=None, data=None, timeout=5):
+    requests.delete(link, params=params, headers=headers, data=data, timeout=timeout)
 
 
 def japaneseDays(day, delimiter=None):
