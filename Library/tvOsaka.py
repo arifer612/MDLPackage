@@ -3,7 +3,7 @@ from Library import general
 root = 'https://www.tv-osaka.co.jp'
 
 
-def getEpisodes(title):
+def getImages(title):
     archives = {
         int(link['href'].split('/')[-2]): f"{root}{link['href']}"
         for link in general.soup(f"{root}/{title}/js/get_story.js").find_all('a')
