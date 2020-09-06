@@ -122,15 +122,10 @@ def search(keyword, result=None):
                 link = f"{siteRoot}{searchResults[answer - 1].contents[0]['href']}"
         else:
             raise FileNotFoundError
-        description = general.soup(link).find(class_='list m-a-0')
-        try:
-            nativeTitle = description.find('b', text='Native Title:').find_next('a')['title']
-        except AttributeError:  # No native tile in MDL
-            nativeTitle = ''
     except FileNotFoundError:
-        nativeTitle = link = ''
+        link = ''
         print('Search keyword returns no results. Check search keyword again')
-    return link, nativeTitle
+    return link
 
 
 def getShowID(link):
@@ -142,11 +137,15 @@ def getShowID(link):
 def showDetails(link):
     soup = general.soup(link)
     try:
+        nativeTitle = soup.find('b', text='Native Title:').find_next('a')['title']
+    except AttributeError:  # No native tile in MDL
+        nativeTitle = ''
+    try:
         network = soup.find(string='Original Network:').find_next('a').string
     except KeyError:
         network = input('No provided TV network. Provide the network\n>>>')
     totalEpisodes = int(list(soup.find(string='Episodes:').parent.parent.strings)[-1])
-    return network, totalEpisodes
+    return nativeTitle, network, totalEpisodes
 
 
 ## Gets episode airdate. Will only work if there is at least 1 date posted on MDL.
@@ -566,13 +565,16 @@ def summarySubmit(cookies, epID, summary='', title='', notes=''):
 
 
 def deleteSubmission(cookies, category=None, link=None, epID=None):
-    deleteURL = f"{siteRoot}/v1/edit/tickets/{epID}/episodes" \
-        if epID else f"{siteRoot}/v1/edit/titles/{getShowID(link)}/titles"
-    params = {
-        'category': category
-    }
-    params.update(parameters(cookies, undef=True if epID else False))
-    general.delete(deleteURL, params=params)
+    if category:
+        deleteURL = f"{siteRoot}/v1/edit/tickets/{epID}/episodes" \
+            if epID else f"{siteRoot}/v1/edit/titles/{getShowID(link)}/titles"
+        params = {
+            'category': category
+        }
+        params.update(parameters(cookies, undef=True if epID else False))
+        general.delete(deleteURL, params=params)
+    else:
+        raise SyntaxError
 
 
 def dramaList(cookies, watching=True, completed=True, plan_to_watch=True, hold=True, drop=True, not_interested=True,

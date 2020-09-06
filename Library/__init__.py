@@ -1,5 +1,8 @@
 import os
 from configparser import ConfigParser
+from . import general
+from . import databaseScraper
+from . import tvTokyo
 
 confDir = os.path.abspath(os.path.join(os.path.realpath(__file__), '..', '..', 'config.conf'))
 conf = ConfigParser()
@@ -13,8 +16,3 @@ if not os.path.exists(keyDir):
     keyConf['USER'] = {'username': '', 'password': ''}
     with open(keyDir, 'w') as r:
         keyConf.write(r)
-
-from . import general
-from . import kakaku
-from . import library
-from . import tvTokyo
