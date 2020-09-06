@@ -1,4 +1,4 @@
-from Library import library
+from MDLTestPackage.Library import library
 
 
 class User:

@@ -16,3 +16,5 @@ if not os.path.exists(keyDir):
     keyConf['USER'] = {'username': '', 'password': ''}
     with open(keyDir, 'w') as r:
         keyConf.write(r)
+
+from . import main

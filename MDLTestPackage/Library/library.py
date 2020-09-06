@@ -9,8 +9,8 @@ from getpass import getpass
 
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
-from Library import general
-from Library import keyDir
+from MDLTestPackage.Library import general
+from MDLTestPackage.Library import keyDir
 
 siteRoot = 'https://mydramalist.com'
 imageURL = f'{siteRoot}/upload/'

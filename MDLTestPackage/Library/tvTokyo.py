@@ -1,8 +1,7 @@
 import datetime as d
 import json
-import requests
 import re
-from Library import general as g
+from MDLTestPackage.Library import general as g
 
 programRoot = 'https://www.tv-tokyo.co.jp/broad_bstvtokyo/program/'
 
