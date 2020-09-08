@@ -10,7 +10,7 @@ from getpass import getpass
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 from mdl.Library import general
-from mdl.Library import keyDir
+from mdl.Library import configFile
 
 siteRoot = 'https://mydramalist.com'
 imageURL = f'{siteRoot}/upload/'
@@ -19,7 +19,7 @@ imageURL = f'{siteRoot}/upload/'
 ## Login script
 def login():
     loginKey = ConfigParser()
-    loginKey.read(keyDir)
+    loginKey.read(configFile._Config__keyDir)
     loginKeys = (loginKey['USER']['username'], loginKey['USER']['password'])
 
     def userInfo():  # Retrieves username and password
@@ -33,7 +33,7 @@ def login():
             if strtobool(answer) or not answer:
                 loginKey['USER']['username'], loginKey['USER']['password'] \
                     = newKeys
-                with open(keyDir, 'w') as f:
+                with open(configFile._Config__keyDir, 'w') as f:
                     loginKey.write(f)
                     print('Saved login details in keyfile')
 

@@ -1,20 +1,20 @@
 from googleapiclient.discovery import build
 import googleapiclient.errors
-from mdl.Library import keyDir
+from mdl.Library import configFile
 from configparser import ConfigParser
 from distutils.util import strtobool
 
 
 def login():
     keys = ConfigParser()
-    keys.read(keyDir)
+    keys.read(configFile._Config__keydir)
     key = keys['USER']['youtubeAPI'] if keys['USER']['youtubeAPI'] else input('API key: ')
     response = build('youtube', 'v3', developerKey=key)
     if response and key != keys['USER']['youtubeAPI']:
         answer = strtobool(input('Save API in key configuration?'))
         if answer:
             keys['USER']['youtubeAPI'] = key
-            with open(keyDir, 'w') as r:
+            with open(configFile._Config__keydir, 'w') as r:
                 keys.write(r)
             print('Saved key')
         else:
