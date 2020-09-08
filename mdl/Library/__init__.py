@@ -7,9 +7,11 @@ from . import tvTokyo
 confDir = os.path.abspath(os.path.join(os.path.realpath(__file__), '../..', '..', 'MDLConfig.conf'))
 if not os.path.exists(confDir):
     conf = ConfigParser()
-    keyDir = os.path.expanduser('~/Documents/.MDL.conf')
+    keyDir = os.path.expanduser('~/.keys/.MDL')
     logDir = os.path.expanduser('~/Documents/Logs')
 
+    if not os.path.exists(os.path.expanduser('~/.keys')):
+        os.mkdir(os.path.expanduser('~/.keys'))
     if not os.path.exists(logDir):
         os.mkdir(logDir)
     conf['DIRECTORIES'] = {'key': keyDir, 'log': logDir}
