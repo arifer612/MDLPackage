@@ -1,6 +1,10 @@
 /venv/
 /.idea/
+
+# Distributions
 /build/
 /dist/
 /mdl.egg-info/
+
+# Workflow files
 Workflow.org
