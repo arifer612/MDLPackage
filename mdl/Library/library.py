@@ -9,8 +9,8 @@ from getpass import getpass
 
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
-from MDLTestPackage.Library import general
-from MDLTestPackage.Library import keyDir
+from mdl.Library import general
+from mdl.Library import keyDir
 
 siteRoot = 'https://mydramalist.com'
 imageURL = f'{siteRoot}/upload/'
@@ -539,6 +539,12 @@ def imageSubmit(cookies, link, file, fileDir, keyNotes, epID=False, description=
     except ConnectionRefusedError:
         print(f'Failed to post {file}')
         return False
+
+
+def retrieveSummary(cookies, epID):
+    summaryURL = postURL(epID=epID)[4].replace('/details', '')
+    response = general.soup(summaryURL, params=parameters(cookies, undef=True), cookies=cookies, JSON=True)['revision']
+    return {'title': response['title'], 'summary': response['summary']}
 
 
 ## Updates the episode summary

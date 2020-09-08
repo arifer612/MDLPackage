@@ -6,7 +6,7 @@
 #   for it has a very messy database for some variety shows.
 
 import datetime as d
-from MDLTestPackage.Library import general as g
+from mdl.Library import general as g
 from bs4 import BeautifulSoup as bs
 import json
 import re

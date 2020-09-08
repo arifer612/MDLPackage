@@ -4,11 +4,11 @@ from . import general
 from . import databaseScraper
 from . import tvTokyo
 
-confDir = os.path.abspath(os.path.join(os.path.realpath(__file__), '../..', '..', 'config.conf'))
+confDir = os.path.abspath(os.path.join(os.path.realpath(__file__), '../..', '..', 'MDLConfig.conf'))
 if not os.path.exists(confDir):
     conf = ConfigParser()
-    keyDir = os.path.expanduser('~/.MDL.conf')
-    logDir = os.path.expanduser('~/Logs')
+    keyDir = os.path.expanduser('~/Documents/.MDL.conf')
+    logDir = os.path.expanduser('~/Documents/Logs')
 
     if not os.path.exists(logDir):
         os.mkdir(logDir)
@@ -25,7 +25,7 @@ else:
 
 if not os.path.exists(keyDir):
     keyConf = ConfigParser()
-    keyConf['USER'] = {'username': '', 'password': ''}
+    keyConf['USER'] = {'username': '', 'password': '', 'youtubeAPI': ''}
     with open(keyDir, 'w') as r:
         keyConf.write(r)
     os.chmod(keyDir, 0o600)

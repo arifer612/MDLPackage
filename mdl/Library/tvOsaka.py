@@ -1,4 +1,4 @@
-from MDLTestPackage.Library import general
+from mdl.Library import general
 
 root = 'https://www.tv-osaka.co.jp'
 

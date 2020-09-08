@@ -1,4 +1,5 @@
-from MDLTestPackage.Library import library
+from mdl.Library import library
+from mdl.Library import YouTubeAPI
 
 
 class User:
@@ -68,18 +69,31 @@ class Show:
     def getCastInfo(self):
         return library.castInfo(self.__cookies, self.link)
 
+    def getSummaryInfo(self, episode):
+        return library.retrieveSummary(self.__cookies, library.getEpisodeID(self.link, episode))
+
     def submitRatings(self, rating, details):
         return library.postRating(self.__cookies, rating, details)
 
     def submitCast(self, castList, notes=''):
         return library.castSubmit(self.__cookies, self.link, castList, notes)
 
-    def submitImage(self, file, fileDir, notes, epID=False, description='', **kwargs):
-        return library.imageSubmit(self.__cookies, self.link, file, fileDir, notes, epID, description, **kwargs)
+    def submitImage(self, file, fileDir, notes, episode=None, description='', **kwargs):
+        return library.imageSubmit(self.__cookies, self.link, file, fileDir, notes,
+                                   library.getEpisodeID(self.link, episode) if episode else False, description, **kwargs)
 
-    def submitSummary(self, epID, summary='', title='', notes=''):
-        return library.summarySubmit(self.__cookies, epID, summary, title, notes)
+    def submitSummary(self, episode=None, summary='', title='', notes=''):
+        return library.summarySubmit(self.__cookies, library.getEpisodeID(self.link, episode) if episode else False,
+                                     summary, title, notes)
 
-    def submitDelete(self, category=None, epID=None):
-        return library.deleteSubmission(self.__cookies, category, self.link, epID)
+    def submitDelete(self, category=None, episode=None):
+        return library.deleteSubmission(self.__cookies, category, self.link,
+                                        library.getEpisodeID(self.link, episode) if episode else False)
 
+
+class YouTube:
+    def __init__(self):
+        self.__service = YouTubeAPI.login()
+
+    def getThumbnails(self, videoID=None, playlistID=None, quality=0):
+        return YouTubeAPI.getThumbnails(self.__service, videoId=videoID, playListId=playlistID, quality=quality)

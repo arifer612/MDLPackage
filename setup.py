@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="MDLTestPackage",
-    version="0.0.4",
+    name="mdl",
+    version="0.0.5",
     author="arifer612",
     description="A first attempt at packaging the libraries I have prepared for botting on MDL",
     long_description=long_description,
