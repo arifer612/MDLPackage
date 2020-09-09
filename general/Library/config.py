@@ -9,30 +9,23 @@ class Config:
     def __init__(self):
         self.dir = os.path.abspath(os.path.join(os.path.realpath(__file__), '../..', 'MDLConfig.conf'))
         self.conf = ConfigParser()
-        self.__keyDir = self.__logDir = None
+        self.version = self.__keyDir = self.logDir = None
         self.start()
         self.updateConf()
 
     def start(self):
-        if not os.path.exists(self.dir):
-            self.__keyDir = os.path.expanduser('~/.keys/.MDL')
-            self.__logDir = os.path.expanduser('~/Documents/Logs')
-
-            self.conf['DIRECTORIES'] = {'key': self.__keyDir, 'log': self.__logDir}
-            with open(self.dir, 'w') as r:
-                self.conf.write(r)
-        else:
-            self.conf = ConfigParser()
-            self.conf.read(self.dir)
-            self.__keyDir = os.path.expanduser(self.conf['DIRECTORIES']['key']) if self.conf['DIRECTORIES']['key'] \
-                else os.path.expanduser('~/.MDL.conf')
-            self.__logDir = os.path.expanduser(self.conf['DIRECTORIES']['log']) if self.conf['DIRECTORIES']['log'] \
-                else os.path.expanduser('~/Documents/Logs')
+        self.conf = ConfigParser()
+        self.conf.read(self.dir)
+        self.__keyDir = os.path.expanduser(self.conf['DIRECTORIES']['key']) if self.conf['DIRECTORIES']['key'] \
+            else os.path.expanduser('~/.MDL.conf')
+        self.logDir = os.path.expanduser(self.conf['DIRECTORIES']['log']) if self.conf['DIRECTORIES']['log'] \
+            else os.path.expanduser('~/Documents/Logs')
+        self.version = self.conf['PACKAGE']['version']
 
         if not os.path.exists(os.path.split(self.__keyDir)[0]):
             os.makedirs(os.path.split(self.__keyDir)[0], exist_ok=True)
-        if not os.path.exists(self.__logDir):
-            os.makedirs(self.__logDir, exist_ok=True)
+        if not os.path.exists(self.logDir):
+            os.makedirs(self.logDir, exist_ok=True)
         if not os.path.exists(self.__keyDir):
             keyConf = ConfigParser()
             keyConf['USER'] = {'username': '', 'password': '', 'youtubeAPI': ''}
@@ -43,7 +36,7 @@ class Config:
     def updateConf(self):
         self.conf['DIRECTORIES'] = {
             'key': self.__keyDir.replace(os.path.expanduser('~/'), '~' + os.sep),  # For cleaner look on Linux
-            'log': self.__logDir.replace(os.path.expanduser('~/'), '~' + os.sep)   # For cleaner look on Linux
+            'log': self.logDir.replace(os.path.expanduser('~/'), '~' + os.sep)   # For cleaner look on Linux
         }
         with open(self.dir, 'w') as r:
             self.conf.write(r)
@@ -55,19 +48,25 @@ class Config:
             return
         else:
             if key:
-                key = os.path.expanduser(key)
-                if not os.path.exists(os.path.split(key)[0]):
-                    os.makedirs(os.path.split(key)[0], exist_ok=True)
-                shutil.move(self.__keyDir, key)
-                self.__keyDir = key
-                print(f'Moved key file to {self.__keyDir}')
+                key = os.path.abspath(os.path.expanduser(key))
+                if key != self.__keyDir:
+                    if not os.path.exists(os.path.split(key)[0]):
+                        os.makedirs(os.path.split(key)[0], exist_ok=True)
+                    shutil.move(self.__keyDir, key)
+                    self.__keyDir = key
+                    print(f'Moved key file to {self.__keyDir}')
+                else:
+                    pass
             if log:
-                log = os.path.expanduser(log)
-                if not os.path.exists(log):
-                    os.makedirs(log)
-                shutil.move(self.__logDir, log)
-                self.__logDir = log
-                print(f'Relocated log directory to {self.__logDir}')
+                log = os.path.abspath(os.path.expanduser(log))
+                if log != self.logDir:
+                    if not os.path.exists(log):
+                        os.makedirs(log, exist_ok=True)
+                    shutil.move(self.logDir, log)
+                    self.logDir = log
+                    print(f'Relocated log directory to {self.logDir}')
+                else:
+                    pass
             self.updateConf()
 
     def newKeys(self, username=None, password=None, echo=True):
@@ -91,10 +90,11 @@ class Config:
     def print(self):
         print(
             f"--------------------------------------------------------------------------\n"
-            f"                       MDL Configuration Settings                         \n\n"
+            f"                           MDLPackage v{self.version}\n"
+            f"                         Configuration Settings\n\n"
             f"Key file\t\t@\t\t\t{self.__keyDir}\n"
-            f"Log directory\t@\t\t\t{self.__logDir}\n\n\n"
-            f"                            Documentation                                 \n\n"
+            f"Log directory\t@\t\t\t{self.logDir}\n\n\n"
+            f"                               Documentation\n\n"
             f"configFile.move(key=keyDir, log=logDir)\n\n"
             f"\tMoves key file or log directory to specified directory\n\n"
             f"configFile.newKeys(username=username, password=password, echo=bool)\n\n"

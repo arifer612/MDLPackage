@@ -1,4 +1,5 @@
 from mdl.Library import library
+import sys
 
 
 class User:
@@ -30,20 +31,25 @@ class User:
     def getCastInfo(self, link):
         return library.castInfo(self._cookies, link)
 
+    def getSummaryInfo(self, link, episode):
+        return library.retrieveSummary(self._cookies, library.getEpisodeID(link, episode))
+
     def submitCast(self, link, castList, notes=''):
         return library.castSubmit(self._cookies, link, castList, notes)
 
-    def submitRatings(self, rating, details):
+    def submitRatings(self, rating, details=None):
         return library.postRating(self._cookies, rating, details)
 
-    def submitImage(self, link, file, fileDir, notes, epID=False, description='', **kwargs):
-        return library.imageSubmit(self._cookies, link, file, fileDir, notes, epID, description, **kwargs)
+    def submitImage(self, link, file, fileDir, notes, episode=None, description='', **kwargs):
+        return library.imageSubmit(self._cookies, link, file, fileDir, notes,
+                                   library.getEpisodeID(link, episode) if episode else False, description, **kwargs)
 
-    def submitSummary(self, epID, summary='', title='', notes=''):
-        return library.summarySubmit(self._cookies, epID, summary, title, notes)
+    def submitSummary(self, link, episode, summary='', title='', notes=''):
+        return library.summarySubmit(self._cookies, library.getEpisodeID(link, episode), summary, title, notes)
 
-    def submitDelete(self, category=None, link=None, epID=None):
-        return library.deleteSubmission(self._cookies, category, link, epID)
+    def submitDelete(self, category, link, episode=None):
+        return library.deleteSubmission(self._cookies, category, link,
+                                        library.getEpisodeID(link, episode) if episode else False)
 
     def dramaList(self, **kwargs):
         return library.dramaList(self._cookies, **kwargs)
@@ -51,10 +57,15 @@ class User:
 
 # Use this when making an updating bot
 class Show:
-    def __init__(self, keyword, result=None):
+    def __init__(self, link='', keyword='', result=None):
+        if not (keyword or link):
+            print('Provide either a search keyword or the link to the show')
         self.__cookies = library.login()
-        self.link = library.search(keyword, result)
-        self.nativeTitle, self.network, self.totalEpisodes = library.showDetails(self.link)
+        self.link = link if link else library.search(keyword, result)
+        if not self.link:
+            sys.exit('Show cannot be found')
+        else:
+            self.nativeTitle, self.network, self.totalEpisodes = library.showDetails(self.link)
 
     def getShowDetails(self):
         return library.showDetails(self.link)

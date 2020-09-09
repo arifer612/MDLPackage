@@ -1,2 +1,2 @@
-from general.Library.library import *
-from general.Library.config import configFile
+from .Library.library import *
+from .Library.config import configFile
