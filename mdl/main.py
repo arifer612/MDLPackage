@@ -1,21 +1,24 @@
 from mdl.Library import library
-from mdl.Library import YouTubeAPI
 
 
 class User:
     def __init__(self):
         self._cookies = library.login()
 
-    def search(self, keyword, result=None):
+    @staticmethod
+    def search(keyword, result=None):
         return library.search(keyword, result)
 
-    def searchCast(self, name, nationality=None, gender=None):
+    @staticmethod
+    def searchCast(name, nationality=None, gender=None):
         return library.castSearch(name, nationality, gender)
 
-    def getShowDetails(self, link):
+    @staticmethod
+    def getShowDetails(link):
         return library.showDetails(link)
 
-    def getAirDate(self, link, totalEpisodes=None, startEpisode=1):
+    @staticmethod
+    def getAirDate(link, totalEpisodes=None, startEpisode=1):
         return library.getStartDate(link, totalEpisodes, startEpisode)
 
     def getRatings(self, link, start=1, end=False):
@@ -89,11 +92,3 @@ class Show:
     def submitDelete(self, category=None, episode=None):
         return library.deleteSubmission(self.__cookies, category, self.link,
                                         library.getEpisodeID(self.link, episode) if episode else False)
-
-
-class YouTube:
-    def __init__(self):
-        self.__service = YouTubeAPI.login()
-
-    def getThumbnails(self, videoID=None, playlistID=None, quality=0):
-        return YouTubeAPI.getThumbnails(self.__service, videoId=videoID, playListId=playlistID, quality=quality)

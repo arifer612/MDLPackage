@@ -1,20 +1,20 @@
 from googleapiclient.discovery import build
 import googleapiclient.errors
-from mdl.Library import configFile
+from scrapers import configFile
 from configparser import ConfigParser
 from distutils.util import strtobool
 
 
 def login():
     keys = ConfigParser()
-    keys.read(configFile._Config__keydir)
+    keys.read(configFile._Config__keyDir)
     key = keys['USER']['youtubeAPI'] if keys['USER']['youtubeAPI'] else input('API key: ')
     response = build('youtube', 'v3', developerKey=key)
     if response and key != keys['USER']['youtubeAPI']:
         answer = strtobool(input('Save API in key configuration?'))
         if answer:
             keys['USER']['youtubeAPI'] = key
-            with open(configFile._Config__keydir, 'w') as r:
+            with open(configFile._Config__keyDir, 'w') as r:
                 keys.write(r)
             print('Saved key')
         else:
@@ -76,4 +76,3 @@ def getThumbnails(youtube, videoId=None, playListId=None, quality=0):
         'url': f"https://www.youtube.com/watch?v={i['snippet']['resourceId']['videoId']}"
     } for i in playlist
         if i['snippet']['title'] != 'Private video']
-

@@ -9,8 +9,8 @@ from getpass import getpass
 
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
-from mdl.Library import general
-from mdl.Library import configFile
+from mdl import general as g
+from mdl import configFile
 
 siteRoot = 'https://mydramalist.com'
 imageURL = f'{siteRoot}/upload/'
@@ -38,8 +38,8 @@ def login():
                     print('Saved login details in keyfile')
 
     def loginFail(loginDetails):
-        response = general.soup(f'{siteRoot}/signin', data={'username': loginDetails[0], 'password': loginDetails[1]},
-                                post=True, response=True)
+        response = g.soup(f'{siteRoot}/signin', data={'username': loginDetails[0], 'password': loginDetails[1]},
+                          post=True, response=True)
         try:
             cookie = response.request._cookies
             if 'jl_sess' in cookie:
@@ -77,14 +77,14 @@ def parameters(cookies, undef=False, inverse=False):
         'lang': 'en-US' if not undef else 'undefined',
         'token': cookies['jl_sess']
     }
-    return params if not inverse else general.revDict(params)
+    return params if not inverse else g.revDict(params)
 
 
 ## Extracts MDL links and native title from MDL search
 # keyword (str) : Search keyword
 # results (int) : Prepared result index
 def search(keyword, result=None):
-    searchResults = general.soup(f"{siteRoot}/search", params={'q': keyword}).find_all('h6')
+    searchResults = g.soup(f"{siteRoot}/search", params={'q': keyword}).find_all('h6')
 
     try:
         if len(searchResults) == 1:
@@ -135,7 +135,7 @@ def getShowID(link):
 ## Extracts information of show's original network and total posted episodes on MDL
 # link (str) : Redirect link. Obtained from search()
 def showDetails(link):
-    soup = general.soup(link)
+    soup = g.soup(link)
     try:
         nativeTitle = soup.find('b', text='Native Title:').find_next('a')['title']
     except AttributeError:  # No native tile in MDL
@@ -155,10 +155,10 @@ def showDetails(link):
 def getStartDate(link, totalEpisodes=None, startEpisode=1):
     def getAirDate(episode):
         if episode == 1:
-            aired = general.soup(link).find(xitemprop='datePublished')['content']
+            aired = g.soup(link).find(xitemprop='datePublished')['content']
             return d.datetime.strptime(aired, '%Y-%m-%d')
         else:
-            soup = general.soup(f"{link}/episodes")
+            soup = g.soup(f"{link}/episodes")
             searchTerm = f"{soup.find(property='og:title')['content']} Episode {startEpisode - 1}"
             aired = soup.find(string=searchTerm).find_next(class_='air-date').string
             return d.datetime.strptime(aired, '%b %d, %Y')
@@ -193,7 +193,7 @@ def getStartDate(link, totalEpisodes=None, startEpisode=1):
 # episodeNumber (int) : Episode number
 def getEpisodeID(link, episodeNumber):
     try:
-        episodeSoup = general.soup(f"{link}/episode/{int(episodeNumber)}")
+        episodeSoup = g.soup(f"{link}/episode/{int(episodeNumber)}")
         return int(episodeSoup.find(property='mdl:rid')['content'])
     except (TypeError, ValueError):
         print(f'Invalid episode (Episode {episodeNumber})')
@@ -208,12 +208,12 @@ def getEpisodeID(link, episodeNumber):
 def retrieveRatings(cookies, link, start=1, end=False):
     end = end if end else start
     rating = {}
-    episodeSoup = general.soup(f"{link}/episodes")
+    episodeSoup = g.soup(f"{link}/episodes")
     for episodeNumber in range(start, end + 1):
         try:
             episodeID = getEpisodeID(link, episodeNumber)
             ratingURL = f"{siteRoot}/v1/episodes/{getEpisodeID(link, episodeNumber)}/reviews/check/rating"
-            ratingJSON = general.soup(ratingURL, params=parameters(cookies), cookies=cookies, JSON=True)
+            ratingJSON = g.soup(ratingURL, params=parameters(cookies), cookies=cookies, JSON=True)
             rating[episodeNumber] = {
                 'ID': (
                     episodeID,
@@ -269,8 +269,8 @@ def postRating(cookies, episodeRating, details=None):
 
     formData.update(details)
     ratingURL = episodeRating['url'] + (not post) * f"/{episodeRating['ID'][1]}"
-    response = general.soup(ratingURL, data=formData, params=parameters(cookies, undef=False), cookies=cookies,
-                            post=(-1) ** (not post), response=True)
+    response = g.soup(ratingURL, data=formData, params=parameters(cookies, undef=False), cookies=cookies,
+                      post=(-1) ** (not post), response=True)
     return True if response.status_code == 200 else False
 
 
@@ -306,8 +306,8 @@ def showInfo(cookies, link):
     params = parameters(cookies)
     episodesURL = f"{infoURL}/episodes"
 
-    info = checkUpdates(general.soup(infoURL, params=params, cookies=cookies, JSON=True))
-    edit = checkUpdates(general.soup(editURL, params=params, cookies=cookies, JSON=True))
+    info = checkUpdates(g.soup(infoURL, params=params, cookies=cookies, JSON=True))
+    edit = checkUpdates(g.soup(editURL, params=params, cookies=cookies, JSON=True))
 
     seasons = {
         season['name']: (
@@ -327,7 +327,7 @@ def showInfo(cookies, link):
         })
         episodesList.append(
             checkUpdates(
-                general.soup(episodesURL, params=params, cookies=cookies, JSON=True),
+                g.soup(episodesURL, params=params, cookies=cookies, JSON=True),
                 onlyEpisodes=True)
         )
     episodes = {info['episode_number']: info for season in episodesList for info in season}
@@ -342,7 +342,7 @@ def castInfo(cookies, link):
     showID = getShowID(link)
     castURL = postURL(showID)[2]
     params = parameters(cookies)
-    castJSON = general.soup(castURL, params=params, cookies=cookies, JSON=True)
+    castJSON = g.soup(castURL, params=params, cookies=cookies, JSON=True)
     castOriginal = {castValue['display_name']: castValue for castValue in castJSON['original']['cast']}
     castRevision = {castValue['display_name']: castValue for castValue in castJSON['revision']['cast']}
     castList = {
@@ -384,7 +384,7 @@ def castSearch(name, nationality=None, gender=None):
         'so': 'relevance'
     }
     [params.pop(i, None) for i in [j for j in params if not params[j]]]
-    searchResults = general.soup(f"{siteRoot}/search", params=params).find_all('h6')
+    searchResults = g.soup(f"{siteRoot}/search", params=params).find_all('h6')
 
     try:
         if len(searchResults) > 1:
@@ -450,7 +450,7 @@ def castAnalyse(castList, castEdited, castRevision):
 ## Posts the updated cast list onto MDL
 # link (str) : Link to show on MDL. Obtained from search()
 # showID (str) : Show ID. Obtained from search()
-# latestCast (dict) : Analysed cast list. Obtained from general.episodesAnalyse()
+# latestCast (dict) : Analysed cast list. Obtained from g.episodesAnalyse()
 # notes (str) : Notes for reviewing staff to read
 def castSubmit(cookies, link, latestCast, notes=''):
     castList, castRevision, weights, castURL, params = castInfo(cookies, link)
@@ -465,7 +465,7 @@ def castSubmit(cookies, link, latestCast, notes=''):
             'weights': weights,
             'cast_weights': weights
         }
-        response = general.soup(castURL, data=dataForm, params=params, cookies=cookies, post=True, response=True)
+        response = g.soup(castURL, data=dataForm, params=params, cookies=cookies, post=True, response=True)
         if response.status_code == 200:
             return True
         else:
@@ -498,8 +498,8 @@ def imageSubmit(cookies, link, file, fileDir, keyNotes, epID=False, description=
         imageID = None
         attempt = 0
         while attempt < attempts:
-            uploadResponse = general.soup(imageURL, params=params if epID else None, headers=headers,
-                                          cookies=cookies, data=imageData, post=True, response=True)
+            uploadResponse = g.soup(imageURL, params=params if epID else None, headers=headers,
+                                    cookies=cookies, data=imageData, post=True, response=True)
             if uploadResponse.status_code == 200:
                 imageID = json.loads(uploadResponse.content)['filename']
                 break
@@ -524,11 +524,11 @@ def imageSubmit(cookies, link, file, fileDir, keyNotes, epID=False, description=
                 'cover_id': imageID
             }
         submitURL = postURL(getShowID(link), epID)[3]
-        params = general.revDict(params) if not epID else params
+        params = g.revDict(params) if not epID else params
         attempt = 0
         while attempt < 3:
-            submitResponse = general.soup(submitURL, data=dataForm, params=params, cookies=cookies,
-                                          post=True, response=True)
+            submitResponse = g.soup(submitURL, data=dataForm, params=params, cookies=cookies,
+                                    post=True, response=True)
             if submitResponse.status_code == 200:
                 print(f'Posted {file}') if not suppress else True
                 os.remove(os.path.join(fileDir, file))
@@ -543,7 +543,7 @@ def imageSubmit(cookies, link, file, fileDir, keyNotes, epID=False, description=
 
 def retrieveSummary(cookies, epID):
     summaryURL = postURL(epID=epID)[4].replace('/details', '')
-    response = general.soup(summaryURL, params=parameters(cookies, undef=True), cookies=cookies, JSON=True)['revision']
+    response = g.soup(summaryURL, params=parameters(cookies, undef=True), cookies=cookies, JSON=True)['revision']
     return {'title': response['title'], 'summary': response['summary']}
 
 
@@ -559,8 +559,8 @@ def summarySubmit(cookies, epID, summary='', title='', notes=''):
             'title': title
         }
         submitURL = postURL(epID=epID)[4]
-        response = general.soup(submitURL, data=dataForm, params=parameters(cookies, undef=True), cookies=cookies,
-                                post=True, response=True)
+        response = g.soup(submitURL, data=dataForm, params=parameters(cookies, undef=True), cookies=cookies,
+                          post=True, response=True)
         if response.status_code == 200:
             return True
         else:
@@ -578,7 +578,7 @@ def deleteSubmission(cookies, category=None, link=None, epID=None):
             'category': category
         }
         params.update(parameters(cookies, undef=True if epID else False))
-        general.delete(deleteURL, params=params)
+        g.delete(deleteURL, params=params)
     else:
         raise SyntaxError
 
@@ -586,23 +586,23 @@ def deleteSubmission(cookies, category=None, link=None, epID=None):
 def dramaList(cookies, watching=True, completed=True, plan_to_watch=True, hold=True, drop=True, not_interested=True,
               suppress=False):
     profileLink = f"{siteRoot}/profile"
-    listLink = f"{siteRoot}{general.soup(profileLink, cookies=cookies).find('a', text='My Watchlist')['href']}"
-    listSoup = general.soup(listLink, cookies=cookies)
+    listLink = f"{siteRoot}{g.soup(profileLink, cookies=cookies).find('a', text='My Watchlist')['href']}"
+    listSoup = g.soup(listLink, cookies=cookies)
     myDramaList = {
         'watching': listSoup.find(id='list_1') if watching else None,
         'completed': listSoup.find(id='list_2') if completed else None,
         'plan_to_watch': listSoup.find(id='list_3') if plan_to_watch else None,
         'on_hold': listSoup.find(id='list_4') if hold else None,
         'dropped': listSoup.find(id='list_5') if drop else None,
-        'not_interested': general.soup(f"{listLink}/not_interested", cookies=cookies).find(id='list_6')
+        'not_interested': g.soup(f"{listLink}/not_interested", cookies=cookies).find(id='list_6')
         if not_interested else None
     }
 
     def userInfo(ID):
-        infoSoup = general.soup(f"{siteRoot}/v1/users/watchaction/{ID}",
-                                params=parameters(cookies),
-                                cookies=cookies,
-                                JSON=True)['data']
+        infoSoup = g.soup(f"{siteRoot}/v1/users/watchaction/{ID}",
+                          params=parameters(cookies),
+                          cookies=cookies,
+                          JSON=True)['data']
         return {
             'date-start': None if infoSoup['date_start'] == '0000-00-00'
             else d.datetime.strptime(infoSoup['date_start'], '%Y-%m-%d'),
@@ -633,5 +633,5 @@ def dramaList(cookies, watching=True, completed=True, plan_to_watch=True, hold=T
     for key in [i for i in myDramaList if myDramaList[i]]:
         for k, showID in enumerate(myDramaList[key], start=k + 1):
             myDramaList[key][showID].update(userInfo(showID))
-            general.printProgressBar(k, totalShows, prefix=f'Retrieving {k}/{totalShows}') if not suppress else True
+            g.printProgressBar(k, totalShows, prefix=f'Retrieving {k}/{totalShows}') if not suppress else True
     return myDramaList

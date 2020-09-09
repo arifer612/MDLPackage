@@ -1,6 +1,7 @@
 import setuptools
 import sys
 from distutils.util import strtobool
+from mdl import configFile  # To create default configuration files and folders
 
 if sys.version_info <= (3, 6):
     print('mdl has only been tested on Python >= 3.6. Continue installing?')
@@ -19,7 +20,7 @@ with open("requirements.txt", "r") as fr:
 with open("README.md", "r") as fR:
     long_description = fR.read()
 
-version = '0.0.7'
+version = '0.0.8'
 
 setuptools.setup(
     classifiers=[

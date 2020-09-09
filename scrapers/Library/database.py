@@ -6,7 +6,7 @@
 #   for it has a very messy database for some variety shows.
 
 import datetime as d
-from mdl.Library import general as g
+import general as g
 from bs4 import BeautifulSoup as bs
 import json
 import re
@@ -65,7 +65,8 @@ def searchDataZoo(nativeTitle, airDate=None, exclusions='', totalResults=1):
                     answer = attempt = 0
                     while attempt < 3:
                         try:
-                            answer = int(input('Result No.')) if attempt == 0 else int(input('Invalid answer. Result No.'))
+                            answer = int(input('Result No.')) if attempt == 0 else int(
+                                input('Invalid answer. Result No.'))
                             if answer not in range(1, totalResults + 1):
                                 raise ValueError
                             else:
@@ -93,7 +94,7 @@ def dataZoo(link):
     soup = g.soup(link)
     information = {
         'cast': [name.split('（')[0]
-                   for name in soup.find(class_='icn_cast').next_sibling.text.replace('\n', '').split('\xa0')],
+                 for name in soup.find(class_='icn_cast').next_sibling.text.replace('\n', '').split('\xa0')],
         'url': link
     }
     try:
@@ -102,7 +103,7 @@ def dataZoo(link):
         prevDate = d.datetime.strptime(f"{prevDates[0]} {prevDates[1].zfill(2)}:{prevDates[2].zfill(2)}",
                                        '%Y年%m月%d日 %H:%M')
         link = f"{rootZoo}{history['href']}"
-    except Exception:
+    except:
         link = prevDate = None
     return information, prevDate, link
 
@@ -213,4 +214,3 @@ def getEpisodes(nativeTitle, startDate, channel, omit=None, startEpisode=1):
 
     seasonsList[list(seasonsList)[-1]]['end'] = episodeNumber
     return episodeList, seasonsList
-

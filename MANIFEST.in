@@ -1,2 +1,3 @@
 include mdl/MDLConfig.conf
+include requirements.txt
 recursive-include data *

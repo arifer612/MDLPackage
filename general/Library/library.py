@@ -2,6 +2,10 @@ import json
 import os
 import urllib.error
 import urllib.request
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle
 
 import requests
 from bs4 import BeautifulSoup as bs
@@ -70,7 +74,6 @@ def delete(link, params=None, headers=None, data=None, timeout=5):
 def japaneseDays(day, delimiter=None):
     dayArray = {'月': 'Mon', '火': 'Tue', '水': 'Wed', '木': 'Thu', '金': 'Fri', '土': 'Sat', '日': 'Sun'}
     if not delimiter:
-        delimiter = []
         return dayArray[day]
     else:
         dayLeft, dayRight = day.split(delimiter[0], 1)
@@ -86,3 +89,44 @@ def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=
     # Print New Line on Complete
     if iteration == total:
         print()
+
+
+def loadLog(fileName, rootDir):
+    fileName = os.path.splitext(fileName)[0] + '.p'
+    file = os.path.abspath(os.path.expanduser(os.path.join(rootDir, fileName)))
+    if not os.path.exists(file):
+        return {}
+    else:
+        with open(file, 'rb') as p:
+            return pickle.load(p)
+
+
+def writeLog(data, fileName, rootDir):
+    fileName = os.path.splitext(fileName)[0] + '.p'
+    file = os.path.abspath(os.path.expanduser(os.path.join(rootDir, fileName)))
+    with open(file, 'wb') as p:
+        pickle.dump(data, p, protocol=pickle.HIGHEST_PROTOCOL)
+
+
+def toJsonLog(fileName, rootDir):
+    fileName = os.path.splitext(fileName)[0] + '.p'
+    file = os.path.abspath(os.path.expanduser(os.path.join(rootDir, fileName)))
+    if not os.path.exists(file):
+        raise FileNotFoundError
+    else:
+        data = loadLog(fileName, rootDir)
+        file = os.path.splitext(file)[0] + '.json'
+        with open(file, 'w') as j:
+            json.dump(data, j, sort_keys=True, indent=4)
+
+
+def toPickleLog(fileName, rootDir):
+    fileName = os.path.splitext(fileName)[0] + '.json'
+    file = os.path.abspath(os.path.expanduser(os.path.join(rootDir, fileName)))
+    if not os.path.exists(file):
+        raise FileNotFoundError
+    else:
+        with open(file, 'r') as j:
+            data = json.load(j)
+        fileName = os.path.splitext(fileName)[0] + '.p'
+        writeLog(data, fileName, rootDir)

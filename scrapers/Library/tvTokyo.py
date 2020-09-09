@@ -1,7 +1,7 @@
 import datetime as d
 import json
 import re
-from mdl.Library import general as g
+from general.Library import library as g
 
 programRoot = 'https://www.tv-tokyo.co.jp/broad_bstvtokyo/program/'
 
