@@ -427,7 +427,7 @@ def castAnalyse(castList, castEdited, castRevision):
     newCast = []
     for cast, castDetails in castList.items():
         try:
-            characterName = castDetails['character_name']
+            characterName = castDetails['character_name'].replace('(Ep. ', '(Ep ').replace('(Ep.', '(Ep ')
             if characterName:
                 episodes = characterName[characterName.find('(Ep '):]
                 episodes = episodes[:episodes.find(')') + 1]
@@ -570,7 +570,7 @@ def summarySubmit(cookies, epID, summary='', title='', notes=''):
         return False
 
 
-def deleteSubmission(cookies, category=None, link=None, epID=None):
+def deleteSubmission(cookies, category, link=None, epID=None):
     if category:
         deleteURL = f"{siteRoot}/v1/edit/tickets/{epID}/episodes" \
             if epID else f"{siteRoot}/v1/edit/titles/{getShowID(link)}/titles"
