@@ -91,21 +91,21 @@ def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=
         print()
 
 
-def loadLog(fileName, rootDir):
+def loadLog(fileName, rootDir, flip=False):
     fileName = os.path.splitext(fileName)[0] + '.p'
     file = os.path.abspath(os.path.expanduser(os.path.join(rootDir, fileName)))
     if not os.path.exists(file):
         return {}
     else:
         with open(file, 'rb') as p:
-            return pickle.load(p)
+            return pickle.load(p) if not flip else revDict(pickle.load(p))
 
 
-def writeLog(data, fileName, rootDir):
+def writeLog(data, fileName, rootDir, flip=False):
     fileName = os.path.splitext(fileName)[0] + '.p'
     file = os.path.abspath(os.path.expanduser(os.path.join(rootDir, fileName)))
     with open(file, 'wb') as p:
-        pickle.dump(data, p, protocol=pickle.HIGHEST_PROTOCOL)
+        pickle.dump(data if not flip else revDict(data), p, protocol=pickle.HIGHEST_PROTOCOL)
 
 
 def toJsonLog(fileName, rootDir):
