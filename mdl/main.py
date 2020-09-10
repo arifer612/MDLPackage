@@ -59,11 +59,11 @@ class User:
 class Show:
     def __init__(self, link='', keyword='', result=None):
         if not (keyword or link):
-            print('Provide either a search keyword or the link to the show')
+            sys.exit('ERROR: Provide either a search keyword or the link to the show')
         self.__cookies = library.login()
         self.link = link if link else library.search(keyword, result)
         if not self.link:
-            sys.exit('Show cannot be found')
+            sys.exit('ERROR: Show cannot be found')
         else:
             self.nativeTitle, self.network, self.totalEpisodes = library.showDetails(self.link)
 

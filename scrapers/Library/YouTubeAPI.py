@@ -41,10 +41,11 @@ def getPlayList(youtube, playlistId, pageToken=None, maxResults=50, **kwargs):
 
 
 def getVideoInfo(youtube, videoId):
-    return youtube.videos().list(
+    search = youtube.videos().list(
         part='snippet',
         id=videoId
     ).execute()
+    return search['items']
 
 
 def getThumbnails(youtube, videoId=None, playListId=None, quality=0):
@@ -73,6 +74,6 @@ def getThumbnails(youtube, videoId=None, playListId=None, quality=0):
     return [{
         'title': i['snippet']['title'],
         'thumbnail': getThumbnail(i, quality),
-        'url': f"https://www.youtube.com/watch?v={i['snippet']['resourceId']['videoId']}"
+        'url': f"https://www.youtube.com/watch?v={videoId if videoId else i['snippet']['resourceId']['videoId']}"
     } for i in playlist
         if i['snippet']['title'] != 'Private video']
