@@ -3,6 +3,39 @@ from configparser import ConfigParser
 import shutil
 from distutils.util import strtobool
 from getpass import getpass
+from shutil import Error
+
+
+def copytree(src, dst, symlinks=False):  # Obtained from shutil
+    names = os.listdir(src)
+    os.makedirs(dst, exist_ok=True)  # Added exist_ok=True
+    errors = []
+    for name in names:
+        srcName = os.path.join(src, name)
+        dstName = os.path.join(dst, name)
+        try:
+            if symlinks and os.path.islink(srcName):
+                linkTo = os.readlink(srcName)
+                os.symlink(linkTo, dstName)
+            elif os.path.isdir(srcName):
+                copytree(srcName, dstName, symlinks)
+            else:
+                shutil.copy2(srcName, dstName)
+        except OSError as why:
+            errors.append((srcName, dstName, str(why)))
+        # catch the Error from the recursive copytree so that we can
+        # continue with other files
+        except Error as err:
+            errors.extend(err.args[0])
+
+    try:
+        shutil.copystat(src, dst)
+    except OSError as why:
+        # can't copy file access times on Windows
+        if why.winerror is None:
+            errors.extend((src, dst, str(why)))
+    if errors:
+        raise Error(errors)
 
 
 class Config:
@@ -60,9 +93,10 @@ class Config:
             if log:
                 log = os.path.abspath(os.path.expanduser(log))
                 if log != self.logDir:
-                    if not os.path.exists(log):
-                        os.makedirs(log, exist_ok=True)
-                    shutil.move(self.logDir, log)
+                    if os.path.exists(log):
+                        copytree(self.logDir, log, symlinks=False)
+                    else:
+                        shutil.move(self.logDir, log)
                     self.logDir = log
                     print(f'Relocated log directory to {self.logDir}')
                 else:
