@@ -142,8 +142,8 @@ def showDetails(link):
         nativeTitle = ''
     try:
         network = soup.find(string='Original Network:').find_next('a').string
-    except KeyError:
-        network = input('No provided TV network. Provide the network\n>>>')
+    except AttributeError:
+        network = ''
     totalEpisodes = int(list(soup.find(string='Episodes:').parent.parent.strings)[-1])
     return nativeTitle, network, totalEpisodes
 
@@ -275,15 +275,10 @@ def postRating(cookies, episodeRating, details=None):
 
 
 ## Preps URL to post information to
-# cookies (CookieJar) : Login cookies. Obtained from login()
-# showID (str) : ShowID. Obtained from search()
+# showID (str) : ShowID. Obtained from getShowID()
+# epID (str) : EpisodeID. Obtained from getEpisodeID()
 def postURL(showID=None, epID=None):
-    infoURL = f"{siteRoot}/v1/edit/titles/{showID}"
-    editURL = f"{siteRoot}/v1/edit/titles/{showID}/release"
-    castURL = f"{siteRoot}/v1/edit/titles/{showID}/cast"
-    pictURL = f"{siteRoot}/v1/titles/{showID}/photos" if not epID else f"{siteRoot}/v1/edit/episodes/{epID}/cover"
-    summaryURL = f"{siteRoot}/v1/edit/episodes/{epID}/details"
-    return infoURL, editURL, castURL, pictURL, summaryURL
+    return f"{siteRoot}/v1/edit/episodes/{epID}/" if epID else f"{siteRoot}/v1/edit/titles/{showID}/"
 
 
 ## Reads all the information of the show episodes and seasons
@@ -302,7 +297,7 @@ def showInfo(cookies, link):
             return revision['episodes'] if not not revision['episodes'] else original['episodes']
 
     showID = getShowID(link)
-    infoURL, editURL = postURL(showID)[:2]
+    infoURL, editURL = [postURL(showID=showID) + i for i in ['', 'release']]
     params = parameters(cookies)
     episodesURL = f"{infoURL}/episodes"
 
@@ -340,7 +335,7 @@ def showInfo(cookies, link):
 # showID (str) : ShowID. Obtained from search()
 def castInfo(cookies, link):
     showID = getShowID(link)
-    castURL = postURL(showID)[2]
+    castURL = postURL(showID=showID) + 'cast'
     params = parameters(cookies)
     castJSON = g.soup(castURL, params=params, cookies=cookies, JSON=True)
     castOriginal = {castValue['display_name']: castValue for castValue in castJSON['original']['cast']}
@@ -523,7 +518,7 @@ def imageSubmit(cookies, link, file, fileDir, keyNotes, epID=False, description=
                 'notes': keyNotes,
                 'cover_id': imageID
             }
-        submitURL = postURL(getShowID(link), epID)[3]
+        submitURL = postURL(getShowID(link), epID) + ('photos' if not epID else 'cover')
         params = g.revDict(params) if not epID else params
         attempt = 0
         while attempt < 3:
@@ -542,7 +537,7 @@ def imageSubmit(cookies, link, file, fileDir, keyNotes, epID=False, description=
 
 
 def retrieveSummary(cookies, epID):
-    summaryURL = postURL(epID=epID)[4].replace('/details', '')
+    summaryURL = postURL(epID=epID)
     response = g.soup(summaryURL, params=parameters(cookies, undef=True), cookies=cookies, JSON=True)['revision']
     return {'title': response['title'], 'summary': response['summary']}
 
@@ -558,7 +553,7 @@ def summarySubmit(cookies, epID, summary='', title='', notes=''):
             'summary': summary,
             'title': title
         }
-        submitURL = postURL(epID=epID)[4]
+        submitURL = postURL(epID=epID) + 'details'
         response = g.soup(submitURL, data=dataForm, params=parameters(cookies, undef=True), cookies=cookies,
                           post=True, response=True)
         if response.status_code == 200:
@@ -635,3 +630,45 @@ def dramaList(cookies, watching=True, completed=True, plan_to_watch=True, hold=T
             myDramaList[key][showID].update(userInfo(showID))
             g.printProgressBar(k, totalShows, prefix=f'Retrieving {k}/{totalShows}') if not suppress else True
     return myDramaList
+
+
+def updateExternalLinks(cookies, link, externalLinks, notes=''):
+    if externalLinks:
+        submitURL = postURL(showID=getShowID(link)) + 'details'
+        params = parameters(cookies)
+        # External links example
+        # externalLinks = [
+        #     {
+        #         "key": "website",
+        #         "label": "Official site (MBS)",
+        #         "text": "",
+        #         "type": "uri",
+        #         "value": "https://www.mbs.jp/araoto_drama/",
+        #         "_status": "created"
+        #     },
+        #     {
+        #         "key": "twitter",
+        #         "label": "",
+        #         "text": "",
+        #         "type": "social",
+        #         "value": "araoto_drama",
+        #         "_status": "created"
+        #     },
+        #     {
+        #         "key": "instagram",
+        #         "label": "",
+        #         "text": "",
+        #         "type": "social",
+        #         "value": "araoto_drama",
+        #         "_status": "created"
+        #     }
+        # ]
+        dataForm = {
+            'external_links': externalLinks,
+            'category': 'external_links',
+            'notes': notes
+        }
+        response = g.soup(submitURL, params=params, cookies=cookies, data=dataForm, post=True, response=True)
+        return True if response.status_code == 200 else False
+    else:
+        return True
