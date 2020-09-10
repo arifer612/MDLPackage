@@ -123,12 +123,12 @@ class Config:
 
     def print(self):
         print(
-            f"--------------------------------------------------------------------------\n"
-            f"                           MDLPackage v{self.version}\n"
-            f"                         Configuration Settings\n\n"
-            f"Key file\t\t@\t\t\t{self.__keyDir}\n"
-            f"Log directory\t@\t\t\t{self.logDir}\n\n\n"
-            f"                               Documentation\n\n"
+            f"----------------------------------------------------------------------------\n"
+            f"                            MDLPackage v{self.version}\n"
+            f"                          Configuration Settings\n\n"
+            f"Key file\t\t@\t{self.__keyDir}\n"
+            f"Log directory\t\t@\t{self.logDir}\n\n\n"
+            f"                                Documentation\n\n"
             f"configFile.move(key=keyDir, log=logDir)\n\n"
             f"\tMoves key file or log directory to specified directory\n\n"
             f"configFile.newKeys(username=username, password=password, echo=bool)\n\n"
@@ -138,7 +138,7 @@ class Config:
             f"\techo=True echoes the password as you input it;\n"
             f"\techo=False mutes the password as you input it.\n"
             f"\tWithout arguments, you will be prompted to input your login details.\n"
-            f"--------------------------------------------------------------------------"
+            f"----------------------------------------------------------------------------"
         )
 
 
