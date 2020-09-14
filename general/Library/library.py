@@ -101,14 +101,14 @@ def loadLog(fileName, rootDir, flip=False):
             return pickle.load(p) if not flip else revDict(pickle.load(p))
 
 
-def writeLog(data, fileName, rootDir, flip=False):
+def saveLog(data, fileName, rootDir, flip=False):
     fileName = os.path.splitext(fileName)[0] + '.p'
     file = os.path.abspath(os.path.expanduser(os.path.join(rootDir, fileName)))
     with open(file, 'wb') as p:
         pickle.dump(data if not flip else revDict(data), p, protocol=pickle.HIGHEST_PROTOCOL)
 
 
-def toJsonLog(fileName, rootDir):
+def readableLog(fileName, rootDir):
     fileName = os.path.splitext(fileName)[0] + '.p'
     file = os.path.abspath(os.path.expanduser(os.path.join(rootDir, fileName)))
     if not os.path.exists(file):
@@ -118,9 +118,10 @@ def toJsonLog(fileName, rootDir):
         file = os.path.splitext(file)[0] + '.json'
         with open(file, 'w') as j:
             json.dump(data, j, sort_keys=True, indent=4)
+        return f"{file}"
 
 
-def toPickleLog(fileName, rootDir):
+def machinableLog(fileName, rootDir):
     fileName = os.path.splitext(fileName)[0] + '.json'
     file = os.path.abspath(os.path.expanduser(os.path.join(rootDir, fileName)))
     if not os.path.exists(file):
@@ -129,4 +130,4 @@ def toPickleLog(fileName, rootDir):
         with open(file, 'r') as j:
             data = json.load(j)
         fileName = os.path.splitext(fileName)[0] + '.p'
-        writeLog(data, fileName, rootDir)
+        saveLog(data, fileName, rootDir)
