@@ -1,66 +1,36 @@
 from .main import User
 import os
-import sys
-import getopt
 from mdl import configFile
+from optparse import OptionGroup, OptionParser
 
 
 def main(argv):
     logDir = configFile.logDir
-    fileName = 'MyDramaList'
-    watching = completed = hold = drop = plan_to_watch = not_interested = True
+    parser = OptionParser()
+    parser.set_defaults(only=False, quiet=False)
+    parser.add_option('-f', '--filename', action='store', dest='filename', help='Specifies FILENAME of export list')
+    parser.add_option('-o', '--only', action='store_true', dest='only', help='Filters list categories')
+    parser.add_option('-e', '--exception', action='store_false', dest='only', help='Specifies list exceptions')
+    parser.add_option('-q', '--quiet', action='store_true', dest='quiet', help='Hides progress bar')
 
-    def usage():
-        print('-----------------------------------------------------------------------------------------\n'
-              '--------This script exports your drama list as a .tsv file from MyDramaList.com----------\n'
-              '\n'
-              'Use the configuration file to set the directory to save your login details.\n'
-              '\n'
-              'usage: exportMDL.py [-f --filename <filename>] [--help]\n'
-              '                    [-e --exception <exception1,exception2...>]\n'
-              '\n'
-              '-f     Specifies filename\n\n'
-              '-e     Specifies list exceptions. Exceptions MUST be separated by a comma without spaces.\n'
-              '       The available options are:\n'
-              '       (watching, completed, hold, drop, plan_to_watch, not_interested)\n'
-              '\n'
-              '-h     Shows the help page'
-              '\n'
-              '-------------------Leave the filename unset to use default filename----------------------\n'
-              '-----------------------------------------------------------------------------------------'
-              )
+    group = OptionGroup(parser, 'Categories to filter list')
+    group.add_option('-w', '--watching', action='store_true', dest='w', default=False)
+    group.add_option('-c', '--completed', action='store_true', dest='c', default=False)
+    group.add_option('-k', '--hold', action='store_true', dest='k', default=False)
+    group.add_option('-d', '--drop', action='store_true', dest='d', default=False)
+    group.add_option('-p', '--plan_to_watch', '--ptw', action='store_true', dest='p', default=False)
+    group.add_option('-n', '--not_interested', '--ni', action='store_true', dest='n', default=False)
+    parser.add_option_group(group)
 
-    try:
-        opts, args = getopt.getopt(argv, "f:he:o:", ['filename=', 'help', 'except=', 'only='])
-        for opt, arg in opts:
-            if opt in ['-f', '--filename']:
-                fileName = arg
-            if opt in ['-e', '--except']:
-                exceptions = arg.split(',')
-                watching -= 'watching' in exceptions
-                completed -= 'completed' in exceptions
-                hold -= 'hold' in exceptions
-                drop -= 'drop' in exceptions
-                plan_to_watch -= 'plan_to_watch' in exceptions
-                not_interested -= 'not_interested' in exceptions
-            if opt in ['-o', '--only']:
-                overwrite = arg.split(',')
-                watching = 'watching' in overwrite
-                completed = 'completed' in overwrite
-                hold = 'hold' in overwrite
-                drop = 'drop' in overwrite
-                plan_to_watch = 'plan_to_watch' in overwrite
-                not_interested = 'not_interested' in overwrite
-            if opt in ['-h', '--help']:
-                usage()
-                sys.exit()
-    except getopt.GetoptError as err:
-        print(err)
-        usage()
-        sys.exit(2)
+    opt, arg = parser.parse_args(argv)
+    if any([opt.w, opt.c, opt.k, opt.d, opt.p, opt.n]):
+        [opt.w, opt.c, opt.k, opt.d, opt.p, opt.n] = [i * opt.only for i in [opt.w, opt.c, opt.k, opt.d, opt.p, opt.n]]
+    else:
+        [opt.w, opt.c, opt.k, opt.d, opt.p, opt.n] = [not i for i in [opt.w, opt.c, opt.k, opt.d, opt.p, opt.n]]
     user = User()
-    myDramaList = user.dramaList(watching=watching, completed=completed, hold=hold, drop=drop,
-                                 plan_to_watch=plan_to_watch, not_interested=not_interested)
+    myDramaList = user.dramaList(watching=opt.w, completed=opt.c, hold=opt.k, drop=opt.d,
+                                 plan_to_watch=opt.p, not_interested=opt.n, suppress=opt.quiet)
+    fileName = 'MyDramaList' if not opt.filename else opt.filename
 
     with open(os.path.join(logDir, f"{fileName}.tsv"), 'w', encoding='utf-8-sig') as e:
         e.write(f"Title\tStatus\tEpisodes watched\tTotal episodes\t"
@@ -75,4 +45,3 @@ def main(argv):
             for status in myDramaList if myDramaList[status] for show in myDramaList[status].values()
         ])
     print(f"File saved as {os.path.join(logDir, f'{fileName}.tsv')}")
-
