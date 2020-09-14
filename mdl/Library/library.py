@@ -1,6 +1,7 @@
 import datetime as d
 import json
 import os
+import re
 import random
 import string
 from configparser import ConfigParser
@@ -422,16 +423,18 @@ def castAnalyse(castList, castEdited, castRevision):
     newCast = []
     for cast, castDetails in castList.items():
         try:
-            characterName = castDetails['character_name'].replace('(Ep. ', '(Ep ').replace('(Ep.', '(Ep ')
+            characterName = castDetails['character_name']
             if characterName:
-                episodes = characterName[characterName.find('(Ep '):]
-                episodes = episodes[:episodes.find(')') + 1]
-                if episodes and episodes != castEdited[cast]:
-                    castDetails['character_name'] = castDetails['character_name'].replace(episodes, castEdited[cast])
-                elif not episodes:
-                    castDetails['character_name'] = f"{characterName} {castEdited[cast]}"
+                episodes = re.findall('\((Ep[^)]+)', characterName)
+                if episodes:
+                    episodes = f"({episodes[0]})"
+                    episodesNormalised = episodes.replace('Ep. ', 'Ep ').replace('Ep.', 'Ep ')
+                    if episodesNormalised != castEdited[cast]:
+                        castDetails['character_name'] = castDetails['character_name'].replace(episodes, castEdited[cast])
+                    else:
+                        raise KeyError
                 else:
-                    raise KeyError
+                    castDetails['character_name'] = f"{characterName} {castEdited[cast]}"
             else:
                 castDetails['character_name'] = castEdited[cast]
             newCast.append(castDetails)
