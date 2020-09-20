@@ -17,7 +17,7 @@ def main(argv):
                         help='Converts readable log file back into machine file')
     parser.add_option_group(logGroup)
 
-    dirGroup = OptionGroup(parser, "Configuration directories",
+    dirGroup = OptionGroup(parser, "Change directories",
                            "Change the directories important for the package to work")
     dirGroup.add_option('-l', '--log', type='string', action='store', dest='logDir', metavar='DIR',
                         help='Moves log directory to DIR')

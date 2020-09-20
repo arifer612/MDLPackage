@@ -43,10 +43,13 @@ class Config:
         self.dir = os.path.abspath(os.path.join(os.path.realpath(__file__), '../..', 'MDLConfig.conf'))
         self.conf = ConfigParser()
         self.version = self.__keyDir = self.logDir = None
-        self.start()
-        self.updateConf()
+        self._start()
+        self._updateConf()
 
-    def start(self):
+    def __repr__(self):
+        return "Configurator"
+
+    def _start(self):
         self.conf = ConfigParser()
         self.conf.read(self.dir)
         self.__keyDir = os.path.expanduser(self.conf['DIRECTORIES']['key']) if self.conf['DIRECTORIES']['key'] \
@@ -66,15 +69,13 @@ class Config:
                 keyConf.write(r)
             os.chmod(self.__keyDir, 0o600)
 
-    def updateConf(self):
+    def _updateConf(self):
         self.conf['DIRECTORIES'] = {
             'key': self.__keyDir.replace(os.path.expanduser('~/'), '~' + os.sep),  # For cleaner look on Linux
             'log': self.logDir.replace(os.path.expanduser('~/'), '~' + os.sep)   # For cleaner look on Linux
         }
         with open(self.dir, 'w') as r:
             self.conf.write(r)
-        with open(self.dir, 'w') as f:
-            self.conf.write(f)
 
     def move(self, key='', log=''):
         if not (key or log):
@@ -101,9 +102,9 @@ class Config:
                     print(f'Relocated log directory to {self.logDir}')
                 else:
                     pass
-            self.updateConf()
+            self._updateConf()
 
-    def newKeys(self, username=None, password=None, echo=True):
+    def newKeys(self, username=None, password=None, youtubeAPI=None, echo=True):
         if not (username and password):
             if echo:
                 try:
@@ -115,31 +116,19 @@ class Config:
             password = input('Password >>>') if echo else getpass('Password >>>')
         else:
             pass
+        if not youtubeAPI:
+            youtubeAPI = input('YouTubeAPI key (skip to ignore) >>>')
+        else:
+            pass
         keyConf = ConfigParser()
         keyConf.read(self.__keyDir)
         keyConf['USER']['username'], keyConf['USER']['password'] = username, password
+        if youtubeAPI:
+            keyConf['USER']['youtubeAPI'] = youtubeAPI
+        else:
+            pass
         with open(self.__keyDir) as f:
             keyConf.write(f)
-
-    def print(self):
-        print(
-            f"----------------------------------------------------------------------------\n"
-            f"                            MDLPackage v{self.version}\n"
-            f"                          Configuration Settings\n\n"
-            f"Key file\t\t@\t{self.__keyDir}\n"
-            f"Log directory\t\t@\t{self.logDir}\n\n\n"
-            f"                                Documentation\n\n"
-            f"configFile.move(key=keyDir, log=logDir)\n\n"
-            f"\tMoves key file or log directory to specified directory\n\n"
-            f"configFile.newKeys(username=username, password=password, echo=bool)\n\n"
-            f"\tWrites new login details into the key file without manually opening\n"
-            f"\tthe file.\n"
-            f"\tUsername and password have to passed as strings if declared.\n"
-            f"\techo=True echoes the password as you input it;\n"
-            f"\techo=False mutes the password as you input it.\n"
-            f"\tWithout arguments, you will be prompted to input your login details.\n"
-            f"----------------------------------------------------------------------------"
-        )
 
 
 configFile = Config()

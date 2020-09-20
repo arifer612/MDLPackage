@@ -6,6 +6,7 @@ try:
     import cPickle as pickle
 except ImportError:
     import pickle
+import yaml
 
 import requests
 from bs4 import BeautifulSoup as bs
@@ -41,11 +42,15 @@ def episodesAnalyse(castDict):
     return castDict
 
 
-def soup(link, params=None, headers=None, cookies=None, data=None, post=False, JSON=False, response=False,
+def soup(link, params=None, headers=None, cookies=None, data=None, post=False, JSON=False, response=False, delete=False,
          timeout=5, attempts=5, **kwargs):
     attempt = 0
     while attempt < attempts:
         try:
+            if delete:
+                request = requests.delete(link, params=params, headers=headers, data=data, timeout=timeout, **kwargs)
+                return request.status_code == 200
+
             if not post:
                 request = requests.get(link, params=params, headers=headers, cookies=cookies, data=data,
                                        timeout=timeout, **kwargs)
@@ -55,6 +60,8 @@ def soup(link, params=None, headers=None, cookies=None, data=None, post=False, J
             elif int(post) == -1:
                 request = requests.patch(link, params=params, headers=headers, cookies=cookies, data=data,
                                          timeout=timeout, **kwargs)
+            else:
+                raise ValueError
 
             if not JSON and not response:
                 return bs(request.content, 'lxml')
@@ -67,20 +74,6 @@ def soup(link, params=None, headers=None, cookies=None, data=None, post=False, J
     raise ConnectionRefusedError
 
 
-def delete(link, params=None, headers=None, data=None, timeout=5):
-    requests.delete(link, params=params, headers=headers, data=data, timeout=timeout)
-
-
-def japaneseDays(day, delimiter=None):
-    dayArray = {'月': 'Mon', '火': 'Tue', '水': 'Wed', '木': 'Thu', '金': 'Fri', '土': 'Sat', '日': 'Sun'}
-    if not delimiter:
-        return dayArray[day]
-    else:
-        dayLeft, dayRight = day.split(delimiter[0], 1)
-        day, dayRight = dayRight.split(delimiter[1], 1)
-        return f"{dayLeft}{dayArray[day]}{dayRight}"
-
-
 def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=80, fill='█', printEnd="\r"):
     percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
     filledLength = int(length * iteration // total)
@@ -91,7 +84,7 @@ def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=
         print()
 
 
-def loadLog(fileName, rootDir, flip=False):
+def loadLog(fileName, rootDir='.', flip=False):
     fileName = os.path.splitext(fileName)[0] + '.p'
     file = os.path.abspath(os.path.expanduser(os.path.join(rootDir, fileName)))
     if not os.path.exists(file):
@@ -101,33 +94,33 @@ def loadLog(fileName, rootDir, flip=False):
             return pickle.load(p) if not flip else revDict(pickle.load(p))
 
 
-def saveLog(data, fileName, rootDir, flip=False):
+def saveLog(data, fileName, rootDir='.', flip=False):
     fileName = os.path.splitext(fileName)[0] + '.p'
     file = os.path.abspath(os.path.expanduser(os.path.join(rootDir, fileName)))
     with open(file, 'wb') as p:
         pickle.dump(data if not flip else revDict(data), p, protocol=pickle.HIGHEST_PROTOCOL)
 
 
-def readableLog(fileName, rootDir):
+def readableLog(fileName, rootDir='.'):
     fileName = os.path.splitext(fileName)[0] + '.p'
     file = os.path.abspath(os.path.expanduser(os.path.join(rootDir, fileName)))
     if not os.path.exists(file):
         raise FileNotFoundError
     else:
         data = loadLog(fileName, rootDir)
-        file = os.path.splitext(file)[0] + '.json'
+        file = os.path.splitext(file)[0] + '.yaml'
         with open(file, 'w') as j:
-            json.dump(data, j, sort_keys=True, indent=4)
+            yaml.safe_dump(data, j)
         return f"{file}"
 
 
-def machinableLog(fileName, rootDir):
-    fileName = os.path.splitext(fileName)[0] + '.json'
+def machinableLog(fileName, rootDir='.'):
+    fileName = os.path.splitext(fileName)[0] + '.yaml'
     file = os.path.abspath(os.path.expanduser(os.path.join(rootDir, fileName)))
     if not os.path.exists(file):
         raise FileNotFoundError
     else:
         with open(file, 'r') as j:
-            data = json.load(j)
+            data = yaml.safe_load(j)
         fileName = os.path.splitext(fileName)[0] + '.p'
         saveLog(data, fileName, rootDir)
