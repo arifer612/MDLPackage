@@ -430,7 +430,8 @@ def castAnalyse(castList, castEdited, castRevision):
                     episodes = f"({episodes[0]})"
                     episodesNormalised = episodes.replace('Ep. ', 'Ep ').replace('Ep.', 'Ep ')
                     if episodesNormalised != castEdited[cast]:
-                        castDetails['character_name'] = castDetails['character_name'].replace(episodes, castEdited[cast])
+                        castDetails['character_name'] = castDetails['character_name'].replace(episodes,
+                                                                                              castEdited[cast])
                     else:
                         raise KeyError
                 else:
@@ -521,7 +522,8 @@ def imageSubmit(cookies, link, file, fileDir, keyNotes, epID=False, description=
                 'notes': keyNotes,
                 'cover_id': imageID
             }
-        submitURL = postURL(getShowID(link), epID) + ('photos' if not epID else 'cover')
+        submitURL = postURL(getShowID(link), epID).replace('edit/', '' if not epID else 'edit/') \
+                    + ('photos' if not epID else 'cover')
         params = g.revDict(params) if not epID else params
         attempt = 0
         while attempt < 3:
@@ -534,7 +536,7 @@ def imageSubmit(cookies, link, file, fileDir, keyNotes, epID=False, description=
             else:
                 attempt += 1
         raise ConnectionRefusedError
-    except ConnectionRefusedError:
+    except (ConnectionRefusedError, AttributeError):  # AttributeError : Images that do not exist
         print(f'Failed to post {file}')
         return False
 
@@ -576,7 +578,7 @@ def deleteSubmission(cookies, category, link=None, epID=None):
             'category': category
         }
         params.update(parameters(cookies, undef=True if epID else False))
-        g.delete(deleteURL, params=params)
+        g.soup(deleteURL, params=params, delete=True)
     else:
         raise SyntaxError
 
