@@ -466,12 +466,11 @@ def castSubmit(cookies, link, latestCast, notes=''):
         }
         response = g.soup(castURL, data=dataForm, params=params, cookies=cookies, post=True, response=True)
         if response.status_code == 200:
-            return True
+            print('Updated cast')
         else:
             print('Failed to update cast')
-            return False
     else:
-        return True
+        print('No updates')
 
 
 ## Uploads images to MDL

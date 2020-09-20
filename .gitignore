@@ -5,6 +5,7 @@
 /build/
 /dist/
 /mdl.egg-info/
+/workspaceMDL.egg-info/
 
 # Workflow files
 Workflow.org
