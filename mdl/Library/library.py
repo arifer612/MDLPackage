@@ -279,7 +279,7 @@ def postRating(cookies, episodeRating, details=None):
 # showID (str) : ShowID. Obtained from getShowID()
 # epID (str) : EpisodeID. Obtained from getEpisodeID()
 def postURL(showID=None, epID=None):
-    return f"{siteRoot}/v1/edit/episodes/{epID}/" if epID else f"{siteRoot}/v1/edit/titles/{showID}/"
+    return f"{siteRoot}/v1/edit/episodes/{epID}" if epID else f"{siteRoot}/v1/edit/titles/{showID}/"
 
 
 ## Reads all the information of the show episodes and seasons
@@ -522,7 +522,7 @@ def imageSubmit(cookies, link, file, fileDir, keyNotes, epID=False, description=
                 'cover_id': imageID
             }
         submitURL = postURL(getShowID(link), epID).replace('edit/', '' if not epID else 'edit/') \
-                    + ('photos' if not epID else 'cover')
+                    + ('/photos' if not epID else '/cover')
         params = g.revDict(params) if not epID else params
         attempt = 0
         while attempt < 3:
@@ -557,7 +557,7 @@ def summarySubmit(cookies, epID, summary='', title='', notes=''):
             'summary': summary,
             'title': title
         }
-        submitURL = postURL(epID=epID) + 'details'
+        submitURL = postURL(epID=epID) + '/details'
         response = g.soup(submitURL, data=dataForm, params=parameters(cookies, undef=True), cookies=cookies,
                           post=True, response=True)
         if response.status_code == 200:
