@@ -6,8 +6,8 @@ try:
     import cPickle as pickle
 except ImportError:
     import pickle
-import yaml
 
+import yaml
 import requests
 from bs4 import BeautifulSoup as bs
 
@@ -124,3 +124,54 @@ def machinableLog(fileName, rootDir='.'):
             data = yaml.safe_load(j)
         fileName = os.path.splitext(fileName)[0] + '.p'
         saveLog(data, fileName, rootDir)
+
+
+class Log:
+    def __init__(self, fileName, rootDir='.', flip=False):
+        self.fileName, self.rootDir, self._flip = fileName, rootDir, flip
+        self.data = self._load()
+        self.__type = type(self.data)
+
+    def add(self, newData):
+        self.data = self._load()
+        if not self.data:
+            if type(newData) == dict:
+                self.data = {}
+            elif type(newData) == list:
+                self.data = []
+            elif type(newData) == str:
+                self.data = ''
+            self.__type = type(self.data)
+
+        if self.__type != type(newData):
+            raise TypeError
+        elif self.__type == dict:
+            self.data.update(newData)
+        elif self.__type == list:
+            self.data += newData
+        elif self.__type == str:
+            self.data += newData + ' \n'
+        self._updateLog()
+
+    def __add__(self, newData):
+        self.add(newData)
+
+    def sub(self, key):
+        self._load()
+        if self.__type == dict:
+            self.data.pop(key, None)
+        elif self.__type == list:
+            if key in self.data:
+                self.data.remove(key)
+        elif self.__type == str:
+            self.data.replace(f"{key} \n", "")
+        self._updateLog()
+
+    def __sub__(self, newData):
+        self.sub(newData)
+
+    def _load(self):
+        return loadLog(self.fileName, self.rootDir, self._flip)
+
+    def _updateLog(self):
+        saveLog(self.data, self.fileName, self.rootDir, self._flip)

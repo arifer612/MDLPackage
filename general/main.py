@@ -32,10 +32,11 @@ def main(argv):
         sys.exit(0)
     if opt.readLogs:
         fileDir, file = os.path.split(opt.readLogs)
+        readableLog(file, fileDir)
         sys.exit(f"A readable logs has been created in {readableLog(file, fileDir)}")
     elif opt.writeLogs:
         fileDir, file = os.path.split(opt.writeLogs)
         machinableLog(file, fileDir)
         sys.exit(f"The readable log has been dumped as a pickle")
-    configFile.move(log=opt.logDir, key=opt.keyDir)
 
+    configFile.move(log=opt.logDir, key=opt.keyDir)
