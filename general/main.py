@@ -1,6 +1,6 @@
 import os
 import sys
-from . import readableLog, machinableLog
+from . import readableLog, machinableLog, LogFile
 from . import configFile
 from optparse import OptionParser, OptionGroup
 
