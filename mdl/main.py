@@ -14,21 +14,40 @@ def checkLink(function):
 class User(object):
     def __init__(self, keyword=None, result=None, link=None):
         self.__cookies = library.login()
-        self.link, self.keyword, self.result = link, keyword, result
-        self.nativeTitle, self.network, self.totalEpisodes = None, None, None
-        if self.link or self.keyword:
+        self.__link, self.__keyword, self.__result = link, keyword, result
+        self.__nativeTitle, self.__network, self.__totalEpisodes = None, None, None
+        if self.__link or self.__keyword:
             self.search()
+        self.__repr = library.userProfile(self.__cookies)
+
+    @property
+    def link(self):
+        return self.__link
+
+    @property
+    def natitiveTitle(self):
+        return self.__nativeTitle
+
+    @property
+    def network(self):
+        return self.__network
+
+    @property
+    def totalEpisodes(self):
+        return self.__totalEpisodes
+
+    def __repr__(self):
+        return self.__repr
 
     def search(self, keyword=None, result=None, link=None):
-        self.link = self.link if not link else link
-        if not self.link and self.keyword:
-            self.link = library.search(self.keyword if not keyword else keyword, self.result if not result else result)
-        elif not keyword:
-            print('Error: Provide either a search keyword or the link to the show')
+        if self.__link or link:
+            self.__link = self.__link if not link else link
+        elif self.__keyword or keyword:
+            self.__link = library.search(self.__keyword if not keyword else keyword, self.__result if not result else result)
         else:
-            self.link = library.search(keyword, result)
-        if self.link:
-            self.nativeTitle, self.network, self.totalEpisodes = library.showDetails(self.link)
+            print('Error: Provide either a search keyword or the link to the show')
+        if self.__link:
+            self.__nativeTitle, self.__network, self.__totalEpisodes = library.showDetails(self.__link)
         else:
             print('Search failed')
 
@@ -94,4 +113,7 @@ class Show(User):
     def __init__(self, keyword=None, result=None, link=None):
         if not (keyword or link):
             sys.exit('Error: Provide either a search keyword or the link to the show')
-        super().__init__(keyword=keyword, result=result, link=link)
+        super().__init__(keyword, result, link)
+
+    def __repr__(self):
+        return f"{super().__repr__()} @ {self.natitiveTitle}"

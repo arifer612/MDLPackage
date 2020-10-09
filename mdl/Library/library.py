@@ -582,6 +582,11 @@ def deleteSubmission(cookies, category, link=None, epID=None):
         raise SyntaxError
 
 
+def userProfile(cookies):
+    profile = g.soup(f"{siteRoot}/profile", cookies=cookies)
+    return re.match(".+(?='s Profile)", profile.head.title.string)[0]
+
+
 def dramaList(cookies, watching=True, completed=True, plan_to_watch=True, hold=True, drop=True, not_interested=True,
               suppress=False):
     profileLink = f"{siteRoot}/profile"

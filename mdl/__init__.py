@@ -1,3 +1,3 @@
 from general import configFile
 import general
-from .main import *
+from .main import User, Show
