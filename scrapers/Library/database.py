@@ -16,6 +16,16 @@ rootKakaku = 'https://kakaku.com'
 networkDictionary = {'NTV': 4, 'TV Asahi': 10, 'TBS': 6, 'TV Tokyo': 12, 'Fuji TV': 8}
 
 
+def japaneseDays(day, delimiter=None):
+    dayArray = {'月': 'Mon', '火': 'Tue', '水': 'Wed', '木': 'Thu', '金': 'Fri', '土': 'Sat', '日': 'Sun'}
+    if not delimiter:
+        return dayArray[day]
+    else:
+        dayLeft, dayRight = day.split(delimiter[0], 1)
+        day, dayRight = dayRight.split(delimiter[1], 1)
+        return f"{dayLeft}{dayArray[day]}{dayRight}"
+
+
 # nativeTitle (str) : Japanese title, needs not be exact but preferable
 # airDate (str) : Last aired date in YYYY/MM/DD format if searching by title, else in datetime (Y, m, d, H, M) format
 def searchDataZoo(nativeTitle, airDate=None, exclusions='', totalResults=1):
@@ -81,7 +91,7 @@ def searchDataZoo(nativeTitle, airDate=None, exclusions='', totalResults=1):
                                 break
                     result = result[answer - 1]
                 title = result['richSnippet']['metatags']['title']
-                title = g.japaneseDays(title[:title.find(' の放送内容')][-18:], ['(', ')'])
+                title = japaneseDays(title[:title.find(' の放送内容')][-18:], ['(', ')'])
                 return result['url'], d.datetime.strptime(title, '%Y/%m/%d%a%H:%M')
             else:
                 raise FileNotFoundError
@@ -161,7 +171,7 @@ def getEpisodes(nativeTitle, startDate, channel, omit=None, startEpisode=1):
         # Gets airdate information
         date = soup.find(attrs={'name': 'keywords'})['content'].split(',')[-2]
         time = soup.find(id='epiinfo').text.split('\u3000')[0].split(date)[1].split('〜')[0]
-        start = d.datetime.strptime(g.japaneseDays(date, delimiter=['（', '）']) + time,
+        start = d.datetime.strptime(japaneseDays(date, delimiter=['（', '）']) + time,
                                     '%Y年%m月%d日%a %H:%M')
 
         if int(d.datetime.strftime(start, '%y%m%d')) not in omit:
