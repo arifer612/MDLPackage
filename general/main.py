@@ -1,14 +1,17 @@
 import os
 import sys
-from .Library.library import readableLog, machinableLog
+from . import readableLog, machinableLog
 from . import configFile
 from optparse import OptionParser, OptionGroup
 
 
 def main(argv):
-    parser = OptionParser()
+    parser = OptionParser(prog='general', version=f"MDLPackage v{configFile.version}")
+    parser.set_defaults(showDir=False, quiet=False)
     parser.add_option('-d', '--directory', action='store_true', dest='showDir', default=False,
                       help='Shows log directory and key filepath.')
+    parser.add_option('-q', '--quiet', action='store_true', dest='quiet', default=False,
+                      help='Suppresses output to the minimum')
 
     logGroup = OptionGroup(parser, "Log file conversion")
     logGroup.add_option('-r', '--read', type='string', action='store', dest='readLogs',
@@ -33,10 +36,10 @@ def main(argv):
     if opt.readLogs:
         fileDir, file = os.path.split(opt.readLogs)
         readableLog(file, fileDir)
-        sys.exit(f"A readable logs has been created in {readableLog(file, fileDir)}")
+        sys.exit(f"A readable logs has been created in {readableLog(file, fileDir)}") if not opt.quiet else sys.exit(0)
     elif opt.writeLogs:
         fileDir, file = os.path.split(opt.writeLogs)
         machinableLog(file, fileDir)
-        sys.exit(f"The readable log has been dumped as a pickle")
+        sys.exit(f"The readable log has been dumped as a pickle") if not opt.quiet else sys.exit(0)
 
     configFile.move(log=opt.logDir, key=opt.keyDir)
