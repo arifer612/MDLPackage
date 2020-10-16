@@ -146,7 +146,7 @@ class Log:
         return temp_self()
 
     def __radd__(self, other):
-        self.add(self + other)
+        self.add(self + other, force=True)
 
 
 class LogFile(Log):
