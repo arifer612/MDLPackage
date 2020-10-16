@@ -43,6 +43,28 @@ class Log:
     def __len__(self):
         return len(self.data)
 
+    def __call__(self, *keys):
+        if not keys:
+            return self.data
+        else:
+            try:
+                if self._type is dict:
+                    if keys[0] in list(self.data.keys()):
+                        return self.data[keys[0]]
+                    else:
+                        raise LookupError
+
+                elif self._type is list:
+                    if keys[0] in len(self):
+                        return self.data[keys[0]]
+                    else:
+                        raise LookupError
+
+                elif self._type is str:
+                    return self.data
+            except LookupError:
+                return KeyError if len(keys) == 1 else TypeError('list cannot be called')
+
     def __iter__(self):
         if self.data or self._type is not str:
             return self
@@ -63,7 +85,7 @@ class Log:
         self._counter += 1
         return result
 
-    def add(self, data, force=False):
+    def add(self, data, force=False, string=False):
         if self._type is dict:
             if type(data) is not dict:
                 raise TypeError('Data has to be a dictionary')
@@ -106,17 +128,17 @@ class LogFile(Log):
         super().__init__(fileName, self.data)
         self._update()  # Creates the file
 
-    def keys(self):
-        return list(self.data)
-
     def __call__(self, *keys):
-        if not keys:
-            return {key: self(key).data if type(self(key)) is Log else self(key)
-                for key in list(self.data)} if self.data else {}
-        elif len(keys) == 1:
-            return self.data[keys[0]]
+        if keys:
+            return super().__call__(*keys).data
         else:
-            return "Only 1 key can be called"
+            return super().__call__()
+
+    def keys(self):
+        return list(self.data.keys())
+
+    def values(self):
+        return list(self.data.values())
 
     def _load(self):
         self.data = loadLog(self._fileName, self._rootDir, self._flip)
@@ -125,18 +147,23 @@ class LogFile(Log):
         saveLog(self.data, self._fileName, self._rootDir, self._flip)
 
     @safeLoad
-    def add(self, key, data=None, force=False):
+    def add(self, key, data=None, force=False, string=False):
         if type(key) is dict:
             for i, j in key.items():
                 if i in self.data:
-                    self(i).add(j, force)
+                    self.data[i].add(j, force)
                 else:
                     super().add({i: Log(i, j)})
         elif type(key) in (int, str):
             if key in self.data:
                 self(key).add(data, force)
             else:
-                super().add({key: Log(key, data)})
+                if string:
+                    super().add({key: Log(key, str(data))}, force)
+                else:
+                    if type(data) is not list:
+                        data = [data]
+                    super().add({key: Log(key, data)}, force)
         else:
             raise TypeError("Data must be <dict>, <list>, or <str>")
 
