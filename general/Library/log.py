@@ -172,7 +172,7 @@ class LogFile(Log):
                     super().add({i: Log(i, j)})
         elif type(key) in (int, str):
             if key in self.data:
-                self(key).add(data, force)
+                self.data[key].add(data, force)
             else:
                 if string:
                     super().add({key: Log(key, str(data))}, force)
