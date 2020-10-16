@@ -208,5 +208,11 @@ def machinableLog(fileName, rootDir='.'):
         with open(file, 'r') as j:
             data = yaml.safe_load(j)
         dataLog = LogFile(fileName, rootDir)
-        dataLog.removeAll()
-        dataLog.add(data)
+        dataOld = LogFile()
+        try:
+            dataLog.removeAll()
+            dataLog.add(data)
+        except Exception as err:
+            print(f'ERROR: {err}')
+            dataLog.add(dataOld)
+
