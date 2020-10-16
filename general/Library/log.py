@@ -16,7 +16,9 @@ def loadLog(fileName, rootDir='.', flip=False):
 
 def saveLog(data, fileName, rootDir='.', flip=False):
     fileName = os.path.splitext(fileName)[0] + '.p'
-    file = os.path.abspath(os.path.expanduser(os.path.join(rootDir, fileName)))
+    rootDir = os.path.abspath(os.path.expanduser(rootDir))
+    os.makedirs(rootDir, exist_ok=True)
+    file = os.path.join(rootDir, fileName)
     with open(file, 'wb') as p:
         pickle.dump(data if not flip else revDict(data), p, protocol=pickle.HIGHEST_PROTOCOL)
 
