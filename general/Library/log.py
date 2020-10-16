@@ -120,6 +120,18 @@ class Log:
         elif self._type is str:
             self.data = ""
 
+    def __add__(self, other):
+        if type(other) is not type(self):
+            raise TypeError(f"{type(self)} can only concatenate with another {type(self)}")
+        if self.__key != other.__key or self._type != other._type:
+            raise NameError('Only equivalent Logs can be concatenated')
+        temp_self = Log(self.__key, self())
+        temp_self.add(other())
+        return temp_self()
+
+    def __radd__(self, other):
+        self.add(self + other)
+
 
 class LogFile(Log):
     def __init__(self, fileName, rootDir='.', flip=False):
