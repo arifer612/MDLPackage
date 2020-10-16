@@ -213,12 +213,11 @@ class LogFile(Log):
         if self.data:
             self.remove(list(self.data))
 
-
 def readableLog(fileName, rootDir='.', quiet=False):
     fileName = os.path.splitext(fileName)[0] + '.p'
     file = os.path.abspath(os.path.expanduser(os.path.join(rootDir, fileName)))
     if not os.path.exists(file):
-        raise FileNotFoundError
+        raise FileNotFoundError(f"{fileName} does not exist")
     else:
         data = LogFile(fileName, rootDir)
         file = os.path.splitext(file)[0] + '.yaml'
@@ -231,7 +230,7 @@ def machinableLog(fileName, rootDir='.'):
     fileName = os.path.splitext(fileName)[0] + '.yaml'
     file = os.path.abspath(os.path.expanduser(os.path.join(rootDir, fileName)))
     if not os.path.exists(file):
-        raise FileNotFoundError
+        raise FileNotFoundError(f"{fileName} does not exist")
     else:
         with open(file, 'r') as j:
             data = yaml.safe_load(j)
