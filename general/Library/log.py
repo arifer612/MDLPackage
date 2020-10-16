@@ -132,7 +132,11 @@ class LogFile(Log):
         if keys:
             return super().__call__(*keys).data
         else:
-            return super().__call__()
+            data = super().__call__()
+            for i, j in data.items():
+                if type(j) in (Log, LogFile):
+                    data[i] = j()
+            return data
 
     def keys(self):
         return list(self.data.keys())
