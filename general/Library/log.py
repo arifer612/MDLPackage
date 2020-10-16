@@ -85,6 +85,22 @@ class Log:
         self._counter += 1
         return result
 
+    @staticmethod
+    def _recursiveUpdate(data, newData):
+        for i, j in newData.items():
+            if i not in data:
+                data.update({i: j})
+            else:
+                if type(data[i]) is dict and type(j) is dict:
+                    self._recursiveUpdate(data[i], j)
+                else:
+                    if type(data[i]) is list and type(j) is not list:
+                        j = [j]
+                    try:
+                        data[i] += j
+                    except Exception as err:
+                        print(f"Failed to update {i} because {err}")
+
     def add(self, data, force=False, string=False):
         if self._type is dict:
             if type(data) is not dict:
@@ -92,7 +108,7 @@ class Log:
             if force:  # Overwrites data
                 self.data = data
             else:  # Updates dictionary value
-                self.data.update(data)
+                self._recursiveUpdate(self.data, data)
 
         elif self._type is list:
             if type(data) is not list:
@@ -177,7 +193,7 @@ class LogFile(Log):
                 if string:
                     super().add({key: Log(key, str(data))}, force)
                 else:
-                    if type(data) is not list:
+                    if type(data) not in (list, dict):
                         data = [data]
                     super().add({key: Log(key, data)}, force)
         else:
