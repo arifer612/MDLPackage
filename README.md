@@ -30,7 +30,7 @@ This package has only been tested in a Linux and Windows 10 environment using Py
         
 # Documentation
 ## mdl
-There are 2 classes that can be called in this package: **mdl.User()** and **mdl.Show()**
+There are 2 objects that can be called from this package: **mdl.User()** and **mdl.Show()**
 
 ####**mdl.User()** 
 Logs in as a user to retrieve or post information on MyDramaList.com without the need for an API key, using only the user's MyDramaList username and password. This class requires no arguments. *(This will be expanded in [Login Details])* The actions that can be used on **User()** are as follows.
@@ -87,3 +87,27 @@ Logs in as a user to retrieve or post information for a specific show on MyDrama
     
 Either *showTitle* or *link* is required. Provide the link to the show as *link*. Otherwise, using *showTitle* will search MyDramaList.com for the show and return a list of matching shows unless there is only 1 show or the result number is declared in *result*. *link* takes priority over *showTitle*.
 
+## general
+There are 2 objects in this module: **general.configFile** and **general.LogFile**. The other methods in this package serve as a library of general methods.
+
+####**general.configFile**
+A global configuration file may be created in ~/.config/MDLConfig.conf. Stores information of where the login key file and log directory are. Without the global configuration file, the default directories are:
+    
+    key file: ~/.MDL.conf
+    log directory: ~/Documents/Logs
+    
+Changing the directories are done through **general.configFile.move()**
+    
+    general.configFile.move(key='', log='')
+    
+It is also possible to set the login keys without accessing the key file directly through **general.configFile.newKeys()**
+
+    general.configFile.newKeys(username='MDL Username', password='MDL Password', youtubeAPI='YouTube API key', echo=True)
+
+####**general.LogFile**
+A log file object to manage the various logs of each episode and show for MyDramaList. The data structure is similar to that of a dictionary but with several new methods meant to add data efficiently. The log file will be physically saved on disk as a pickle but it is possible to convert it to the human readable YAML format for editing. The methods which may be used on **general.LogFile** are as follows:
+
+    log = general.LogFile(fileName, rootDir='.', flip=False)
+    
+    log.add(key, data=None, force=False)
+Adds data to the log file. **key** may be a dictionary of data. If **key** is not a dictionary, **data** will be added to the 
