@@ -1,5 +1,6 @@
 /venv/
 /.idea/
+/tests
 *.pyc
 
 # Distributions
