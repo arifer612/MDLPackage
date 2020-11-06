@@ -413,6 +413,24 @@ def castSearch(name, nationality=None, gender=None):
         return False
 
 
+def episodesAnalyse(castDict: dict) -> dict:
+    """
+    Parses a dictionary with lists of integers to string of text.
+    e.g. {cast: [1, 2, 4, 5, 6]} -> {cast: '(Ep 1-2, 4-6)'}
+    """
+    for cast, episodeList in castDict.items():
+        end = -1
+        final = []
+        for episode in episodeList:
+            if episode > end + 1:
+                final.append(str(episode))
+            else:
+                final[-1] = final[-1].split('-')[0] + f'-{episode}'
+            end = episode
+        castDict[cast] = f"(Ep {', '.join([episodeBunch for episodeBunch in final])})"
+    return castDict
+
+
 ## Analyses new cast against previously posted cast on MDL castList (dict) : Cast List. Obtained from castInfo()
 # castEdited (dict) : New cast with the appropriate character names castRevision (dict) : Posted revised cast list.
 # Obtained from castInfo() (Necessary to make sure the output does not break)

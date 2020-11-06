@@ -17,18 +17,6 @@ def revDict(dic: dict) -> dict:
     return dict(reversed(list(dic.items())))
 
 
-def episodesAnalyse(castDict):
-    for cast, episodeList in castDict.items():
-        end = -1
-        final = []
-        for episode in episodeList:
-            if episode > end + 1:
-                final.append(str(episode))
-            else:
-                final[-1] = final[-1].split('-')[0] + f'-{episode}'
-            end = episode
-        castDict[cast] = f"(Ep {', '.join([episodeBunch for episodeBunch in final])})"
-    return castDict
 def saveFile(link: str, rootDir: str = ".", fileName: str = "", attempts: int = 3, **kwargs) -> Optional[str]:
     """
     Downloads file and saves locally
