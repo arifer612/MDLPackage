@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.1" />
+<title>mdl.main API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>mdl.main</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from mdl.Library import library
+import sys
+
+
+def checkLink(function):
+    def runFunction(self, *args, **kwargs):
+        if not self.link:
+            return print(f&#34;Error: {repr(function.__name__)} requires a link. Use search() to set.&#34;)
+        else:
+            return function(self, *args, **kwargs)
+    return runFunction
+
+
+class User(object):
+    def __init__(self, keyword=None, result=None, link=None):
+        self.__cookies = library.login()
+        self.__link, self.__keyword, self.__result = link, keyword, result
+        self.__nativeTitle, self.__network, self.__totalEpisodes = None, None, None
+        if self.__link or self.__keyword:
+            self.search()
+        self.__repr = library.userProfile(self.__cookies)
+
+    @property
+    def link(self):
+        return self.__link
+
+    @property
+    def natitiveTitle(self):
+        return self.__nativeTitle
+
+    @property
+    def network(self):
+        return self.__network
+
+    @property
+    def totalEpisodes(self):
+        return self.__totalEpisodes
+
+    def __repr__(self):
+        return self.__repr
+
+    def search(self, keyword=None, result=None, link=None):
+        if self.__link or link:
+            self.__link = self.__link if not link else link
+        elif self.__keyword or keyword:
+            self.__link = library.search(self.__keyword if not keyword else keyword, self.__result if not result else result)
+        else:
+            print(&#39;Error: Provide either a search keyword or the link to the show&#39;)
+        if self.__link:
+            self.__nativeTitle, self.__network, self.__totalEpisodes = library.showDetails(self.__link)
+        else:
+            print(&#39;Search failed&#39;)
+
+    @staticmethod
+    def searchCast(name, nationality=None, gender=None):
+        return library.castSearch(name, nationality, gender)
+
+    @checkLink
+    def getShowDetails(self):
+        return library.showDetails(self.link)
+
+    @checkLink
+    def getAirDate(self, totalEpisodes=None, startEpisode=1):
+        return library.getStartDate(self.link, totalEpisodes, startEpisode)
+
+    @checkLink
+    def getRatings(self, start=1, end=False):
+        return library.retrieveRatings(self.__cookies, self.link, start,
+                                       self.totalEpisodes if start == 1 and not end else end)
+
+    @checkLink
+    def getShowInfo(self):
+        return library.showInfo(self.__cookies, self.link)
+
+    @checkLink
+    def getCastInfo(self):
+        return library.castInfo(self.__cookies, self.link)
+
+    @checkLink
+    def getSummaryInfo(self, episode):
+        return library.retrieveSummary(self.__cookies, library.getEpisodeID(self.link, episode))
+
+    @checkLink
+    def submitRatings(self, rating, details):
+        return library.postRating(self.__cookies, rating, details)
+
+    @checkLink
+    def submitCast(self, castList, notes=&#39;&#39;):
+        return library.castSubmit(self.__cookies, self.link, castList, notes)
+
+    @checkLink
+    def submitImage(self, file, fileDir, notes, episode=None, description=&#39;&#39;, **kwargs):
+        return library.imageSubmit(self.__cookies, self.link, file, fileDir, notes,
+                                   library.getEpisodeID(self.link, episode) if episode else False, description, **kwargs)
+
+    @checkLink
+    def submitSummary(self, episode=None, summary=&#39;&#39;, title=&#39;&#39;, notes=&#39;&#39;):
+        return library.summarySubmit(self.__cookies, library.getEpisodeID(self.link, episode) if episode else False,
+                                     summary, title, notes)
+
+    @checkLink
+    def submitDelete(self, category=None, episode=None):
+        return library.deleteSubmission(self.__cookies, category, self.link,
+                                        library.getEpisodeID(self.link, episode) if episode else False)
+
+    def dramaList(self, **kwargs):
+        if self.__class__ == Show:
+            raise AttributeError(&#34;dramaList is not accessible through the &#39;Show&#39; object&#34;)
+        return library.dramaList(self.__cookies, **kwargs)
+
+
+class Show(User):
+    def __init__(self, keyword=None, result=None, link=None):
+        if not (keyword or link):
+            sys.exit(&#39;Error: Provide either a search keyword or the link to the show&#39;)
+        super().__init__(keyword, result, link)
+
+    def __repr__(self):
+        return f&#34;{super().__repr__()} @ {self.natitiveTitle}&#34;</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="mdl.main.checkLink"><code class="name flex">
+<span>def <span class="ident">checkLink</span></span>(<span>function)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def checkLink(function):
+    def runFunction(self, *args, **kwargs):
+        if not self.link:
+            return print(f&#34;Error: {repr(function.__name__)} requires a link. Use search() to set.&#34;)
+        else:
+            return function(self, *args, **kwargs)
+    return runFunction</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="mdl.main.Show"><code class="flex name class">
+<span>class <span class="ident">Show</span></span>
+<span>(</span><span>keyword=None, result=None, link=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Show(User):
+    def __init__(self, keyword=None, result=None, link=None):
+        if not (keyword or link):
+            sys.exit(&#39;Error: Provide either a search keyword or the link to the show&#39;)
+        super().__init__(keyword, result, link)
+
+    def __repr__(self):
+        return f&#34;{super().__repr__()} @ {self.natitiveTitle}&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="mdl.main.User" href="#mdl.main.User">User</a></li>
+</ul>
+</dd>
+<dt id="mdl.main.User"><code class="flex name class">
+<span>class <span class="ident">User</span></span>
+<span>(</span><span>keyword=None, result=None, link=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class User(object):
+    def __init__(self, keyword=None, result=None, link=None):
+        self.__cookies = library.login()
+        self.__link, self.__keyword, self.__result = link, keyword, result
+        self.__nativeTitle, self.__network, self.__totalEpisodes = None, None, None
+        if self.__link or self.__keyword:
+            self.search()
+        self.__repr = library.userProfile(self.__cookies)
+
+    @property
+    def link(self):
+        return self.__link
+
+    @property
+    def natitiveTitle(self):
+        return self.__nativeTitle
+
+    @property
+    def network(self):
+        return self.__network
+
+    @property
+    def totalEpisodes(self):
+        return self.__totalEpisodes
+
+    def __repr__(self):
+        return self.__repr
+
+    def search(self, keyword=None, result=None, link=None):
+        if self.__link or link:
+            self.__link = self.__link if not link else link
+        elif self.__keyword or keyword:
+            self.__link = library.search(self.__keyword if not keyword else keyword, self.__result if not result else result)
+        else:
+            print(&#39;Error: Provide either a search keyword or the link to the show&#39;)
+        if self.__link:
+            self.__nativeTitle, self.__network, self.__totalEpisodes = library.showDetails(self.__link)
+        else:
+            print(&#39;Search failed&#39;)
+
+    @staticmethod
+    def searchCast(name, nationality=None, gender=None):
+        return library.castSearch(name, nationality, gender)
+
+    @checkLink
+    def getShowDetails(self):
+        return library.showDetails(self.link)
+
+    @checkLink
+    def getAirDate(self, totalEpisodes=None, startEpisode=1):
+        return library.getStartDate(self.link, totalEpisodes, startEpisode)
+
+    @checkLink
+    def getRatings(self, start=1, end=False):
+        return library.retrieveRatings(self.__cookies, self.link, start,
+                                       self.totalEpisodes if start == 1 and not end else end)
+
+    @checkLink
+    def getShowInfo(self):
+        return library.showInfo(self.__cookies, self.link)
+
+    @checkLink
+    def getCastInfo(self):
+        return library.castInfo(self.__cookies, self.link)
+
+    @checkLink
+    def getSummaryInfo(self, episode):
+        return library.retrieveSummary(self.__cookies, library.getEpisodeID(self.link, episode))
+
+    @checkLink
+    def submitRatings(self, rating, details):
+        return library.postRating(self.__cookies, rating, details)
+
+    @checkLink
+    def submitCast(self, castList, notes=&#39;&#39;):
+        return library.castSubmit(self.__cookies, self.link, castList, notes)
+
+    @checkLink
+    def submitImage(self, file, fileDir, notes, episode=None, description=&#39;&#39;, **kwargs):
+        return library.imageSubmit(self.__cookies, self.link, file, fileDir, notes,
+                                   library.getEpisodeID(self.link, episode) if episode else False, description, **kwargs)
+
+    @checkLink
+    def submitSummary(self, episode=None, summary=&#39;&#39;, title=&#39;&#39;, notes=&#39;&#39;):
+        return library.summarySubmit(self.__cookies, library.getEpisodeID(self.link, episode) if episode else False,
+                                     summary, title, notes)
+
+    @checkLink
+    def submitDelete(self, category=None, episode=None):
+        return library.deleteSubmission(self.__cookies, category, self.link,
+                                        library.getEpisodeID(self.link, episode) if episode else False)
+
+    def dramaList(self, **kwargs):
+        if self.__class__ == Show:
+            raise AttributeError(&#34;dramaList is not accessible through the &#39;Show&#39; object&#34;)
+        return library.dramaList(self.__cookies, **kwargs)</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="mdl.main.Show" href="#mdl.main.Show">Show</a></li>
+</ul>
+<h3>Static methods</h3>
+<dl>
+<dt id="mdl.main.User.searchCast"><code class="name flex">
+<span>def <span class="ident">searchCast</span></span>(<span>name, nationality=None, gender=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def searchCast(name, nationality=None, gender=None):
+    return library.castSearch(name, nationality, gender)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="mdl.main.User.link"><code class="name">var <span class="ident">link</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def link(self):
+    return self.__link</code></pre>
+</details>
+</dd>
+<dt id="mdl.main.User.natitiveTitle"><code class="name">var <span class="ident">natitiveTitle</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def natitiveTitle(self):
+    return self.__nativeTitle</code></pre>
+</details>
+</dd>
+<dt id="mdl.main.User.network"><code class="name">var <span class="ident">network</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def network(self):
+    return self.__network</code></pre>
+</details>
+</dd>
+<dt id="mdl.main.User.totalEpisodes"><code class="name">var <span class="ident">totalEpisodes</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def totalEpisodes(self):
+    return self.__totalEpisodes</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="mdl.main.User.dramaList"><code class="name flex">
+<span>def <span class="ident">dramaList</span></span>(<span>self, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dramaList(self, **kwargs):
+    if self.__class__ == Show:
+        raise AttributeError(&#34;dramaList is not accessible through the &#39;Show&#39; object&#34;)
+    return library.dramaList(self.__cookies, **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="mdl.main.User.getAirDate"><code class="name flex">
+<span>def <span class="ident">getAirDate</span></span>(<span>self, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def runFunction(self, *args, **kwargs):
+    if not self.link:
+        return print(f&#34;Error: {repr(function.__name__)} requires a link. Use search() to set.&#34;)
+    else:
+        return function(self, *args, **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="mdl.main.User.getCastInfo"><code class="name flex">
+<span>def <span class="ident">getCastInfo</span></span>(<span>self, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def runFunction(self, *args, **kwargs):
+    if not self.link:
+        return print(f&#34;Error: {repr(function.__name__)} requires a link. Use search() to set.&#34;)
+    else:
+        return function(self, *args, **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="mdl.main.User.getRatings"><code class="name flex">
+<span>def <span class="ident">getRatings</span></span>(<span>self, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def runFunction(self, *args, **kwargs):
+    if not self.link:
+        return print(f&#34;Error: {repr(function.__name__)} requires a link. Use search() to set.&#34;)
+    else:
+        return function(self, *args, **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="mdl.main.User.getShowDetails"><code class="name flex">
+<span>def <span class="ident">getShowDetails</span></span>(<span>self, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def runFunction(self, *args, **kwargs):
+    if not self.link:
+        return print(f&#34;Error: {repr(function.__name__)} requires a link. Use search() to set.&#34;)
+    else:
+        return function(self, *args, **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="mdl.main.User.getShowInfo"><code class="name flex">
+<span>def <span class="ident">getShowInfo</span></span>(<span>self, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def runFunction(self, *args, **kwargs):
+    if not self.link:
+        return print(f&#34;Error: {repr(function.__name__)} requires a link. Use search() to set.&#34;)
+    else:
+        return function(self, *args, **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="mdl.main.User.getSummaryInfo"><code class="name flex">
+<span>def <span class="ident">getSummaryInfo</span></span>(<span>self, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def runFunction(self, *args, **kwargs):
+    if not self.link:
+        return print(f&#34;Error: {repr(function.__name__)} requires a link. Use search() to set.&#34;)
+    else:
+        return function(self, *args, **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="mdl.main.User.search"><code class="name flex">
+<span>def <span class="ident">search</span></span>(<span>self, keyword=None, result=None, link=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def search(self, keyword=None, result=None, link=None):
+    if self.__link or link:
+        self.__link = self.__link if not link else link
+    elif self.__keyword or keyword:
+        self.__link = library.search(self.__keyword if not keyword else keyword, self.__result if not result else result)
+    else:
+        print(&#39;Error: Provide either a search keyword or the link to the show&#39;)
+    if self.__link:
+        self.__nativeTitle, self.__network, self.__totalEpisodes = library.showDetails(self.__link)
+    else:
+        print(&#39;Search failed&#39;)</code></pre>
+</details>
+</dd>
+<dt id="mdl.main.User.submitCast"><code class="name flex">
+<span>def <span class="ident">submitCast</span></span>(<span>self, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def runFunction(self, *args, **kwargs):
+    if not self.link:
+        return print(f&#34;Error: {repr(function.__name__)} requires a link. Use search() to set.&#34;)
+    else:
+        return function(self, *args, **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="mdl.main.User.submitDelete"><code class="name flex">
+<span>def <span class="ident">submitDelete</span></span>(<span>self, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def runFunction(self, *args, **kwargs):
+    if not self.link:
+        return print(f&#34;Error: {repr(function.__name__)} requires a link. Use search() to set.&#34;)
+    else:
+        return function(self, *args, **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="mdl.main.User.submitImage"><code class="name flex">
+<span>def <span class="ident">submitImage</span></span>(<span>self, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def runFunction(self, *args, **kwargs):
+    if not self.link:
+        return print(f&#34;Error: {repr(function.__name__)} requires a link. Use search() to set.&#34;)
+    else:
+        return function(self, *args, **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="mdl.main.User.submitRatings"><code class="name flex">
+<span>def <span class="ident">submitRatings</span></span>(<span>self, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def runFunction(self, *args, **kwargs):
+    if not self.link:
+        return print(f&#34;Error: {repr(function.__name__)} requires a link. Use search() to set.&#34;)
+    else:
+        return function(self, *args, **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="mdl.main.User.submitSummary"><code class="name flex">
+<span>def <span class="ident">submitSummary</span></span>(<span>self, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def runFunction(self, *args, **kwargs):
+    if not self.link:
+        return print(f&#34;Error: {repr(function.__name__)} requires a link. Use search() to set.&#34;)
+    else:
+        return function(self, *args, **kwargs)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="mdl" href="index.html">mdl</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="mdl.main.checkLink" href="#mdl.main.checkLink">checkLink</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="mdl.main.Show" href="#mdl.main.Show">Show</a></code></h4>
+</li>
+<li>
+<h4><code><a title="mdl.main.User" href="#mdl.main.User">User</a></code></h4>
+<ul class="two-column">
+<li><code><a title="mdl.main.User.dramaList" href="#mdl.main.User.dramaList">dramaList</a></code></li>
+<li><code><a title="mdl.main.User.getAirDate" href="#mdl.main.User.getAirDate">getAirDate</a></code></li>
+<li><code><a title="mdl.main.User.getCastInfo" href="#mdl.main.User.getCastInfo">getCastInfo</a></code></li>
+<li><code><a title="mdl.main.User.getRatings" href="#mdl.main.User.getRatings">getRatings</a></code></li>
+<li><code><a title="mdl.main.User.getShowDetails" href="#mdl.main.User.getShowDetails">getShowDetails</a></code></li>
+<li><code><a title="mdl.main.User.getShowInfo" href="#mdl.main.User.getShowInfo">getShowInfo</a></code></li>
+<li><code><a title="mdl.main.User.getSummaryInfo" href="#mdl.main.User.getSummaryInfo">getSummaryInfo</a></code></li>
+<li><code><a title="mdl.main.User.link" href="#mdl.main.User.link">link</a></code></li>
+<li><code><a title="mdl.main.User.natitiveTitle" href="#mdl.main.User.natitiveTitle">natitiveTitle</a></code></li>
+<li><code><a title="mdl.main.User.network" href="#mdl.main.User.network">network</a></code></li>
+<li><code><a title="mdl.main.User.search" href="#mdl.main.User.search">search</a></code></li>
+<li><code><a title="mdl.main.User.searchCast" href="#mdl.main.User.searchCast">searchCast</a></code></li>
+<li><code><a title="mdl.main.User.submitCast" href="#mdl.main.User.submitCast">submitCast</a></code></li>
+<li><code><a title="mdl.main.User.submitDelete" href="#mdl.main.User.submitDelete">submitDelete</a></code></li>
+<li><code><a title="mdl.main.User.submitImage" href="#mdl.main.User.submitImage">submitImage</a></code></li>
+<li><code><a title="mdl.main.User.submitRatings" href="#mdl.main.User.submitRatings">submitRatings</a></code></li>
+<li><code><a title="mdl.main.User.submitSummary" href="#mdl.main.User.submitSummary">submitSummary</a></code></li>
+<li><code><a title="mdl.main.User.totalEpisodes" href="#mdl.main.User.totalEpisodes">totalEpisodes</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.1</a>.</p>
+</footer>
+</body>
+</html>

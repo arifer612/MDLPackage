@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.1" />
+<title>scrapers.Library.database API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>scrapers.Library.database</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">## Datazoo searches episodes backwards from the latest episode to the first and has a database that starts on
+#   2010/04/15. I recommend using this over kakaku especially if the show begins after 2010 as kakaku usually has very
+#   messy cast information.
+
+## Kakaku searches episodes forward in time from the first episode to the last. This should be used as a backup option
+#   for it has a very messy database for some variety shows.
+
+import datetime as d
+import general as g
+from bs4 import BeautifulSoup as bs
+import json
+import re
+
+rootZoo = &#39;https://datazoo.jp&#39;
+rootKakaku = &#39;https://kakaku.com&#39;
+networkDictionary = {&#39;NTV&#39;: 4, &#39;TV Asahi&#39;: 10, &#39;TBS&#39;: 6, &#39;TV Tokyo&#39;: 12, &#39;Fuji TV&#39;: 8}
+
+
+def japaneseDays(day, delimiter=None):
+    dayArray = {&#39;月&#39;: &#39;Mon&#39;, &#39;火&#39;: &#39;Tue&#39;, &#39;水&#39;: &#39;Wed&#39;, &#39;木&#39;: &#39;Thu&#39;, &#39;金&#39;: &#39;Fri&#39;, &#39;土&#39;: &#39;Sat&#39;, &#39;日&#39;: &#39;Sun&#39;}
+    if not delimiter:
+        return dayArray[day]
+    else:
+        dayLeft, dayRight = day.split(delimiter[0], 1)
+        day, dayRight = dayRight.split(delimiter[1], 1)
+        return f&#34;{dayLeft}{dayArray[day]}{dayRight}&#34;
+
+
+# nativeTitle (str) : Japanese title, needs not be exact but preferable
+# airDate (str) : Last aired date in YYYY/MM/DD format if searching by title, else in datetime (Y, m, d, H, M) format
+def searchDataZoo(nativeTitle, airDate=None, exclusions=&#39;&#39;, totalResults=1):
+    if type(totalResults) != int:
+        print(&#39;totalResults only accepts integer values&#39;)
+        raise TypeError
+    if type(airDate) == d.datetime:
+        if airDate &gt;= d.datetime(2010, 4, 15):
+            queryURL = f&#34;{rootZoo}/d/{airDate.year}/{airDate.month}/{airDate.day}/{int(airDate.hour / 6) + 1}&#34;
+            soup = g.soup(queryURL)
+            link = f&#34;{rootZoo}{soup.find(string=nativeTitle).parent[&#39;href&#39;]}&#34;
+            return link, airDate
+        else:
+            print(&#39;Too far back in time, not within database&#39;)
+    elif type(airDate) == str:
+        queryURL = &#39;https://cse.google.com/cse/element/v1&#39;
+        params = {
+            &#39;rsz&#39;: &#39;filtered_cse&#39;,
+            &#39;num&#39;: totalResults,
+            &#39;hl&#39;: &#39;ja&#39;,
+            &#39;source&#39;: &#39;gcsc&#39;,
+            &#39;gss&#39;: &#39;.com&#39;,
+            &#39;cselibv&#39;: &#39;26b8d00a7c7a0812&#39;,
+            &#39;cx&#39;: &#39;partner-pub-1955300006877540:6422076301&#39;,
+            &#39;q&#39;: f&#34;{nativeTitle} {airDate} -{exclusions}&#34;,
+            &#39;safe&#39;: &#39;active&#39;,
+            &#39;cse_tok&#39;: &#39;AJvRUv29OfLq77RISJdH3hnYlRBU:1599371773557&#39;,
+            &#39;exp&#39;: &#39;csqr.cc&#39;,
+            &#39;oq&#39;: f&#34;{nativeTitle} {airDate}&#34;,
+            &#39;gs_I&#39;: &#39;partner-generic.3...10019.11097.2.11305.0.0.0.0.0.0.0.0..0.0.csems,nrl=13...0.11073j100193469j5j2...&#39;
+                    &#39;1.34.partner-generic..0.0.0.&#39;,
+            &#39;callback&#39;: &#39;google.search.cse.api16222&#39;
+        }
+        headers = {&#39;user-agent&#39;: &#39;Mozilla/5.0&#39;}
+        try:
+            response = g.soup(queryURL, params=params, headers=headers, response=True)
+            if response.status_code == 200:
+                result = [i for i in json.loads(response.content[35:-2])[&#39;results&#39;] if &#39;/tv/&#39; in i[&#39;url&#39;]]
+                if len(result) == 0:
+                    raise FileNotFoundError
+                elif len(result) == 1:
+                    result = result[0]
+                else:
+                    print(&#39;Which of the following is the right result?&#39;)
+                    for i, r in enumerate(result, start=1):
+                        print(f&#34;{i} : {r[&#39;richSnippet&#39;][&#39;metatags&#39;][&#39;title&#39;]}&#34;)
+                    answer = attempt = 0
+                    while attempt &lt; 3:
+                        try:
+                            answer = int(input(&#39;Result No.&#39;)) if attempt == 0 else int(
+                                input(&#39;Invalid answer. Result No.&#39;))
+                            if answer not in range(1, totalResults + 1):
+                                raise ValueError
+                            else:
+                                break
+                        except ValueError:
+                            attempt += 1
+                            if attempt &lt; 3:
+                                pass
+                            else:
+                                print(&#39;Too many invalid attempts. Picking first choice&#39;)
+                                answer = 1
+                                break
+                    result = result[answer - 1]
+                title = result[&#39;richSnippet&#39;][&#39;metatags&#39;][&#39;title&#39;]
+                title = japaneseDays(title[:title.find(&#39; の放送内容&#39;)][-18:], [&#39;(&#39;, &#39;)&#39;])
+                return result[&#39;url&#39;], d.datetime.strptime(title, &#39;%Y/%m/%d%a%H:%M&#39;)
+            else:
+                raise FileNotFoundError
+        except (FileNotFoundError, KeyError):
+            print(&#39;No search results&#39;)
+            return False, False
+
+
+def dataZoo(link):
+    soup = g.soup(link)
+    information = {
+        &#39;cast&#39;: [name.split(&#39;（&#39;)[0]
+                 for name in soup.find(class_=&#39;icn_cast&#39;).next_sibling.text.replace(&#39;\n&#39;, &#39;&#39;).split(&#39;\xa0&#39;)],
+        &#39;url&#39;: link
+    }
+    try:
+        history = soup.find(class_=&#39;oldprogram&#39;).find_all(&#39;a&#39;, href=True)[0]
+        prevDates = re.split(&#39;[（：）]&#39;, history.text)
+        prevDate = d.datetime.strptime(f&#34;{prevDates[0]} {prevDates[1].zfill(2)}:{prevDates[2].zfill(2)}&#34;,
+                                       &#39;%Y年%m月%d日 %H:%M&#39;)
+        link = f&#34;{rootZoo}{history[&#39;href&#39;]}&#34;
+    except:
+        link = prevDate = None
+    return information, prevDate, link
+
+
+def dataZooScrape(nativeTitle, airDate=&#39;&#39;, exclusions=&#39;&#39;, totalResults=1):
+    episodeList = {}
+    link, airDate = searchDataZoo(nativeTitle, airDate, exclusions, totalResults)
+    while link:
+        episodeList[airDate], airDate, link = dataZoo(link)
+    return episodeList
+
+
+## Searches kakaku.com for an entry in the timetable.
+# nativeTitle (str) : EXACT Japanese title of the show
+# startDate (datetime) : EXACT date the show airs on. May or may not be the first episode.
+# Channel (str) : kakaku.com only stores information for NTV, TV Asahi, TBS, TV Tokyo, and Fuji TV
+def getStartLink(nativeTitle, startDate, channel):
+    channelNumber = networkDictionary[channel]
+    attempt = 1
+    date = d.datetime.strftime(startDate, &#39;%Y%m%d&#39;)
+    while True:
+        try:
+            soup = g.soup(f&#34;{rootKakaku}/tv/channel={channelNumber}/date={date}&#34;)
+            suffixLink = soup.find(&#39;a&#39;, string=nativeTitle).find_next(&#39;a&#39;)[&#39;href&#39;]
+            print(f&#39;Found the show on {date}&#39;)
+            break
+        except AttributeError:
+            # The following will account for possible date mis-entries in MDL because of the 28HR system used in
+            # Japanese TV
+            print(f&#39;Cannot find the show on {date}&#39;)
+            date = d.datetime.strftime(startDate + d.timedelta(days=-(-1) ** attempt * (1 + (attempt &gt; 2))), &#39;%Y%m%d&#39;)
+            attempt += 1
+            if attempt &gt; 4:
+                print(
+                    &#39;Cannot find the show between dates {} - {}&#39;.format(
+                        d.datetime.strftime(startDate - d.timedelta(days=2), &#39;%Y%m%d&#39;),
+                        d.datetime.strftime(startDate + d.timedelta(days=2), &#39;%Y%m%d&#39;)
+                    )
+                )
+                date = input(&#39;Provide a valid date in the exact format (YYYYMMDD) : &#39;).replace(&#39; &#39;, &#39;&#39;)
+            if attempt == 6:
+                exit(&#39;No valid dates. Either that or the title or the channel is incorrect/invalid&#39;)
+    return suffixLink
+
+
+def getEpisodes(nativeTitle, startDate, channel, omit=None, startEpisode=1):
+    episodeSuffix = getStartLink(nativeTitle, startDate, channel)
+    episodeList = {}
+    seasonsList = {}
+    episodeNumber = startEpisode
+    episodeLinks = [episodeSuffix]
+    while True:
+        soup = g.soup(f&#34;{rootKakaku}{episodeSuffix}&#34;)
+
+        # Gets airdate information
+        date = soup.find(attrs={&#39;name&#39;: &#39;keywords&#39;})[&#39;content&#39;].split(&#39;,&#39;)[-2]
+        time = soup.find(id=&#39;epiinfo&#39;).text.split(&#39;\u3000&#39;)[0].split(date)[1].split(&#39;〜&#39;)[0]
+        start = d.datetime.strptime(japaneseDays(date, delimiter=[&#39;（&#39;, &#39;）&#39;]) + time,
+                                    &#39;%Y年%m月%d日%a %H:%M&#39;)
+
+        if int(d.datetime.strftime(start, &#39;%y%m%d&#39;)) not in omit:
+            episodeList[episodeNumber] = {&#39;start&#39;: start,
+                                          &#39;cast&#39;: [],
+                                          &#39;guests&#39;: [],
+                                          &#39;url&#39;: f&#34;{rootKakaku}{episodeSuffix}&#34;}
+
+            # Gets cast and guests information
+            castInfo = [info for info in str(soup.find(id=&#39;epiinfo&#39;)).split(&#39;&lt;br/&gt;&#39;)[1:] if &#39;\xa0&#39; in info]
+            if castInfo:
+                for castDetails in castInfo:
+                    castType, cast = castDetails.split(&#39;\xa0&#39;)
+                    if castType in [&#39;【出演】&#39;, &#39;【声の出演】&#39;]:
+                        episodeList[episodeNumber][&#39;cast&#39;] += [name.text.split(&#39;（&#39;)[0]
+                                                               for name in bs(cast, &#39;lxml&#39;).find_all(&#39;a&#39;)]
+                    else:
+                        episodeList[episodeNumber][&#39;guests&#39;] += [name.text.split(&#39;（&#39;)[0]
+                                                                 for name in bs(cast, &#39;lxml&#39;).find_all(&#39;a&#39;)]
+            else:
+                zooLink = searchDataZoo(nativeTitle, start)[0]
+                episodeList[episodeNumber].update(dataZoo(zooLink)[0])
+
+            if episodeList[episodeNumber][&#39;start&#39;].year not in list(seasonsList.keys()):
+                seasonsList[episodeList[episodeNumber][&#39;start&#39;].year] = {
+                    &#39;start&#39;: episodeNumber,
+                    &#39;end&#39;: 0,
+                    &#39;startDate&#39;: episodeList[episodeNumber][&#39;start&#39;]
+                }
+                try:
+                    seasonsList[episodeList[episodeNumber][&#39;start&#39;].year - 1][&#39;end&#39;] = episodeNumber - 1
+                except KeyError:
+                    pass
+
+            if episodeNumber % 1 == 0:
+                print(f&#39;Episode {episodeNumber} @ {start}&#39;)
+        else:
+            episodeNumber -= 1
+
+        nextButton = soup.find(src=&#39;https://img1.kakaku.k-img.com/images/tv/2008/epi_next.gif&#39;)
+        nextEpisode = nextButton.parent[&#39;href&#39;] if nextButton else &#39;&#39;
+
+        if nextEpisode:
+            episodeNumber += 1
+            episodeSuffix = nextEpisode
+            episodeLinks.append(episodeSuffix)
+        else:
+            print(f&#34;Scraped episodes {len(episodeList)}\nNo more epiosdes&#34;)
+            break
+
+    seasonsList[list(seasonsList)[-1]][&#39;end&#39;] = episodeNumber
+    return episodeList, seasonsList</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="scrapers.Library.database.dataZoo"><code class="name flex">
+<span>def <span class="ident">dataZoo</span></span>(<span>link)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dataZoo(link):
+    soup = g.soup(link)
+    information = {
+        &#39;cast&#39;: [name.split(&#39;（&#39;)[0]
+                 for name in soup.find(class_=&#39;icn_cast&#39;).next_sibling.text.replace(&#39;\n&#39;, &#39;&#39;).split(&#39;\xa0&#39;)],
+        &#39;url&#39;: link
+    }
+    try:
+        history = soup.find(class_=&#39;oldprogram&#39;).find_all(&#39;a&#39;, href=True)[0]
+        prevDates = re.split(&#39;[（：）]&#39;, history.text)
+        prevDate = d.datetime.strptime(f&#34;{prevDates[0]} {prevDates[1].zfill(2)}:{prevDates[2].zfill(2)}&#34;,
+                                       &#39;%Y年%m月%d日 %H:%M&#39;)
+        link = f&#34;{rootZoo}{history[&#39;href&#39;]}&#34;
+    except:
+        link = prevDate = None
+    return information, prevDate, link</code></pre>
+</details>
+</dd>
+<dt id="scrapers.Library.database.dataZooScrape"><code class="name flex">
+<span>def <span class="ident">dataZooScrape</span></span>(<span>nativeTitle, airDate='', exclusions='', totalResults=1)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dataZooScrape(nativeTitle, airDate=&#39;&#39;, exclusions=&#39;&#39;, totalResults=1):
+    episodeList = {}
+    link, airDate = searchDataZoo(nativeTitle, airDate, exclusions, totalResults)
+    while link:
+        episodeList[airDate], airDate, link = dataZoo(link)
+    return episodeList</code></pre>
+</details>
+</dd>
+<dt id="scrapers.Library.database.getEpisodes"><code class="name flex">
+<span>def <span class="ident">getEpisodes</span></span>(<span>nativeTitle, startDate, channel, omit=None, startEpisode=1)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getEpisodes(nativeTitle, startDate, channel, omit=None, startEpisode=1):
+    episodeSuffix = getStartLink(nativeTitle, startDate, channel)
+    episodeList = {}
+    seasonsList = {}
+    episodeNumber = startEpisode
+    episodeLinks = [episodeSuffix]
+    while True:
+        soup = g.soup(f&#34;{rootKakaku}{episodeSuffix}&#34;)
+
+        # Gets airdate information
+        date = soup.find(attrs={&#39;name&#39;: &#39;keywords&#39;})[&#39;content&#39;].split(&#39;,&#39;)[-2]
+        time = soup.find(id=&#39;epiinfo&#39;).text.split(&#39;\u3000&#39;)[0].split(date)[1].split(&#39;〜&#39;)[0]
+        start = d.datetime.strptime(japaneseDays(date, delimiter=[&#39;（&#39;, &#39;）&#39;]) + time,
+                                    &#39;%Y年%m月%d日%a %H:%M&#39;)
+
+        if int(d.datetime.strftime(start, &#39;%y%m%d&#39;)) not in omit:
+            episodeList[episodeNumber] = {&#39;start&#39;: start,
+                                          &#39;cast&#39;: [],
+                                          &#39;guests&#39;: [],
+                                          &#39;url&#39;: f&#34;{rootKakaku}{episodeSuffix}&#34;}
+
+            # Gets cast and guests information
+            castInfo = [info for info in str(soup.find(id=&#39;epiinfo&#39;)).split(&#39;&lt;br/&gt;&#39;)[1:] if &#39;\xa0&#39; in info]
+            if castInfo:
+                for castDetails in castInfo:
+                    castType, cast = castDetails.split(&#39;\xa0&#39;)
+                    if castType in [&#39;【出演】&#39;, &#39;【声の出演】&#39;]:
+                        episodeList[episodeNumber][&#39;cast&#39;] += [name.text.split(&#39;（&#39;)[0]
+                                                               for name in bs(cast, &#39;lxml&#39;).find_all(&#39;a&#39;)]
+                    else:
+                        episodeList[episodeNumber][&#39;guests&#39;] += [name.text.split(&#39;（&#39;)[0]
+                                                                 for name in bs(cast, &#39;lxml&#39;).find_all(&#39;a&#39;)]
+            else:
+                zooLink = searchDataZoo(nativeTitle, start)[0]
+                episodeList[episodeNumber].update(dataZoo(zooLink)[0])
+
+            if episodeList[episodeNumber][&#39;start&#39;].year not in list(seasonsList.keys()):
+                seasonsList[episodeList[episodeNumber][&#39;start&#39;].year] = {
+                    &#39;start&#39;: episodeNumber,
+                    &#39;end&#39;: 0,
+                    &#39;startDate&#39;: episodeList[episodeNumber][&#39;start&#39;]
+                }
+                try:
+                    seasonsList[episodeList[episodeNumber][&#39;start&#39;].year - 1][&#39;end&#39;] = episodeNumber - 1
+                except KeyError:
+                    pass
+
+            if episodeNumber % 1 == 0:
+                print(f&#39;Episode {episodeNumber} @ {start}&#39;)
+        else:
+            episodeNumber -= 1
+
+        nextButton = soup.find(src=&#39;https://img1.kakaku.k-img.com/images/tv/2008/epi_next.gif&#39;)
+        nextEpisode = nextButton.parent[&#39;href&#39;] if nextButton else &#39;&#39;
+
+        if nextEpisode:
+            episodeNumber += 1
+            episodeSuffix = nextEpisode
+            episodeLinks.append(episodeSuffix)
+        else:
+            print(f&#34;Scraped episodes {len(episodeList)}\nNo more epiosdes&#34;)
+            break
+
+    seasonsList[list(seasonsList)[-1]][&#39;end&#39;] = episodeNumber
+    return episodeList, seasonsList</code></pre>
+</details>
+</dd>
+<dt id="scrapers.Library.database.getStartLink"><code class="name flex">
+<span>def <span class="ident">getStartLink</span></span>(<span>nativeTitle, startDate, channel)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getStartLink(nativeTitle, startDate, channel):
+    channelNumber = networkDictionary[channel]
+    attempt = 1
+    date = d.datetime.strftime(startDate, &#39;%Y%m%d&#39;)
+    while True:
+        try:
+            soup = g.soup(f&#34;{rootKakaku}/tv/channel={channelNumber}/date={date}&#34;)
+            suffixLink = soup.find(&#39;a&#39;, string=nativeTitle).find_next(&#39;a&#39;)[&#39;href&#39;]
+            print(f&#39;Found the show on {date}&#39;)
+            break
+        except AttributeError:
+            # The following will account for possible date mis-entries in MDL because of the 28HR system used in
+            # Japanese TV
+            print(f&#39;Cannot find the show on {date}&#39;)
+            date = d.datetime.strftime(startDate + d.timedelta(days=-(-1) ** attempt * (1 + (attempt &gt; 2))), &#39;%Y%m%d&#39;)
+            attempt += 1
+            if attempt &gt; 4:
+                print(
+                    &#39;Cannot find the show between dates {} - {}&#39;.format(
+                        d.datetime.strftime(startDate - d.timedelta(days=2), &#39;%Y%m%d&#39;),
+                        d.datetime.strftime(startDate + d.timedelta(days=2), &#39;%Y%m%d&#39;)
+                    )
+                )
+                date = input(&#39;Provide a valid date in the exact format (YYYYMMDD) : &#39;).replace(&#39; &#39;, &#39;&#39;)
+            if attempt == 6:
+                exit(&#39;No valid dates. Either that or the title or the channel is incorrect/invalid&#39;)
+    return suffixLink</code></pre>
+</details>
+</dd>
+<dt id="scrapers.Library.database.japaneseDays"><code class="name flex">
+<span>def <span class="ident">japaneseDays</span></span>(<span>day, delimiter=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def japaneseDays(day, delimiter=None):
+    dayArray = {&#39;月&#39;: &#39;Mon&#39;, &#39;火&#39;: &#39;Tue&#39;, &#39;水&#39;: &#39;Wed&#39;, &#39;木&#39;: &#39;Thu&#39;, &#39;金&#39;: &#39;Fri&#39;, &#39;土&#39;: &#39;Sat&#39;, &#39;日&#39;: &#39;Sun&#39;}
+    if not delimiter:
+        return dayArray[day]
+    else:
+        dayLeft, dayRight = day.split(delimiter[0], 1)
+        day, dayRight = dayRight.split(delimiter[1], 1)
+        return f&#34;{dayLeft}{dayArray[day]}{dayRight}&#34;</code></pre>
+</details>
+</dd>
+<dt id="scrapers.Library.database.searchDataZoo"><code class="name flex">
+<span>def <span class="ident">searchDataZoo</span></span>(<span>nativeTitle, airDate=None, exclusions='', totalResults=1)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def searchDataZoo(nativeTitle, airDate=None, exclusions=&#39;&#39;, totalResults=1):
+    if type(totalResults) != int:
+        print(&#39;totalResults only accepts integer values&#39;)
+        raise TypeError
+    if type(airDate) == d.datetime:
+        if airDate &gt;= d.datetime(2010, 4, 15):
+            queryURL = f&#34;{rootZoo}/d/{airDate.year}/{airDate.month}/{airDate.day}/{int(airDate.hour / 6) + 1}&#34;
+            soup = g.soup(queryURL)
+            link = f&#34;{rootZoo}{soup.find(string=nativeTitle).parent[&#39;href&#39;]}&#34;
+            return link, airDate
+        else:
+            print(&#39;Too far back in time, not within database&#39;)
+    elif type(airDate) == str:
+        queryURL = &#39;https://cse.google.com/cse/element/v1&#39;
+        params = {
+            &#39;rsz&#39;: &#39;filtered_cse&#39;,
+            &#39;num&#39;: totalResults,
+            &#39;hl&#39;: &#39;ja&#39;,
+            &#39;source&#39;: &#39;gcsc&#39;,
+            &#39;gss&#39;: &#39;.com&#39;,
+            &#39;cselibv&#39;: &#39;26b8d00a7c7a0812&#39;,
+            &#39;cx&#39;: &#39;partner-pub-1955300006877540:6422076301&#39;,
+            &#39;q&#39;: f&#34;{nativeTitle} {airDate} -{exclusions}&#34;,
+            &#39;safe&#39;: &#39;active&#39;,
+            &#39;cse_tok&#39;: &#39;AJvRUv29OfLq77RISJdH3hnYlRBU:1599371773557&#39;,
+            &#39;exp&#39;: &#39;csqr.cc&#39;,
+            &#39;oq&#39;: f&#34;{nativeTitle} {airDate}&#34;,
+            &#39;gs_I&#39;: &#39;partner-generic.3...10019.11097.2.11305.0.0.0.0.0.0.0.0..0.0.csems,nrl=13...0.11073j100193469j5j2...&#39;
+                    &#39;1.34.partner-generic..0.0.0.&#39;,
+            &#39;callback&#39;: &#39;google.search.cse.api16222&#39;
+        }
+        headers = {&#39;user-agent&#39;: &#39;Mozilla/5.0&#39;}
+        try:
+            response = g.soup(queryURL, params=params, headers=headers, response=True)
+            if response.status_code == 200:
+                result = [i for i in json.loads(response.content[35:-2])[&#39;results&#39;] if &#39;/tv/&#39; in i[&#39;url&#39;]]
+                if len(result) == 0:
+                    raise FileNotFoundError
+                elif len(result) == 1:
+                    result = result[0]
+                else:
+                    print(&#39;Which of the following is the right result?&#39;)
+                    for i, r in enumerate(result, start=1):
+                        print(f&#34;{i} : {r[&#39;richSnippet&#39;][&#39;metatags&#39;][&#39;title&#39;]}&#34;)
+                    answer = attempt = 0
+                    while attempt &lt; 3:
+                        try:
+                            answer = int(input(&#39;Result No.&#39;)) if attempt == 0 else int(
+                                input(&#39;Invalid answer. Result No.&#39;))
+                            if answer not in range(1, totalResults + 1):
+                                raise ValueError
+                            else:
+                                break
+                        except ValueError:
+                            attempt += 1
+                            if attempt &lt; 3:
+                                pass
+                            else:
+                                print(&#39;Too many invalid attempts. Picking first choice&#39;)
+                                answer = 1
+                                break
+                    result = result[answer - 1]
+                title = result[&#39;richSnippet&#39;][&#39;metatags&#39;][&#39;title&#39;]
+                title = japaneseDays(title[:title.find(&#39; の放送内容&#39;)][-18:], [&#39;(&#39;, &#39;)&#39;])
+                return result[&#39;url&#39;], d.datetime.strptime(title, &#39;%Y/%m/%d%a%H:%M&#39;)
+            else:
+                raise FileNotFoundError
+        except (FileNotFoundError, KeyError):
+            print(&#39;No search results&#39;)
+            return False, False</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="scrapers.Library" href="index.html">scrapers.Library</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="scrapers.Library.database.dataZoo" href="#scrapers.Library.database.dataZoo">dataZoo</a></code></li>
+<li><code><a title="scrapers.Library.database.dataZooScrape" href="#scrapers.Library.database.dataZooScrape">dataZooScrape</a></code></li>
+<li><code><a title="scrapers.Library.database.getEpisodes" href="#scrapers.Library.database.getEpisodes">getEpisodes</a></code></li>
+<li><code><a title="scrapers.Library.database.getStartLink" href="#scrapers.Library.database.getStartLink">getStartLink</a></code></li>
+<li><code><a title="scrapers.Library.database.japaneseDays" href="#scrapers.Library.database.japaneseDays">japaneseDays</a></code></li>
+<li><code><a title="scrapers.Library.database.searchDataZoo" href="#scrapers.Library.database.searchDataZoo">searchDataZoo</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.1</a>.</p>
+</footer>
+</body>
+</html>

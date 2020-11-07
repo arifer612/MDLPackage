@@ -1,0 +1,1574 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.1" />
+<title>mdl.Library.library API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>mdl.Library.library</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import datetime as d
+import json
+import os
+import re
+import random
+import string
+from configparser import ConfigParser
+from distutils.util import strtobool
+from getpass import getpass
+
+from requests_toolbelt.multipart.encoder import MultipartEncoder
+
+from mdl import general as g
+from mdl import configFile
+
+siteRoot = &#39;https://mydramalist.com&#39;
+imageURL = f&#39;{siteRoot}/upload/&#39;
+
+
+## Login script
+def login():
+    loginKey = ConfigParser()
+    loginKey.read(configFile._Config__keyDir)
+    loginKeys = (loginKey[&#39;USER&#39;][&#39;username&#39;], loginKey[&#39;USER&#39;][&#39;password&#39;])
+
+    def userInfo():  # Retrieves username and password
+        username = input(&#39;USERNAME &gt;&gt;&gt;&#39;)
+        password = getpass(&#39;PASSWORD &gt;&gt;&gt;&#39;)
+        return username, password
+
+    def saveKeys(newKeys):
+        if loginKeys not in [newKeys, (&#39;-&#39;, &#39;-&#39;)]:
+            answer = input(&#39;Save login details? (y/n)&#39;)
+            if strtobool(answer) or not answer:
+                loginKey[&#39;USER&#39;][&#39;username&#39;], loginKey[&#39;USER&#39;][&#39;password&#39;] \
+                    = newKeys
+                with open(configFile._Config__keyDir, &#39;w&#39;) as f:
+                    loginKey.write(f)
+                    print(&#39;Saved login details in keyfile&#39;)
+
+    def loginFail(loginDetails):
+        response = g.soup(f&#39;{siteRoot}/signin&#39;, data={&#39;username&#39;: loginDetails[0], &#39;password&#39;: loginDetails[1]},
+                          post=True, response=True)
+        try:
+            cookie = response.request._cookies
+            if &#39;jl_sess&#39; in cookie:
+                saveKeys(loginDetails)
+            else:
+                raise ConnectionError
+        except ConnectionError:
+            cookie = None
+            print(&#39;!!Incorrect email or password!!&#39;)
+            loginDetails = userInfo()
+            print(&#34;Attempting to login again\n...&#34;)
+        return loginDetails, cookie
+
+    details = userInfo() if not all(loginKeys) else loginKeys
+
+    cookies = attempt = 0
+    attempt += not all(loginKeys)
+    while not cookies and attempt &lt; 3:
+        details, cookies = loginFail(details)
+        attempt += 1
+    if not cookies and attempt == 3:
+        print(&#39;Failed to login\nCheck username and password again.&#39;)
+    else:
+        print(&#39;Successfully logged in&#39;)
+    return cookies
+
+
+## Prepares parameters and headers for requesting / posting
+# cookies (list) : CookieJar. Obtained from login()
+# refererURL (str) : Referer URL.
+# post (bool) : True -&gt; Prepare headers for posting. False -&gt; Prepares headers for requesting
+# undef (bool) : True -&gt; lang = undefined. False -&gt; lang = en-US
+def parameters(cookies, undef=False, inverse=False):
+    params = {
+        &#39;lang&#39;: &#39;en-US&#39; if not undef else &#39;undefined&#39;,
+        &#39;token&#39;: cookies[&#39;jl_sess&#39;]
+    }
+    return params if not inverse else g.revDict(params)
+
+
+## Extracts MDL links and native title from MDL search
+# keyword (str) : Search keyword
+# results (int) : Prepared result index
+def search(keyword, result=None):
+    searchResults = g.soup(f&#34;{siteRoot}/search&#34;, params={&#39;q&#39;: keyword}).find_all(&#39;h6&#39;)
+
+    try:
+        if len(searchResults) == 1:
+            link = f&#34;{siteRoot}{searchResults[0].contents[0][&#39;href&#39;]}&#34;
+        elif len(searchResults) &gt; 1:
+            try:
+                if result:
+                    link = f&#34;{siteRoot}{searchResults[result - 1].contents[0][&#39;href&#39;]}&#34;
+                else:
+                    raise IndexError
+            except IndexError:
+                if result:
+                    print(&#39;Declared index does not exist. Pick one of the following shows&#39;)
+                else:
+                    print(&#39;Which of these shows is the right show?&#39;)
+                for resultNumber, result in enumerate(searchResults, start=1):
+                    print(f&#34;{resultNumber} : &#34;
+                          f&#34;{result.contents[0].text} ({result.find_next(class_=&#39;text-muted&#39;).text})&#34;)
+                counter = 1
+                while True:
+                    try:
+                        answer = int(input())
+                        if answer - 1 not in range(len(searchResults)):
+                            raise ValueError
+                        else:
+                            break
+                    except ValueError:
+                        counter += 1
+                        if counter &lt; 4:
+                            print(&#39;Invalid answer. Pick one of the shows above&#39;)
+                        else:
+                            print(&#39;Too many invalid answers. The first show will be picked&#39;)
+                            answer = 1
+                            break
+                link = f&#34;{siteRoot}{searchResults[answer - 1].contents[0][&#39;href&#39;]}&#34;
+        else:
+            raise FileNotFoundError
+    except FileNotFoundError:
+        link = &#39;&#39;
+        print(&#39;Search keyword returns no results. Check search keyword again&#39;)
+    return link
+
+
+def getShowID(link):
+    return link.split(&#39;/&#39;)[-1].split(&#39;-&#39;)[0]
+
+
+## Extracts information of show&#39;s original network and total posted episodes on MDL
+# link (str) : Redirect link. Obtained from search()
+def showDetails(link):
+    soup = g.soup(link)
+    try:
+        nativeTitle = soup.find(&#39;b&#39;, text=&#39;Native Title:&#39;).find_next(&#39;a&#39;)[&#39;title&#39;]
+    except AttributeError:  # No native tile in MDL
+        nativeTitle = &#39;&#39;
+    try:
+        network = soup.find(string=&#39;Original Network:&#39;).find_next(&#39;a&#39;).string
+    except AttributeError:
+        network = &#39;&#39;
+    totalEpisodes = int(list(soup.find(string=&#39;Episodes:&#39;).parent.parent.strings)[-1])
+    return nativeTitle, network, totalEpisodes
+
+
+## Gets episode airdate. Will only work if there is at least 1 date posted on MDL.
+# link (str) : Redirect link. Obtained from search()
+# totalEpisodes (int) : Total number of episodes posted on MDL. Obtained from showDetails()
+# startEpisode (int) : default to be set at 1. May use getStartEpisode() to query user.
+def getStartDate(link, totalEpisodes=None, startEpisode=1):
+    def getAirDate(episode):
+        if episode == 1:
+            aired = g.soup(link).find(xitemprop=&#39;datePublished&#39;)[&#39;content&#39;]
+            return d.datetime.strptime(aired, &#39;%Y-%m-%d&#39;)
+        else:
+            soup = g.soup(f&#34;{link}/episodes&#34;)
+            searchTerm = f&#34;{soup.find(property=&#39;og:title&#39;)[&#39;content&#39;]} Episode {startEpisode - 1}&#34;
+            aired = soup.find(string=searchTerm).find_next(class_=&#39;air-date&#39;).string
+            return d.datetime.strptime(aired, &#39;%b %d, %Y&#39;)
+
+    totalEpisodes = totalEpisodes if totalEpisodes else showDetails(link)[1]
+    attempt = 0
+    while attempt &lt; 3:
+        while 0 &lt; startEpisode &lt;= totalEpisodes:
+            try:
+                return getAirDate(startEpisode)
+            except ValueError:
+                startEpisode -= 1
+                if startEpisode &gt; 0:
+                    print(f&#34;Invalid airdate for Episode {startEpisode + 1}. Checking Episode {startEpisode}&#34;)
+                else:
+                    print(&#39;No information for any episodes at all. Provide information of the first aired episode&#39;)
+                    while True:
+                        try:
+                            return d.datetime.strptime(input(&#39;YYYY/MM/DD : &#39;), &#39;%Y/%m/%d&#39;)
+                        except ValueError:
+                            pass
+        try:  # Fixes startEpisode if it is above the total number of posted episodes
+            print(&#39;Invalid start episode.&#39;)
+            startEpisode = int(input(&#39;&gt;&gt;&gt;&#39;))
+        except ValueError:
+            attempt += 1
+    raise UnboundLocalError
+
+
+## Extracts episode ID of a show&#39;s episode
+# link (str) : Redirect link. Obtained from search()
+# episodeNumber (int) : Episode number
+def getEpisodeID(link, episodeNumber):
+    try:
+        episodeSoup = g.soup(f&#34;{link}/episode/{int(episodeNumber)}&#34;)
+        return int(episodeSoup.find(property=&#39;mdl:rid&#39;)[&#39;content&#39;])
+    except (TypeError, ValueError):
+        print(f&#39;Invalid episode (Episode {episodeNumber})&#39;)
+        raise FileNotFoundError
+
+
+## Retrieves rating information of a show
+# cookies (CookieJar) : Login cookies. Obtained from login()
+# link (str) : Redirect link. Obtained from search()
+# start (int) : Episode to start retrieving information from
+# end (int) : Episode to stop retrieving information from. If not specified, will only retrieve the rating of 1 episode
+def retrieveRatings(cookies, link, start=1, end=False):
+    end = end if end else start
+    rating = {}
+    episodeSoup = g.soup(f&#34;{link}/episodes&#34;)
+    for episodeNumber in range(start, end + 1):
+        try:
+            episodeID = getEpisodeID(link, episodeNumber)
+            ratingURL = f&#34;{siteRoot}/v1/episodes/{getEpisodeID(link, episodeNumber)}/reviews/check/rating&#34;
+            ratingJSON = g.soup(ratingURL, params=parameters(cookies), cookies=cookies, JSON=True)
+            rating[episodeNumber] = {
+                &#39;ID&#39;: (
+                    episodeID,
+                    ratingJSON[&#39;id&#39;]
+                ),
+                &#39;rating&#39;: {
+                    &#39;self&#39;: ratingJSON[&#39;rating&#39;],
+                    &#39;MDL&#39;: float(episodeSoup.find(href=f&#34;{link.replace(siteRoot, &#39;&#39;)}/episode/{episodeNumber}&#34;)
+                                 .find_next(class_=&#39;rating-panel&#39;).find(&#39;b&#39;).string)
+                },
+                &#39;url&#39;: ratingURL.replace(&#39;/check/rating&#39;, &#39;&#39;)
+            }
+        except FileNotFoundError:
+            pass
+    return rating
+
+
+## Post personal ratings onto MDL
+# episodeRating (dict) : Information of the episode&#39;s rating. Obtained by picking an episode from retrieveRating()
+# cookies (CookieJar) : Login cookies. Obtained from login()
+# link (str) : Redirect link. Obtained from search()
+# details (dict) : Detailed information of rating breakdown.
+def postRating(cookies, episodeRating, details=None):
+    details = details if details else {}
+    post = True if episodeRating[&#39;ID&#39;][1] == 0 else False
+    if post:
+        formData = {
+            &#39;id&#39;: 0,
+            &#39;dropped&#39;: &#39;&#39;,
+            &#39;spoiler&#39;: &#39;&#39;,
+            &#39;completed&#39;: &#39;&#39;,
+            &#39;episode_seen&#39;: &#39;&#39;,
+            &#39;review_headline&#39;: &#39;&#39;,
+            &#39;review&#39;: &#39;&#39;,
+            &#39;story_rating&#39;: 0,
+            &#39;acting_rating&#39;: 0,
+            &#39;lang_iso&#39;: &#39;en_US&#39;,
+            &#39;music_rating&#39;: 0,
+            &#39;rewatch_rating&#39;: 0,
+            &#39;overall_rating&#39;: 0,
+            &#39;rating&#39;: round(episodeRating[&#39;rating&#39;][&#39;self&#39;] * 2) / 2
+        }
+    else:
+        formData = {
+            &#39;id&#39;: episodeRating[&#39;ID&#39;][1],
+            &#39;lang_iso&#39;: &#39;en-US&#39;,
+            &#39;language&#39;: &#39;English&#39;,
+            &#39;headline&#39;: &#39;&#39;,
+            &#39;review&#39;: &#39;&#39;,
+            &#39;review_raw&#39;: &#39;&#39;,
+            &#39;rating&#39;: round(episodeRating[&#39;rating&#39;][&#39;self&#39;] * 2) / 2
+        }
+
+    formData.update(details)
+    ratingURL = episodeRating[&#39;url&#39;] + (not post) * f&#34;/{episodeRating[&#39;ID&#39;][1]}&#34;
+    response = g.soup(ratingURL, data=formData, params=parameters(cookies, undef=False), cookies=cookies,
+                      post=(-1) ** (not post), response=True)
+    return True if response.status_code == 200 else False
+
+
+## Preps URL to post information to
+# showID (str) : ShowID. Obtained from getShowID()
+# epID (str) : EpisodeID. Obtained from getEpisodeID()
+def postURL(showID=None, epID=None):
+    return f&#34;{siteRoot}/v1/edit/episodes/{epID}&#34; if epID else f&#34;{siteRoot}/v1/edit/titles/{showID}/&#34;
+
+
+## Reads all the information of the show episodes and seasons
+# cookies (CookieJar) : Login cookies. Obtained from login()
+# showID (str) : ShowID. Obtained from search()
+def showInfo(cookies, link):
+    def checkUpdates(jsonResponse, onlyEpisodes=False):
+        original = jsonResponse[&#39;original&#39;]
+        revision = jsonResponse[&#39;revision&#39;]
+        revised = 0
+        if not onlyEpisodes:
+            for element in revision.values():
+                revised += not not element
+            return original if revised == 0 else revision
+        else:
+            return revision[&#39;episodes&#39;] if not not revision[&#39;episodes&#39;] else original[&#39;episodes&#39;]
+
+    showID = getShowID(link)
+    infoURL, editURL = [postURL(showID=showID) + i for i in [&#39;&#39;, &#39;release&#39;]]
+    params = parameters(cookies)
+    episodesURL = f&#34;{infoURL}/episodes&#34;
+
+    info = checkUpdates(g.soup(infoURL, params=params, cookies=cookies, JSON=True))
+    edit = checkUpdates(g.soup(editURL, params=params, cookies=cookies, JSON=True))
+
+    seasons = {
+        season[&#39;name&#39;]: (
+            season[&#39;sid&#39;],
+            season[&#39;episode_start&#39;],
+            season[&#39;episode_end&#39;],
+            order
+        ) for order, season in enumerate(edit[&#39;seasons&#39;])
+    }
+
+    episodesList = []
+    for sID, startEpisode, endEpisode, order in seasons.values():
+        params.update({
+            &#39;sid&#39;: sID,
+            &#39;eps&#39;: startEpisode,
+            &#39;epe&#39;: endEpisode
+        })
+        episodesList.append(
+            checkUpdates(
+                g.soup(episodesURL, params=params, cookies=cookies, JSON=True),
+                onlyEpisodes=True)
+        )
+    episodes = {info[&#39;episode_number&#39;]: info for season in episodesList for info in season}
+    episodes = {keys: episodes[keys] for keys in sorted(list(episodes.keys()))}
+    return info, edit, episodes, seasons
+
+
+## Reads all the information of the cast appearance
+# cookies (CookieJar) : Login cookies. Obtained from login()
+# showID (str) : ShowID. Obtained from search()
+def castInfo(cookies, link):
+    showID = getShowID(link)
+    castURL = postURL(showID=showID) + &#39;cast&#39;
+    params = parameters(cookies)
+    castJSON = g.soup(castURL, params=params, cookies=cookies, JSON=True)
+    castOriginal = {castValue[&#39;display_name&#39;]: castValue for castValue in castJSON[&#39;original&#39;][&#39;cast&#39;]}
+    castRevision = {castValue[&#39;display_name&#39;]: castValue for castValue in castJSON[&#39;revision&#39;][&#39;cast&#39;]}
+    castList = {
+        cast: castRevision[cast] if cast in castRevision else castOriginal[cast] for cast in castOriginal
+    }
+    weights = &#39;,&#39;.join(castJSON[&#39;revision&#39;][&#39;cast_weights&#39;])
+    return castList, castRevision, weights, castURL, params
+
+
+## Searches for castID on MDL
+def castSearch(name, nationality=None, gender=None):
+    nationalityMap = {
+        &#39;japanese&#39;: 1,
+        &#39;jp&#39;: 1,
+        &#39;korean&#39;: 2,
+        &#39;ko&#39;: 2,
+        &#39;chinese&#39;: 3,
+        &#39;cn&#39;: 3,
+        &#39;hong kongers&#39;: 4,
+        &#39;hk&#39;: 4,
+        &#39;taiwanese&#39;: 5,
+        &#39;tw&#39;: 5,
+        &#39;thai&#39;: 6,
+        &#39;th&#39;: 6,
+        &#39;filipino&#39;: 140,
+        &#39;fp&#39;: 140
+    }
+    genderMap = {
+        &#39;male&#39;: 77,
+        &#39;m&#39;: 77,
+        &#39;female&#39;: 70,
+        &#39;f&#39;: 70
+    }
+    params = {
+        &#39;q&#39;: name,
+        &#39;adv&#39;: &#39;people&#39;,
+        &#39;gd&#39;: genderMap[gender.lower()] if gender else None,
+        &#39;na&#39;: nationalityMap[nationality.lower()] if nationality else None,
+        &#39;so&#39;: &#39;relevance&#39;
+    }
+    [params.pop(i, None) for i in [j for j in params if not params[j]]]
+    searchResults = g.soup(f&#34;{siteRoot}/search&#34;, params=params).find_all(&#39;h6&#39;)
+
+    try:
+        if len(searchResults) &gt; 1:
+            print(f&#39;Which of these is the right cast for {name}? (0 if no matches)&#39;)
+            for resultNumber, result in enumerate(searchResults, start=1):
+                print(f&#34;{resultNumber} : {result.contents[0].text} &#34;
+                      f&#34;({result.find_next(class_=&#39;text-muted&#39;).find_next(&#39;p&#39;).string})&#34;)
+            counter = 1
+            while True:
+                try:
+                    answer = int(input())
+                    if answer == 0:
+                        raise FileNotFoundError
+                    elif answer not in range(len(searchResults)):
+                        raise ValueError
+                    else:
+                        return searchResults[answer - 1].string
+                except ValueError:
+                    counter += 1
+                    if counter &lt; 4:
+                        print(&#39;Invalid answer&#39;)
+                    else:
+                        print(&#39;Too many invalid answers. The first choice will be picked&#39;)
+                        return searchResults[0].string
+        elif len(searchResults) == 1:
+            return searchResults[0].text
+        else:
+            raise FileNotFoundError
+    except FileNotFoundError:
+        return False
+
+
+## Analyses new cast against previously posted cast on MDL castList (dict) : Cast List. Obtained from castInfo()
+# castEdited (dict) : New cast with the appropriate character names castRevision (dict) : Posted revised cast list.
+# Obtained from castInfo() (Necessary to make sure the output does not break)
+# How this works - It compares the latest cast list against the original posted cast list on MDL.
+#   All the cast in the new cast list with a different character name entry will be outputted to be posted to MDL.
+#   This was created mainly for variety shows with guests, where they only appear for a few episodes at a time.
+def castAnalyse(castList, castEdited, castRevision):
+    newCast = []
+    for cast, castDetails in castList.items():
+        try:
+            characterName = castDetails[&#39;character_name&#39;]
+            if characterName:
+                episodes = re.findall(&#39;\((Ep[^)]+)&#39;, characterName)
+                if episodes:
+                    episodes = f&#34;({episodes[0]})&#34;
+                    episodesNormalised = episodes.replace(&#39;Ep. &#39;, &#39;Ep &#39;).replace(&#39;Ep.&#39;, &#39;Ep &#39;)
+                    if episodesNormalised != castEdited[cast]:
+                        castDetails[&#39;character_name&#39;] = castDetails[&#39;character_name&#39;].replace(episodes,
+                                                                                              castEdited[cast])
+                    else:
+                        raise KeyError
+                else:
+                    castDetails[&#39;character_name&#39;] = f&#34;{characterName} {castEdited[cast]}&#34;
+            else:
+                castDetails[&#39;character_name&#39;] = castEdited[cast]
+            newCast.append(castDetails)
+        except KeyError:  # Ignore guests that may not be considered in castEdited
+            pass
+    for guest, guestDetails in set(castRevision) - set(castList):
+        newCast.append(guestDetails)
+    return newCast
+
+
+## Posts the updated cast list onto MDL
+# link (str) : Link to show on MDL. Obtained from search()
+# showID (str) : Show ID. Obtained from search()
+# latestCast (dict) : Analysed cast list. Obtained from g.episodesAnalyse()
+# notes (str) : Notes for reviewing staff to read
+def castSubmit(cookies, link, latestCast, notes=&#39;&#39;):
+    castList, castRevision, weights, castURL, params = castInfo(cookies, link)
+    newCastList = castAnalyse(castList, latestCast, castRevision)
+    if newCastList:
+        popTerms = [&#39;url&#39;, &#39;content_type&#39;, &#39;display_nam&#39;, &#39;role_id&#39;, &#39;weight&#39;, &#39;thumbnail&#39;]
+        [item.pop(i, None) for item in newCastList for i in popTerms]
+        dataForm = {
+            &#39;notes&#39;: notes,
+            &#39;category&#39;: &#39;cast&#39;,
+            &#39;cast_data&#39;: json.dumps(newCastList),
+            &#39;weights&#39;: weights,
+            &#39;cast_weights&#39;: weights
+        }
+        response = g.soup(castURL, data=dataForm, params=params, cookies=cookies, post=True, response=True)
+        if response.status_code == 200:
+            print(&#39;Updated cast&#39;)
+        else:
+            print(&#39;Failed to update cast&#39;)
+    else:
+        print(&#39;No updates&#39;)
+
+
+## Uploads images to MDL
+# cookies (CookieJar) : Login cookies. Obtained from login()
+# link (str) : Link to show on MDL. Obtained from search()
+# file (str) : Filename with extension
+# fileDir (dir) : Directory where file is stored in
+# keyNotes (str) : Title of photo if uploading photo or notes for approving staff to read if uploading episode cover
+# epID (str) : Episode ID if uploading as episode cover, otherwise will automatically upload as a normal photo
+# description (str) : Only used if uploading photo to a show
+def imageSubmit(cookies, link, file, fileDir, keyNotes, epID=False, description=&#39;&#39;, suppress=False, attempts=3):
+    # Upload to MDL
+    try:
+        params = parameters(cookies, undef=not not epID)
+        imageData = MultipartEncoder(
+            fields={
+                &#39;category&#39;: (None, &#39;temp_photos&#39;),
+                &#39;file&#39;: (file, open(os.path.join(fileDir, file), &#39;rb&#39;), &#39;image/jpeg&#39;)
+            },
+            boundary=f&#34;------WebKitFormBoundary{&#39;&#39;.join(random.sample(string.ascii_letters + string.digits, 16))}&#34;
+        )
+        headers = {&#39;content-type&#39;: imageData.content_type}
+        imageID = None
+        attempt = 0
+        while attempt &lt; attempts:
+            uploadResponse = g.soup(imageURL, params=params if epID else None, headers=headers,
+                                    cookies=cookies, data=imageData, post=True, response=True)
+            if uploadResponse.status_code == 200:
+                imageID = json.loads(uploadResponse.content)[&#39;filename&#39;]
+                break
+            else:
+                attempt += 1
+
+        if not imageID:
+            raise ConnectionRefusedError
+
+        # Submit to MDL
+        if not epID:
+            dataForm = {
+                &#39;title&#39;: keyNotes,
+                &#39;image&#39;: f&#39;https://i.mydramalist.com/{imageID}m.jpg&#39;,
+                &#39;description&#39;: description,
+                &#39;filename&#39;: imageID
+            }
+        else:
+            dataForm = {
+                &#39;category&#39;: &#39;cover&#39;,
+                &#39;notes&#39;: keyNotes,
+                &#39;cover_id&#39;: imageID
+            }
+        submitURL = postURL(getShowID(link), epID).replace(&#39;edit/&#39;, &#39;&#39; if not epID else &#39;edit/&#39;) \
+                    + (&#39;/photos&#39; if not epID else &#39;/cover&#39;)
+        params = g.revDict(params) if not epID else params
+        attempt = 0
+        while attempt &lt; 3:
+            submitResponse = g.soup(submitURL, data=dataForm, params=params, cookies=cookies,
+                                    post=True, response=True)
+            if submitResponse.status_code == 200:
+                print(f&#39;Posted {file}&#39;) if not suppress else True
+                os.remove(os.path.join(fileDir, file))
+                return True
+            else:
+                attempt += 1
+        raise ConnectionRefusedError
+    except (ConnectionRefusedError, AttributeError):  # AttributeError : Images that do not exist
+        print(f&#39;Failed to post {file}&#39;)
+        return False
+
+
+def retrieveSummary(cookies, epID):
+    summaryURL = postURL(epID=epID)
+    response = g.soup(summaryURL, params=parameters(cookies, undef=True), cookies=cookies, JSON=True)[&#39;revision&#39;]
+    return {&#39;title&#39;: response[&#39;title&#39;], &#39;summary&#39;: response[&#39;summary&#39;]}
+
+
+## Updates the episode summary
+# summary (str) : Summary of the episode
+# notes (str) : Notes for reviewing staff to read
+def summarySubmit(cookies, epID, summary=&#39;&#39;, title=&#39;&#39;, notes=&#39;&#39;):
+    if summary or title:
+        dataForm = {
+            &#39;category&#39;: &#39;details&#39;,
+            &#39;notes&#39;: notes,
+            &#39;summary&#39;: summary,
+            &#39;title&#39;: title
+        }
+        submitURL = postURL(epID=epID) + &#39;/details&#39;
+        response = g.soup(submitURL, data=dataForm, params=parameters(cookies, undef=True), cookies=cookies,
+                          post=True, response=True)
+        if response.status_code == 200:
+            return True
+        else:
+            print(f&#39;Failed to update {epID}&#39;)
+            return False
+    else:
+        return False
+
+
+def deleteSubmission(cookies, category, link=None, epID=None):
+    if category:
+        deleteURL = f&#34;{siteRoot}/v1/edit/tickets/{epID}/episodes&#34; \
+            if epID else f&#34;{siteRoot}/v1/edit/titles/{getShowID(link)}/titles&#34;
+        params = {
+            &#39;category&#39;: category
+        }
+        params.update(parameters(cookies, undef=True if epID else False))
+        g.soup(deleteURL, params=params, delete=True)
+    else:
+        raise SyntaxError
+
+
+def userProfile(cookies):
+    profile = g.soup(f&#34;{siteRoot}/profile&#34;, cookies=cookies)
+    return re.match(&#34;.+(?=&#39;s Profile)&#34;, profile.head.title.string)[0]
+
+
+def dramaList(cookies, watching=True, completed=True, plan_to_watch=True, hold=True, drop=True, not_interested=True,
+              suppress=False):
+    profileLink = f&#34;{siteRoot}/profile&#34;
+    listLink = f&#34;{siteRoot}{g.soup(profileLink, cookies=cookies).find(&#39;a&#39;, text=&#39;My Watchlist&#39;)[&#39;href&#39;]}&#34;
+    listSoup = g.soup(listLink, cookies=cookies)
+    myDramaList = {
+        &#39;watching&#39;: listSoup.find(id=&#39;list_1&#39;) if watching else None,
+        &#39;completed&#39;: listSoup.find(id=&#39;list_2&#39;) if completed else None,
+        &#39;plan_to_watch&#39;: listSoup.find(id=&#39;list_3&#39;) if plan_to_watch else None,
+        &#39;on_hold&#39;: listSoup.find(id=&#39;list_4&#39;) if hold else None,
+        &#39;dropped&#39;: listSoup.find(id=&#39;list_5&#39;) if drop else None,
+        &#39;not_interested&#39;: g.soup(f&#34;{listLink}/not_interested&#34;, cookies=cookies).find(id=&#39;list_6&#39;)
+        if not_interested else None
+    }
+
+    def userInfo(ID):
+        infoSoup = g.soup(f&#34;{siteRoot}/v1/users/watchaction/{ID}&#34;,
+                          params=parameters(cookies),
+                          cookies=cookies,
+                          JSON=True)[&#39;data&#39;]
+        return {
+            &#39;date-start&#39;: None if infoSoup[&#39;date_start&#39;] == &#39;0000-00-00&#39;
+            else d.datetime.strptime(infoSoup[&#39;date_start&#39;], &#39;%Y-%m-%d&#39;),
+            &#39;date-end&#39;: None if infoSoup[&#39;date_finish&#39;] == &#39;0000-00-00&#39;
+            else d.datetime.strptime(infoSoup[&#39;date_finish&#39;], &#39;%Y-%m-%d&#39;),
+            &#39;rewatched&#39;: infoSoup[&#39;times_rewatched&#39;]
+        }
+
+    for key in [i for i in myDramaList if myDramaList[i]]:
+        try:
+            myDramaList[key] = {
+                int(show[&#39;id&#39;][2:]): {
+                    &#39;title&#39;: show.find(class_=&#39;title&#39;).text,
+                    &#39;country&#39;: show.find(class_=&#39;sort2&#39;).text,
+                    &#39;year&#39;: int(show.find(class_=&#39;sort3&#39;).text),
+                    &#39;type&#39;: show.find(class_=&#39;sort4&#39;).text,
+                    &#39;rating&#39;: float(show.find(class_=&#39;score&#39;).text)
+                    if show.find(class_=&#39;score&#39;) or float(show.find(class_=&#39;score&#39;).text) != 0.0 else None,
+                    &#39;progress&#39;: int(show.find(class_=&#39;episode-seen&#39;).text) if show.find(class_=&#39;episode-seen&#39;) else 0,
+                    &#39;total&#39;: int(show.find(class_=&#39;episode-total&#39;).text) if show.find(class_=&#39;episode-seen&#39;) else 0,
+                } for show in myDramaList[key].tbody.find_all(&#39;tr&#39;)
+            }
+        except (AttributeError, KeyError):
+            myDramaList[key] = None
+
+    totalShows = len([i for j in myDramaList if myDramaList[j] for i in myDramaList[j]])
+    k = 0
+    for key in [i for i in myDramaList if myDramaList[i]]:
+        for k, showID in enumerate(myDramaList[key], start=k + 1):
+            myDramaList[key][showID].update(userInfo(showID))
+            g.printProgressBar(k, totalShows, prefix=f&#39;Retrieving {k}/{totalShows}&#39;) if not suppress else True
+    return myDramaList
+
+
+def updateExternalLinks(cookies, link, externalLinks, notes=&#39;&#39;):
+    if externalLinks:
+        submitURL = postURL(showID=getShowID(link)) + &#39;details&#39;
+        params = parameters(cookies)
+        # External links example
+        # externalLinks = [
+        #     {
+        #         &#34;key&#34;: &#34;website&#34;,
+        #         &#34;label&#34;: &#34;Official site (MBS)&#34;,
+        #         &#34;text&#34;: &#34;&#34;,
+        #         &#34;type&#34;: &#34;uri&#34;,
+        #         &#34;value&#34;: &#34;https://www.mbs.jp/araoto_drama/&#34;,
+        #         &#34;_status&#34;: &#34;created&#34;
+        #     },
+        #     {
+        #         &#34;key&#34;: &#34;twitter&#34;,
+        #         &#34;label&#34;: &#34;&#34;,
+        #         &#34;text&#34;: &#34;&#34;,
+        #         &#34;type&#34;: &#34;social&#34;,
+        #         &#34;value&#34;: &#34;araoto_drama&#34;,
+        #         &#34;_status&#34;: &#34;created&#34;
+        #     },
+        #     {
+        #         &#34;key&#34;: &#34;instagram&#34;,
+        #         &#34;label&#34;: &#34;&#34;,
+        #         &#34;text&#34;: &#34;&#34;,
+        #         &#34;type&#34;: &#34;social&#34;,
+        #         &#34;value&#34;: &#34;araoto_drama&#34;,
+        #         &#34;_status&#34;: &#34;created&#34;
+        #     }
+        # ]
+        dataForm = {
+            &#39;external_links&#39;: externalLinks,
+            &#39;category&#39;: &#39;external_links&#39;,
+            &#39;notes&#39;: notes
+        }
+        response = g.soup(submitURL, params=params, cookies=cookies, data=dataForm, post=True, response=True)
+        return True if response.status_code == 200 else False
+    else:
+        return True</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="mdl.Library.library.castAnalyse"><code class="name flex">
+<span>def <span class="ident">castAnalyse</span></span>(<span>castList, castEdited, castRevision)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def castAnalyse(castList, castEdited, castRevision):
+    newCast = []
+    for cast, castDetails in castList.items():
+        try:
+            characterName = castDetails[&#39;character_name&#39;]
+            if characterName:
+                episodes = re.findall(&#39;\((Ep[^)]+)&#39;, characterName)
+                if episodes:
+                    episodes = f&#34;({episodes[0]})&#34;
+                    episodesNormalised = episodes.replace(&#39;Ep. &#39;, &#39;Ep &#39;).replace(&#39;Ep.&#39;, &#39;Ep &#39;)
+                    if episodesNormalised != castEdited[cast]:
+                        castDetails[&#39;character_name&#39;] = castDetails[&#39;character_name&#39;].replace(episodes,
+                                                                                              castEdited[cast])
+                    else:
+                        raise KeyError
+                else:
+                    castDetails[&#39;character_name&#39;] = f&#34;{characterName} {castEdited[cast]}&#34;
+            else:
+                castDetails[&#39;character_name&#39;] = castEdited[cast]
+            newCast.append(castDetails)
+        except KeyError:  # Ignore guests that may not be considered in castEdited
+            pass
+    for guest, guestDetails in set(castRevision) - set(castList):
+        newCast.append(guestDetails)
+    return newCast</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.castInfo"><code class="name flex">
+<span>def <span class="ident">castInfo</span></span>(<span>cookies, link)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def castInfo(cookies, link):
+    showID = getShowID(link)
+    castURL = postURL(showID=showID) + &#39;cast&#39;
+    params = parameters(cookies)
+    castJSON = g.soup(castURL, params=params, cookies=cookies, JSON=True)
+    castOriginal = {castValue[&#39;display_name&#39;]: castValue for castValue in castJSON[&#39;original&#39;][&#39;cast&#39;]}
+    castRevision = {castValue[&#39;display_name&#39;]: castValue for castValue in castJSON[&#39;revision&#39;][&#39;cast&#39;]}
+    castList = {
+        cast: castRevision[cast] if cast in castRevision else castOriginal[cast] for cast in castOriginal
+    }
+    weights = &#39;,&#39;.join(castJSON[&#39;revision&#39;][&#39;cast_weights&#39;])
+    return castList, castRevision, weights, castURL, params</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.castSearch"><code class="name flex">
+<span>def <span class="ident">castSearch</span></span>(<span>name, nationality=None, gender=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def castSearch(name, nationality=None, gender=None):
+    nationalityMap = {
+        &#39;japanese&#39;: 1,
+        &#39;jp&#39;: 1,
+        &#39;korean&#39;: 2,
+        &#39;ko&#39;: 2,
+        &#39;chinese&#39;: 3,
+        &#39;cn&#39;: 3,
+        &#39;hong kongers&#39;: 4,
+        &#39;hk&#39;: 4,
+        &#39;taiwanese&#39;: 5,
+        &#39;tw&#39;: 5,
+        &#39;thai&#39;: 6,
+        &#39;th&#39;: 6,
+        &#39;filipino&#39;: 140,
+        &#39;fp&#39;: 140
+    }
+    genderMap = {
+        &#39;male&#39;: 77,
+        &#39;m&#39;: 77,
+        &#39;female&#39;: 70,
+        &#39;f&#39;: 70
+    }
+    params = {
+        &#39;q&#39;: name,
+        &#39;adv&#39;: &#39;people&#39;,
+        &#39;gd&#39;: genderMap[gender.lower()] if gender else None,
+        &#39;na&#39;: nationalityMap[nationality.lower()] if nationality else None,
+        &#39;so&#39;: &#39;relevance&#39;
+    }
+    [params.pop(i, None) for i in [j for j in params if not params[j]]]
+    searchResults = g.soup(f&#34;{siteRoot}/search&#34;, params=params).find_all(&#39;h6&#39;)
+
+    try:
+        if len(searchResults) &gt; 1:
+            print(f&#39;Which of these is the right cast for {name}? (0 if no matches)&#39;)
+            for resultNumber, result in enumerate(searchResults, start=1):
+                print(f&#34;{resultNumber} : {result.contents[0].text} &#34;
+                      f&#34;({result.find_next(class_=&#39;text-muted&#39;).find_next(&#39;p&#39;).string})&#34;)
+            counter = 1
+            while True:
+                try:
+                    answer = int(input())
+                    if answer == 0:
+                        raise FileNotFoundError
+                    elif answer not in range(len(searchResults)):
+                        raise ValueError
+                    else:
+                        return searchResults[answer - 1].string
+                except ValueError:
+                    counter += 1
+                    if counter &lt; 4:
+                        print(&#39;Invalid answer&#39;)
+                    else:
+                        print(&#39;Too many invalid answers. The first choice will be picked&#39;)
+                        return searchResults[0].string
+        elif len(searchResults) == 1:
+            return searchResults[0].text
+        else:
+            raise FileNotFoundError
+    except FileNotFoundError:
+        return False</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.castSubmit"><code class="name flex">
+<span>def <span class="ident">castSubmit</span></span>(<span>cookies, link, latestCast, notes='')</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def castSubmit(cookies, link, latestCast, notes=&#39;&#39;):
+    castList, castRevision, weights, castURL, params = castInfo(cookies, link)
+    newCastList = castAnalyse(castList, latestCast, castRevision)
+    if newCastList:
+        popTerms = [&#39;url&#39;, &#39;content_type&#39;, &#39;display_nam&#39;, &#39;role_id&#39;, &#39;weight&#39;, &#39;thumbnail&#39;]
+        [item.pop(i, None) for item in newCastList for i in popTerms]
+        dataForm = {
+            &#39;notes&#39;: notes,
+            &#39;category&#39;: &#39;cast&#39;,
+            &#39;cast_data&#39;: json.dumps(newCastList),
+            &#39;weights&#39;: weights,
+            &#39;cast_weights&#39;: weights
+        }
+        response = g.soup(castURL, data=dataForm, params=params, cookies=cookies, post=True, response=True)
+        if response.status_code == 200:
+            print(&#39;Updated cast&#39;)
+        else:
+            print(&#39;Failed to update cast&#39;)
+    else:
+        print(&#39;No updates&#39;)</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.deleteSubmission"><code class="name flex">
+<span>def <span class="ident">deleteSubmission</span></span>(<span>cookies, category, link=None, epID=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def deleteSubmission(cookies, category, link=None, epID=None):
+    if category:
+        deleteURL = f&#34;{siteRoot}/v1/edit/tickets/{epID}/episodes&#34; \
+            if epID else f&#34;{siteRoot}/v1/edit/titles/{getShowID(link)}/titles&#34;
+        params = {
+            &#39;category&#39;: category
+        }
+        params.update(parameters(cookies, undef=True if epID else False))
+        g.soup(deleteURL, params=params, delete=True)
+    else:
+        raise SyntaxError</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.dramaList"><code class="name flex">
+<span>def <span class="ident">dramaList</span></span>(<span>cookies, watching=True, completed=True, plan_to_watch=True, hold=True, drop=True, not_interested=True, suppress=False)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dramaList(cookies, watching=True, completed=True, plan_to_watch=True, hold=True, drop=True, not_interested=True,
+              suppress=False):
+    profileLink = f&#34;{siteRoot}/profile&#34;
+    listLink = f&#34;{siteRoot}{g.soup(profileLink, cookies=cookies).find(&#39;a&#39;, text=&#39;My Watchlist&#39;)[&#39;href&#39;]}&#34;
+    listSoup = g.soup(listLink, cookies=cookies)
+    myDramaList = {
+        &#39;watching&#39;: listSoup.find(id=&#39;list_1&#39;) if watching else None,
+        &#39;completed&#39;: listSoup.find(id=&#39;list_2&#39;) if completed else None,
+        &#39;plan_to_watch&#39;: listSoup.find(id=&#39;list_3&#39;) if plan_to_watch else None,
+        &#39;on_hold&#39;: listSoup.find(id=&#39;list_4&#39;) if hold else None,
+        &#39;dropped&#39;: listSoup.find(id=&#39;list_5&#39;) if drop else None,
+        &#39;not_interested&#39;: g.soup(f&#34;{listLink}/not_interested&#34;, cookies=cookies).find(id=&#39;list_6&#39;)
+        if not_interested else None
+    }
+
+    def userInfo(ID):
+        infoSoup = g.soup(f&#34;{siteRoot}/v1/users/watchaction/{ID}&#34;,
+                          params=parameters(cookies),
+                          cookies=cookies,
+                          JSON=True)[&#39;data&#39;]
+        return {
+            &#39;date-start&#39;: None if infoSoup[&#39;date_start&#39;] == &#39;0000-00-00&#39;
+            else d.datetime.strptime(infoSoup[&#39;date_start&#39;], &#39;%Y-%m-%d&#39;),
+            &#39;date-end&#39;: None if infoSoup[&#39;date_finish&#39;] == &#39;0000-00-00&#39;
+            else d.datetime.strptime(infoSoup[&#39;date_finish&#39;], &#39;%Y-%m-%d&#39;),
+            &#39;rewatched&#39;: infoSoup[&#39;times_rewatched&#39;]
+        }
+
+    for key in [i for i in myDramaList if myDramaList[i]]:
+        try:
+            myDramaList[key] = {
+                int(show[&#39;id&#39;][2:]): {
+                    &#39;title&#39;: show.find(class_=&#39;title&#39;).text,
+                    &#39;country&#39;: show.find(class_=&#39;sort2&#39;).text,
+                    &#39;year&#39;: int(show.find(class_=&#39;sort3&#39;).text),
+                    &#39;type&#39;: show.find(class_=&#39;sort4&#39;).text,
+                    &#39;rating&#39;: float(show.find(class_=&#39;score&#39;).text)
+                    if show.find(class_=&#39;score&#39;) or float(show.find(class_=&#39;score&#39;).text) != 0.0 else None,
+                    &#39;progress&#39;: int(show.find(class_=&#39;episode-seen&#39;).text) if show.find(class_=&#39;episode-seen&#39;) else 0,
+                    &#39;total&#39;: int(show.find(class_=&#39;episode-total&#39;).text) if show.find(class_=&#39;episode-seen&#39;) else 0,
+                } for show in myDramaList[key].tbody.find_all(&#39;tr&#39;)
+            }
+        except (AttributeError, KeyError):
+            myDramaList[key] = None
+
+    totalShows = len([i for j in myDramaList if myDramaList[j] for i in myDramaList[j]])
+    k = 0
+    for key in [i for i in myDramaList if myDramaList[i]]:
+        for k, showID in enumerate(myDramaList[key], start=k + 1):
+            myDramaList[key][showID].update(userInfo(showID))
+            g.printProgressBar(k, totalShows, prefix=f&#39;Retrieving {k}/{totalShows}&#39;) if not suppress else True
+    return myDramaList</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.getEpisodeID"><code class="name flex">
+<span>def <span class="ident">getEpisodeID</span></span>(<span>link, episodeNumber)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getEpisodeID(link, episodeNumber):
+    try:
+        episodeSoup = g.soup(f&#34;{link}/episode/{int(episodeNumber)}&#34;)
+        return int(episodeSoup.find(property=&#39;mdl:rid&#39;)[&#39;content&#39;])
+    except (TypeError, ValueError):
+        print(f&#39;Invalid episode (Episode {episodeNumber})&#39;)
+        raise FileNotFoundError</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.getShowID"><code class="name flex">
+<span>def <span class="ident">getShowID</span></span>(<span>link)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getShowID(link):
+    return link.split(&#39;/&#39;)[-1].split(&#39;-&#39;)[0]</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.getStartDate"><code class="name flex">
+<span>def <span class="ident">getStartDate</span></span>(<span>link, totalEpisodes=None, startEpisode=1)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getStartDate(link, totalEpisodes=None, startEpisode=1):
+    def getAirDate(episode):
+        if episode == 1:
+            aired = g.soup(link).find(xitemprop=&#39;datePublished&#39;)[&#39;content&#39;]
+            return d.datetime.strptime(aired, &#39;%Y-%m-%d&#39;)
+        else:
+            soup = g.soup(f&#34;{link}/episodes&#34;)
+            searchTerm = f&#34;{soup.find(property=&#39;og:title&#39;)[&#39;content&#39;]} Episode {startEpisode - 1}&#34;
+            aired = soup.find(string=searchTerm).find_next(class_=&#39;air-date&#39;).string
+            return d.datetime.strptime(aired, &#39;%b %d, %Y&#39;)
+
+    totalEpisodes = totalEpisodes if totalEpisodes else showDetails(link)[1]
+    attempt = 0
+    while attempt &lt; 3:
+        while 0 &lt; startEpisode &lt;= totalEpisodes:
+            try:
+                return getAirDate(startEpisode)
+            except ValueError:
+                startEpisode -= 1
+                if startEpisode &gt; 0:
+                    print(f&#34;Invalid airdate for Episode {startEpisode + 1}. Checking Episode {startEpisode}&#34;)
+                else:
+                    print(&#39;No information for any episodes at all. Provide information of the first aired episode&#39;)
+                    while True:
+                        try:
+                            return d.datetime.strptime(input(&#39;YYYY/MM/DD : &#39;), &#39;%Y/%m/%d&#39;)
+                        except ValueError:
+                            pass
+        try:  # Fixes startEpisode if it is above the total number of posted episodes
+            print(&#39;Invalid start episode.&#39;)
+            startEpisode = int(input(&#39;&gt;&gt;&gt;&#39;))
+        except ValueError:
+            attempt += 1
+    raise UnboundLocalError</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.imageSubmit"><code class="name flex">
+<span>def <span class="ident">imageSubmit</span></span>(<span>cookies, link, file, fileDir, keyNotes, epID=False, description='', suppress=False, attempts=3)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def imageSubmit(cookies, link, file, fileDir, keyNotes, epID=False, description=&#39;&#39;, suppress=False, attempts=3):
+    # Upload to MDL
+    try:
+        params = parameters(cookies, undef=not not epID)
+        imageData = MultipartEncoder(
+            fields={
+                &#39;category&#39;: (None, &#39;temp_photos&#39;),
+                &#39;file&#39;: (file, open(os.path.join(fileDir, file), &#39;rb&#39;), &#39;image/jpeg&#39;)
+            },
+            boundary=f&#34;------WebKitFormBoundary{&#39;&#39;.join(random.sample(string.ascii_letters + string.digits, 16))}&#34;
+        )
+        headers = {&#39;content-type&#39;: imageData.content_type}
+        imageID = None
+        attempt = 0
+        while attempt &lt; attempts:
+            uploadResponse = g.soup(imageURL, params=params if epID else None, headers=headers,
+                                    cookies=cookies, data=imageData, post=True, response=True)
+            if uploadResponse.status_code == 200:
+                imageID = json.loads(uploadResponse.content)[&#39;filename&#39;]
+                break
+            else:
+                attempt += 1
+
+        if not imageID:
+            raise ConnectionRefusedError
+
+        # Submit to MDL
+        if not epID:
+            dataForm = {
+                &#39;title&#39;: keyNotes,
+                &#39;image&#39;: f&#39;https://i.mydramalist.com/{imageID}m.jpg&#39;,
+                &#39;description&#39;: description,
+                &#39;filename&#39;: imageID
+            }
+        else:
+            dataForm = {
+                &#39;category&#39;: &#39;cover&#39;,
+                &#39;notes&#39;: keyNotes,
+                &#39;cover_id&#39;: imageID
+            }
+        submitURL = postURL(getShowID(link), epID).replace(&#39;edit/&#39;, &#39;&#39; if not epID else &#39;edit/&#39;) \
+                    + (&#39;/photos&#39; if not epID else &#39;/cover&#39;)
+        params = g.revDict(params) if not epID else params
+        attempt = 0
+        while attempt &lt; 3:
+            submitResponse = g.soup(submitURL, data=dataForm, params=params, cookies=cookies,
+                                    post=True, response=True)
+            if submitResponse.status_code == 200:
+                print(f&#39;Posted {file}&#39;) if not suppress else True
+                os.remove(os.path.join(fileDir, file))
+                return True
+            else:
+                attempt += 1
+        raise ConnectionRefusedError
+    except (ConnectionRefusedError, AttributeError):  # AttributeError : Images that do not exist
+        print(f&#39;Failed to post {file}&#39;)
+        return False</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.login"><code class="name flex">
+<span>def <span class="ident">login</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def login():
+    loginKey = ConfigParser()
+    loginKey.read(configFile._Config__keyDir)
+    loginKeys = (loginKey[&#39;USER&#39;][&#39;username&#39;], loginKey[&#39;USER&#39;][&#39;password&#39;])
+
+    def userInfo():  # Retrieves username and password
+        username = input(&#39;USERNAME &gt;&gt;&gt;&#39;)
+        password = getpass(&#39;PASSWORD &gt;&gt;&gt;&#39;)
+        return username, password
+
+    def saveKeys(newKeys):
+        if loginKeys not in [newKeys, (&#39;-&#39;, &#39;-&#39;)]:
+            answer = input(&#39;Save login details? (y/n)&#39;)
+            if strtobool(answer) or not answer:
+                loginKey[&#39;USER&#39;][&#39;username&#39;], loginKey[&#39;USER&#39;][&#39;password&#39;] \
+                    = newKeys
+                with open(configFile._Config__keyDir, &#39;w&#39;) as f:
+                    loginKey.write(f)
+                    print(&#39;Saved login details in keyfile&#39;)
+
+    def loginFail(loginDetails):
+        response = g.soup(f&#39;{siteRoot}/signin&#39;, data={&#39;username&#39;: loginDetails[0], &#39;password&#39;: loginDetails[1]},
+                          post=True, response=True)
+        try:
+            cookie = response.request._cookies
+            if &#39;jl_sess&#39; in cookie:
+                saveKeys(loginDetails)
+            else:
+                raise ConnectionError
+        except ConnectionError:
+            cookie = None
+            print(&#39;!!Incorrect email or password!!&#39;)
+            loginDetails = userInfo()
+            print(&#34;Attempting to login again\n...&#34;)
+        return loginDetails, cookie
+
+    details = userInfo() if not all(loginKeys) else loginKeys
+
+    cookies = attempt = 0
+    attempt += not all(loginKeys)
+    while not cookies and attempt &lt; 3:
+        details, cookies = loginFail(details)
+        attempt += 1
+    if not cookies and attempt == 3:
+        print(&#39;Failed to login\nCheck username and password again.&#39;)
+    else:
+        print(&#39;Successfully logged in&#39;)
+    return cookies</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.parameters"><code class="name flex">
+<span>def <span class="ident">parameters</span></span>(<span>cookies, undef=False, inverse=False)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def parameters(cookies, undef=False, inverse=False):
+    params = {
+        &#39;lang&#39;: &#39;en-US&#39; if not undef else &#39;undefined&#39;,
+        &#39;token&#39;: cookies[&#39;jl_sess&#39;]
+    }
+    return params if not inverse else g.revDict(params)</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.postRating"><code class="name flex">
+<span>def <span class="ident">postRating</span></span>(<span>cookies, episodeRating, details=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def postRating(cookies, episodeRating, details=None):
+    details = details if details else {}
+    post = True if episodeRating[&#39;ID&#39;][1] == 0 else False
+    if post:
+        formData = {
+            &#39;id&#39;: 0,
+            &#39;dropped&#39;: &#39;&#39;,
+            &#39;spoiler&#39;: &#39;&#39;,
+            &#39;completed&#39;: &#39;&#39;,
+            &#39;episode_seen&#39;: &#39;&#39;,
+            &#39;review_headline&#39;: &#39;&#39;,
+            &#39;review&#39;: &#39;&#39;,
+            &#39;story_rating&#39;: 0,
+            &#39;acting_rating&#39;: 0,
+            &#39;lang_iso&#39;: &#39;en_US&#39;,
+            &#39;music_rating&#39;: 0,
+            &#39;rewatch_rating&#39;: 0,
+            &#39;overall_rating&#39;: 0,
+            &#39;rating&#39;: round(episodeRating[&#39;rating&#39;][&#39;self&#39;] * 2) / 2
+        }
+    else:
+        formData = {
+            &#39;id&#39;: episodeRating[&#39;ID&#39;][1],
+            &#39;lang_iso&#39;: &#39;en-US&#39;,
+            &#39;language&#39;: &#39;English&#39;,
+            &#39;headline&#39;: &#39;&#39;,
+            &#39;review&#39;: &#39;&#39;,
+            &#39;review_raw&#39;: &#39;&#39;,
+            &#39;rating&#39;: round(episodeRating[&#39;rating&#39;][&#39;self&#39;] * 2) / 2
+        }
+
+    formData.update(details)
+    ratingURL = episodeRating[&#39;url&#39;] + (not post) * f&#34;/{episodeRating[&#39;ID&#39;][1]}&#34;
+    response = g.soup(ratingURL, data=formData, params=parameters(cookies, undef=False), cookies=cookies,
+                      post=(-1) ** (not post), response=True)
+    return True if response.status_code == 200 else False</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.postURL"><code class="name flex">
+<span>def <span class="ident">postURL</span></span>(<span>showID=None, epID=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def postURL(showID=None, epID=None):
+    return f&#34;{siteRoot}/v1/edit/episodes/{epID}&#34; if epID else f&#34;{siteRoot}/v1/edit/titles/{showID}/&#34;</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.retrieveRatings"><code class="name flex">
+<span>def <span class="ident">retrieveRatings</span></span>(<span>cookies, link, start=1, end=False)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def retrieveRatings(cookies, link, start=1, end=False):
+    end = end if end else start
+    rating = {}
+    episodeSoup = g.soup(f&#34;{link}/episodes&#34;)
+    for episodeNumber in range(start, end + 1):
+        try:
+            episodeID = getEpisodeID(link, episodeNumber)
+            ratingURL = f&#34;{siteRoot}/v1/episodes/{getEpisodeID(link, episodeNumber)}/reviews/check/rating&#34;
+            ratingJSON = g.soup(ratingURL, params=parameters(cookies), cookies=cookies, JSON=True)
+            rating[episodeNumber] = {
+                &#39;ID&#39;: (
+                    episodeID,
+                    ratingJSON[&#39;id&#39;]
+                ),
+                &#39;rating&#39;: {
+                    &#39;self&#39;: ratingJSON[&#39;rating&#39;],
+                    &#39;MDL&#39;: float(episodeSoup.find(href=f&#34;{link.replace(siteRoot, &#39;&#39;)}/episode/{episodeNumber}&#34;)
+                                 .find_next(class_=&#39;rating-panel&#39;).find(&#39;b&#39;).string)
+                },
+                &#39;url&#39;: ratingURL.replace(&#39;/check/rating&#39;, &#39;&#39;)
+            }
+        except FileNotFoundError:
+            pass
+    return rating</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.retrieveSummary"><code class="name flex">
+<span>def <span class="ident">retrieveSummary</span></span>(<span>cookies, epID)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def retrieveSummary(cookies, epID):
+    summaryURL = postURL(epID=epID)
+    response = g.soup(summaryURL, params=parameters(cookies, undef=True), cookies=cookies, JSON=True)[&#39;revision&#39;]
+    return {&#39;title&#39;: response[&#39;title&#39;], &#39;summary&#39;: response[&#39;summary&#39;]}</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.search"><code class="name flex">
+<span>def <span class="ident">search</span></span>(<span>keyword, result=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def search(keyword, result=None):
+    searchResults = g.soup(f&#34;{siteRoot}/search&#34;, params={&#39;q&#39;: keyword}).find_all(&#39;h6&#39;)
+
+    try:
+        if len(searchResults) == 1:
+            link = f&#34;{siteRoot}{searchResults[0].contents[0][&#39;href&#39;]}&#34;
+        elif len(searchResults) &gt; 1:
+            try:
+                if result:
+                    link = f&#34;{siteRoot}{searchResults[result - 1].contents[0][&#39;href&#39;]}&#34;
+                else:
+                    raise IndexError
+            except IndexError:
+                if result:
+                    print(&#39;Declared index does not exist. Pick one of the following shows&#39;)
+                else:
+                    print(&#39;Which of these shows is the right show?&#39;)
+                for resultNumber, result in enumerate(searchResults, start=1):
+                    print(f&#34;{resultNumber} : &#34;
+                          f&#34;{result.contents[0].text} ({result.find_next(class_=&#39;text-muted&#39;).text})&#34;)
+                counter = 1
+                while True:
+                    try:
+                        answer = int(input())
+                        if answer - 1 not in range(len(searchResults)):
+                            raise ValueError
+                        else:
+                            break
+                    except ValueError:
+                        counter += 1
+                        if counter &lt; 4:
+                            print(&#39;Invalid answer. Pick one of the shows above&#39;)
+                        else:
+                            print(&#39;Too many invalid answers. The first show will be picked&#39;)
+                            answer = 1
+                            break
+                link = f&#34;{siteRoot}{searchResults[answer - 1].contents[0][&#39;href&#39;]}&#34;
+        else:
+            raise FileNotFoundError
+    except FileNotFoundError:
+        link = &#39;&#39;
+        print(&#39;Search keyword returns no results. Check search keyword again&#39;)
+    return link</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.showDetails"><code class="name flex">
+<span>def <span class="ident">showDetails</span></span>(<span>link)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def showDetails(link):
+    soup = g.soup(link)
+    try:
+        nativeTitle = soup.find(&#39;b&#39;, text=&#39;Native Title:&#39;).find_next(&#39;a&#39;)[&#39;title&#39;]
+    except AttributeError:  # No native tile in MDL
+        nativeTitle = &#39;&#39;
+    try:
+        network = soup.find(string=&#39;Original Network:&#39;).find_next(&#39;a&#39;).string
+    except AttributeError:
+        network = &#39;&#39;
+    totalEpisodes = int(list(soup.find(string=&#39;Episodes:&#39;).parent.parent.strings)[-1])
+    return nativeTitle, network, totalEpisodes</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.showInfo"><code class="name flex">
+<span>def <span class="ident">showInfo</span></span>(<span>cookies, link)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def showInfo(cookies, link):
+    def checkUpdates(jsonResponse, onlyEpisodes=False):
+        original = jsonResponse[&#39;original&#39;]
+        revision = jsonResponse[&#39;revision&#39;]
+        revised = 0
+        if not onlyEpisodes:
+            for element in revision.values():
+                revised += not not element
+            return original if revised == 0 else revision
+        else:
+            return revision[&#39;episodes&#39;] if not not revision[&#39;episodes&#39;] else original[&#39;episodes&#39;]
+
+    showID = getShowID(link)
+    infoURL, editURL = [postURL(showID=showID) + i for i in [&#39;&#39;, &#39;release&#39;]]
+    params = parameters(cookies)
+    episodesURL = f&#34;{infoURL}/episodes&#34;
+
+    info = checkUpdates(g.soup(infoURL, params=params, cookies=cookies, JSON=True))
+    edit = checkUpdates(g.soup(editURL, params=params, cookies=cookies, JSON=True))
+
+    seasons = {
+        season[&#39;name&#39;]: (
+            season[&#39;sid&#39;],
+            season[&#39;episode_start&#39;],
+            season[&#39;episode_end&#39;],
+            order
+        ) for order, season in enumerate(edit[&#39;seasons&#39;])
+    }
+
+    episodesList = []
+    for sID, startEpisode, endEpisode, order in seasons.values():
+        params.update({
+            &#39;sid&#39;: sID,
+            &#39;eps&#39;: startEpisode,
+            &#39;epe&#39;: endEpisode
+        })
+        episodesList.append(
+            checkUpdates(
+                g.soup(episodesURL, params=params, cookies=cookies, JSON=True),
+                onlyEpisodes=True)
+        )
+    episodes = {info[&#39;episode_number&#39;]: info for season in episodesList for info in season}
+    episodes = {keys: episodes[keys] for keys in sorted(list(episodes.keys()))}
+    return info, edit, episodes, seasons</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.summarySubmit"><code class="name flex">
+<span>def <span class="ident">summarySubmit</span></span>(<span>cookies, epID, summary='', title='', notes='')</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def summarySubmit(cookies, epID, summary=&#39;&#39;, title=&#39;&#39;, notes=&#39;&#39;):
+    if summary or title:
+        dataForm = {
+            &#39;category&#39;: &#39;details&#39;,
+            &#39;notes&#39;: notes,
+            &#39;summary&#39;: summary,
+            &#39;title&#39;: title
+        }
+        submitURL = postURL(epID=epID) + &#39;/details&#39;
+        response = g.soup(submitURL, data=dataForm, params=parameters(cookies, undef=True), cookies=cookies,
+                          post=True, response=True)
+        if response.status_code == 200:
+            return True
+        else:
+            print(f&#39;Failed to update {epID}&#39;)
+            return False
+    else:
+        return False</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.updateExternalLinks"><code class="name flex">
+<span>def <span class="ident">updateExternalLinks</span></span>(<span>cookies, link, externalLinks, notes='')</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def updateExternalLinks(cookies, link, externalLinks, notes=&#39;&#39;):
+    if externalLinks:
+        submitURL = postURL(showID=getShowID(link)) + &#39;details&#39;
+        params = parameters(cookies)
+        # External links example
+        # externalLinks = [
+        #     {
+        #         &#34;key&#34;: &#34;website&#34;,
+        #         &#34;label&#34;: &#34;Official site (MBS)&#34;,
+        #         &#34;text&#34;: &#34;&#34;,
+        #         &#34;type&#34;: &#34;uri&#34;,
+        #         &#34;value&#34;: &#34;https://www.mbs.jp/araoto_drama/&#34;,
+        #         &#34;_status&#34;: &#34;created&#34;
+        #     },
+        #     {
+        #         &#34;key&#34;: &#34;twitter&#34;,
+        #         &#34;label&#34;: &#34;&#34;,
+        #         &#34;text&#34;: &#34;&#34;,
+        #         &#34;type&#34;: &#34;social&#34;,
+        #         &#34;value&#34;: &#34;araoto_drama&#34;,
+        #         &#34;_status&#34;: &#34;created&#34;
+        #     },
+        #     {
+        #         &#34;key&#34;: &#34;instagram&#34;,
+        #         &#34;label&#34;: &#34;&#34;,
+        #         &#34;text&#34;: &#34;&#34;,
+        #         &#34;type&#34;: &#34;social&#34;,
+        #         &#34;value&#34;: &#34;araoto_drama&#34;,
+        #         &#34;_status&#34;: &#34;created&#34;
+        #     }
+        # ]
+        dataForm = {
+            &#39;external_links&#39;: externalLinks,
+            &#39;category&#39;: &#39;external_links&#39;,
+            &#39;notes&#39;: notes
+        }
+        response = g.soup(submitURL, params=params, cookies=cookies, data=dataForm, post=True, response=True)
+        return True if response.status_code == 200 else False
+    else:
+        return True</code></pre>
+</details>
+</dd>
+<dt id="mdl.Library.library.userProfile"><code class="name flex">
+<span>def <span class="ident">userProfile</span></span>(<span>cookies)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def userProfile(cookies):
+    profile = g.soup(f&#34;{siteRoot}/profile&#34;, cookies=cookies)
+    return re.match(&#34;.+(?=&#39;s Profile)&#34;, profile.head.title.string)[0]</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="mdl.Library" href="index.html">mdl.Library</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="mdl.Library.library.castAnalyse" href="#mdl.Library.library.castAnalyse">castAnalyse</a></code></li>
+<li><code><a title="mdl.Library.library.castInfo" href="#mdl.Library.library.castInfo">castInfo</a></code></li>
+<li><code><a title="mdl.Library.library.castSearch" href="#mdl.Library.library.castSearch">castSearch</a></code></li>
+<li><code><a title="mdl.Library.library.castSubmit" href="#mdl.Library.library.castSubmit">castSubmit</a></code></li>
+<li><code><a title="mdl.Library.library.deleteSubmission" href="#mdl.Library.library.deleteSubmission">deleteSubmission</a></code></li>
+<li><code><a title="mdl.Library.library.dramaList" href="#mdl.Library.library.dramaList">dramaList</a></code></li>
+<li><code><a title="mdl.Library.library.getEpisodeID" href="#mdl.Library.library.getEpisodeID">getEpisodeID</a></code></li>
+<li><code><a title="mdl.Library.library.getShowID" href="#mdl.Library.library.getShowID">getShowID</a></code></li>
+<li><code><a title="mdl.Library.library.getStartDate" href="#mdl.Library.library.getStartDate">getStartDate</a></code></li>
+<li><code><a title="mdl.Library.library.imageSubmit" href="#mdl.Library.library.imageSubmit">imageSubmit</a></code></li>
+<li><code><a title="mdl.Library.library.login" href="#mdl.Library.library.login">login</a></code></li>
+<li><code><a title="mdl.Library.library.parameters" href="#mdl.Library.library.parameters">parameters</a></code></li>
+<li><code><a title="mdl.Library.library.postRating" href="#mdl.Library.library.postRating">postRating</a></code></li>
+<li><code><a title="mdl.Library.library.postURL" href="#mdl.Library.library.postURL">postURL</a></code></li>
+<li><code><a title="mdl.Library.library.retrieveRatings" href="#mdl.Library.library.retrieveRatings">retrieveRatings</a></code></li>
+<li><code><a title="mdl.Library.library.retrieveSummary" href="#mdl.Library.library.retrieveSummary">retrieveSummary</a></code></li>
+<li><code><a title="mdl.Library.library.search" href="#mdl.Library.library.search">search</a></code></li>
+<li><code><a title="mdl.Library.library.showDetails" href="#mdl.Library.library.showDetails">showDetails</a></code></li>
+<li><code><a title="mdl.Library.library.showInfo" href="#mdl.Library.library.showInfo">showInfo</a></code></li>
+<li><code><a title="mdl.Library.library.summarySubmit" href="#mdl.Library.library.summarySubmit">summarySubmit</a></code></li>
+<li><code><a title="mdl.Library.library.updateExternalLinks" href="#mdl.Library.library.updateExternalLinks">updateExternalLinks</a></code></li>
+<li><code><a title="mdl.Library.library.userProfile" href="#mdl.Library.library.userProfile">userProfile</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.1</a>.</p>
+</footer>
+</body>
+</html>
