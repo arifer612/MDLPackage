@@ -29,7 +29,7 @@ setuptools.setup(
     name="mdl",
     version=configFile.version,
     author="arifer612",
-    description="Bots for scraping and posting information onto MyDramaList.com",
+    description="A package of libraries used for scraping information of Japanese TV shows from official sites to post on MyDramaList.com",
     include_package_data=True,
     install_requires=install_requires,
     long_description=long_description,
