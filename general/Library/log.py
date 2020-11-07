@@ -20,7 +20,7 @@ def safeLoad(function):
 
 
 class Log:
-    def __init__(self, key: Union[str, int], data: Union[dict, list, set, int, float, str]):
+    def __init__(self, key: Union[str, int], data: Union[dict, list, int, float, str]):
         self.__key, self.data, self._counter = key, data, 0
         if not isinstance(self.data, (dict, list, int, float, str)):
             raise TypeError(f"{type(self.data)} is not a supported data type.")
@@ -31,7 +31,7 @@ class Log:
     def __len__(self):
         return len(self.data)
 
-    def __call__(self, *keys) -> Union[dict, list, str, "Log"]:
+    def __call__(self, *keys) -> Union[dict, list, str, int, float, "Log"]:
         if not keys:
             return self.data
         else:
@@ -43,7 +43,7 @@ class Log:
                         raise LookupError
 
                 elif isinstance(self.data, list):
-                    if keys[0] in len(self):
+                    if keys[0] in range(len(self)):
                         return self.data[keys[0]]
                     else:
                         raise LookupError
@@ -54,7 +54,9 @@ class Log:
                 else:
                     raise TypeError
             except LookupError:
-                raise KeyError if len(keys) == 1 else TypeError('List cannot be called')
+                if len(keys) == 1:
+                    raise KeyError
+                raise TypeError("List cannot be called")
             except TypeError:
                 raise TypeError(f"{type(self.data)} is not a supported type")
 
@@ -80,7 +82,7 @@ class Log:
         self._counter += 1
         return result
 
-    def _recursiveUpdate(self, data: Dict[Union[str, int], Union[dict, list, str, int]],
+    def _recursiveUpdate(self, data: Dict[Union[str, int], Any],
                          newData: Dict[Union[str, int], Any]) -> None:
         for i, j in newData.items():
             if i not in data.keys():
@@ -88,7 +90,7 @@ class Log:
             else:
                 if isinstance(data[i], dict) and isinstance(j, dict):  # Repeats update
                     self._recursiveUpdate(data[i], j)
-                elif isinstance(data[i], list):  # Extends the list
+                elif isinstance(data[i], list):
                     if not isinstance(j, list):
                         j = [j]
                     try:

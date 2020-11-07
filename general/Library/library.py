@@ -79,7 +79,7 @@ def soup(link: str, post: Union[bool, int] = False, JSON: bool = False, response
         try:
             if delete:
                 request = requests.delete(link, timeout=timeout, **kwargs)
-                return request.status_code == 200  # type: bool
+                return request.status_code == 200
 
             if not post:
                 request = requests.get(link, timeout=timeout, **kwargs)
@@ -97,11 +97,11 @@ def soup(link: str, post: Union[bool, int] = False, JSON: bool = False, response
                 raise ConnectionError
 
             if not JSON and not response:
-                return BeautifulSoup(request.content, parser)  # type: BeautifulSoup
+                return BeautifulSoup(request.content, parser)
             elif JSON:
-                return json.loads(request.content)  # type: dict
+                return json.loads(request.content)
             elif response:
-                return request  # type: Response
+                return request
         except (requests.exceptions.ConnectTimeout, requests.exceptions.ReadTimeout):
             attempts -= 1
         except ConnectionError:
